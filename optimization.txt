@@ -1,0 +1,5 @@
+Ways to optimize
+
+1. Get rid of all cases of bitset
+2. Avoid retrieving memory one by one; instead do it together at once
+3. Create a linked list for all instructions that contains a pointer to the next instruction, and can call the function as needed

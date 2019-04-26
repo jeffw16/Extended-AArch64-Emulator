@@ -1,0 +1,26 @@
+
+t1:     file format elf64-littleaarch64
+
+
+Disassembly of section .note.gnu.build-id:
+
+00000000004000b0 <.note.gnu.build-id>:
+  4000b0:	00000004 	.inst	0x00000004 ; undefined
+  4000b4:	00000014 	.inst	0x00000014 ; undefined
+  4000b8:	00000003 	.inst	0x00000003 ; undefined
+  4000bc:	00554e47 	.inst	0x00554e47 ; undefined
+  4000c0:	f2714f60 	ands	x0, x27, #0x7ffff8000
+  4000c4:	f4a9362b 	.inst	0xf4a9362b ; undefined
+  4000c8:	bea28581 	.inst	0xbea28581 ; undefined
+  4000cc:	1ecc169e 	.inst	0x1ecc169e ; undefined
+  4000d0:	177cc93a 	b	fffffffffe3325b8 <__end__+0xfffffffffdf224c8>
+
+Disassembly of section .text:
+
+00000000004000d4 <start>:
+  4000d4:	f1000421 	subs	x1, x1, #0x1
+  4000d8:	d2800f02 	mov	x2, #0x78                  	// #120
+  4000dc:	39000022 	strb	w2, [x1]
+  4000e0:	d2800142 	mov	x2, #0xa                   	// #10
+  4000e4:	39000022 	strb	w2, [x1]
+  4000e8:	d65f03c0 	ret

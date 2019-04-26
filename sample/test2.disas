@@ -1,0 +1,56 @@
+
+test2:     file format elf64-littleaarch64
+
+
+Disassembly of section .note.gnu.build-id:
+
+00000000004000b0 <.note.gnu.build-id>:
+  4000b0:	00000004 	.inst	0x00000004 ; undefined
+  4000b4:	00000014 	.inst	0x00000014 ; undefined
+  4000b8:	00000003 	.inst	0x00000003 ; undefined
+  4000bc:	00554e47 	.inst	0x00554e47 ; undefined
+  4000c0:	231ad1ab 	.inst	0x231ad1ab ; undefined
+  4000c4:	334a9cfd 	.inst	0x334a9cfd ; undefined
+  4000c8:	831f60f9 	.inst	0x831f60f9 ; undefined
+  4000cc:	5a3169ab 	.inst	0x5a3169ab ; undefined
+  4000d0:	6aca91cf 	.inst	0x6aca91cf ; undefined
+
+Disassembly of section .text:
+
+00000000004000d4 <start>:
+  4000d4:	d1000694 	sub	x20, x20, #0x1
+  4000d8:	d28008f0 	mov	x16, #0x47                  	// #71
+  4000dc:	d10029ef 	sub	x15, x15, #0xa
+  4000e0:	390001f0 	strb	w16, [x15]
+  4000e4:	394001f1 	ldrb	w17, [x15]
+  4000e8:	39000291 	strb	w17, [x20]
+  4000ec:	d2800910 	mov	x16, #0x48                  	// #72
+  4000f0:	d14401ef 	sub	x15, x15, #0x100, lsl #12
+  4000f4:	390001f0 	strb	w16, [x15]
+  4000f8:	394001f1 	ldrb	w17, [x15]
+  4000fc:	39000291 	strb	w17, [x20]
+  400100:	d28008b0 	mov	x16, #0x45                  	// #69
+  400104:	d14801ef 	sub	x15, x15, #0x200, lsl #12
+  400108:	390001f0 	strb	w16, [x15]
+  40010c:	394001f1 	ldrb	w17, [x15]
+  400110:	39000291 	strb	w17, [x20]
+  400114:	91001210 	add	x16, x16, #0x4
+  400118:	d14c01ef 	sub	x15, x15, #0x300, lsl #12
+  40011c:	390001f0 	strb	w16, [x15]
+  400120:	394001f1 	ldrb	w17, [x15]
+  400124:	39000291 	strb	w17, [x20]
+  400128:	d2800a90 	mov	x16, #0x54                  	// #84
+  40012c:	d15001ef 	sub	x15, x15, #0x400, lsl #12
+  400130:	390001f0 	strb	w16, [x15]
+  400134:	394001f1 	ldrb	w17, [x15]
+  400138:	39000291 	strb	w17, [x20]
+  40013c:	d2800910 	mov	x16, #0x48                  	// #72
+  400140:	d15401ef 	sub	x15, x15, #0x500, lsl #12
+  400144:	390001f0 	strb	w16, [x15]
+  400148:	394001f1 	ldrb	w17, [x15]
+  40014c:	39000291 	strb	w17, [x20]
+  400150:	d2800150 	mov	x16, #0xa                   	// #10
+  400154:	d16c01ef 	sub	x15, x15, #0xb00, lsl #12
+  400158:	390001f0 	strb	w16, [x15]
+  40015c:	394001f1 	ldrb	w17, [x15]
+  400160:	39000291 	strb	w17, [x20]
