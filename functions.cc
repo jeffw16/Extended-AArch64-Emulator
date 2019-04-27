@@ -31,34 +31,6 @@ uint32_t sign_extend_32(uint32_t in, uint32_t most) {
     }
 }
 
-// uint64_t zero_extend_x(string unextended_bitstr, uint64_t x) {
-//     int len = unextended_bitstr.length();
-//     string prepend_content = "";
-//     for ( uint64_t i = 0; i < x - len; i++ ) {
-//         prepend_content += "0";
-//     }
-//     string result = prepend_content + unextended_bitstr;
-//     bitset<64> result_bs(result);
-//     uint64_t result_int = result_bs.to_ulong();
-//     return result_int;
-// }
-
-// uint64_t logical_shift_left(uint64_t orig, unsigned int scale) {
-//     return orig << scale;
-// }
-//
-// uint64_t logical_shift_right(uint64_t orig, unsigned int scale) {
-//     return orig >> scale;
-// }
-//
-// uint32_t logical_shift_left32(uint32_t orig, unsigned int scale) {
-//     return orig << scale;
-// }
-//
-// uint32_t logical_shift_right32(uint32_t orig, unsigned int scale) {
-//     return orig >> scale;
-// }
-
 uint64_t arithmetic_shift_right(uint64_t orig, unsigned int scale) {
     int64_t signedOrig = (int64_t) orig;
     signedOrig = signedOrig >> scale;
@@ -94,7 +66,7 @@ bool termin(uint64_t address, unsigned long instruction, uint64_t* reg) {
             printf("X%02d : %016lX\n", i, val);
         }
     }
-    
+
     exit(0);
     return true;
 }
@@ -102,91 +74,6 @@ bool termin(uint64_t address, unsigned long instruction, uint64_t* reg) {
 int finalTermin() {
     exit(0);
 }
-
-// void memory_set(uint64_t address, uint8_t data) {
-//     // if ( memory.find(address) != memory.end() ) {
-//         // check if it exists
-//         // memory[address] = data;
-//     // } else
-//     if ( address != 0xFFFFFFFFFFFFFFFFULL ) {
-//         memory[address] = data;
-//         // memory->set(address, data);
-//     } else {
-//         // if magic address, print the data
-//         printf("%c", data);
-//     }
-//     // printf("%x\n", data);
-// }
-
-// void memory_set_64(uint64_t address, uint64_t data) {
-//     memory[address] = (uint8_t) extract(data, 7, 0);
-//     memory[address + 1] = (uint8_t) extract(data, 15, 8);
-//     memory[address + 2] = (uint8_t) extract(data, 23, 16);
-//     memory[address + 3] = (uint8_t) extract(data, 31, 24);
-//     memory[address + 4] = (uint8_t) extract(data, 39, 32);
-//     memory[address + 5] = (uint8_t) extract(data, 47, 40);
-//     memory[address + 6] = (uint8_t) extract(data, 55, 48);
-//     memory[address + 7] = (uint8_t) extract(data, 63, 56);
-//     // memory->set(address, (uint8_t) extract(data, 7, 0));
-//     // memory->set(address + 1, (uint8_t) extract(data, 15, 8));
-//     // memory->set(address + 2, (uint8_t) extract(data, 23, 16));
-//     // memory->set(address + 3, (uint8_t) extract(data, 31, 24));
-//     // memory->set(address + 4, (uint8_t) extract(data, 39, 32));
-//     // memory->set(address + 5, (uint8_t) extract(data, 47, 40));
-//     // memory->set(address + 6, (uint8_t) extract(data, 55, 48));
-//     // memory->set(address + 7, (uint8_t) extract(data, 63, 56));
-// }
-//
-// void memory_set_32(uint64_t address, uint32_t data) {
-//     memory[address] = (uint8_t) extract(data, 7, 0);
-//     memory[address + 1] = (uint8_t) extract(data, 15, 8);
-//     memory[address + 2] = (uint8_t) extract(data, 23, 16);
-//     memory[address + 3] = (uint8_t) extract(data, 31, 24);
-//     // memory->set(address, (uint8_t) extract(data, 7, 0));
-//     // memory->set(address + 1, (uint8_t) extract(data, 15, 8));
-//     // memory->set(address + 2, (uint8_t) extract(data, 23, 16));
-//     // memory->set(address + 3, (uint8_t) extract(data, 31, 24));
-// }
-
-// uint8_t memory_get(uint64_t address) {
-//     // if ( memory.find(address) == memory.end() ) {
-//         // cout << "Error! Memory address ";
-//         // printf("%lx", address);
-//         // cout << " not found" << endl;
-//     // }
-//     return memory[address];
-//     // return memory->get(address);
-// }
-
-// inline uint64_t memory_get_64(uint64_t address) {
-//     // return memory->getBlock(address, 8);
-//     // uint64_t mem0 = memory[address], mem1 = memory[address + 1], mem2 = memory[address + 2], mem3 = memory[address + 3], mem4 = memory[address + 4], mem5 = memory[address + 5], mem6 = memory[address + 6], mem7 = memory[address + 7];
-//     // uint64_t mem0 = memory->get(address), mem1 = memory->get(address + 1), mem2 = memory->get(address + 2), mem3 = memory->get(address + 3), mem4 = memory->get(address + 4), mem5 = memory->get(address + 5), mem6 = memory->get(address + 6), mem7 = memory->get(address + 7);
-//     // return ((mem7 << 56) | (mem6 << 48) | (mem5 << 40) | (mem4 << 32) | (mem3 << 24) | (mem2 << 16) | (mem1 << 8) | mem0);
-//     return *((uint64_t *) (memory + address));
-// }
-
-// uint32_t memory_get_32(uint64_t address) {
-//     uint8_t mem0 = memory[address], mem1 = memory[address + 1], mem2 = memory[address + 2], mem3 = memory[address + 3];
-//     // uint64_t mem0 = memory->get(address), mem1 = memory->get(address + 1), mem2 = memory->get(address + 2), mem3 = memory->get(address + 3);
-//     return ((mem3 << 24) | (mem2 << 16) | (mem1 << 8) | mem0);
-// }
-
-// uint64_t extract(uint64_t full, int left, int right) {
-//     return (full << (63 - left)) >> (63 - left + right);
-// }
-//
-// uint32_t extract32(uint32_t full, int left, int right) {
-//     return (full << (31 - left)) >> (31 - left + right);
-// }
-//
-// uint64_t extract_single(uint64_t full, int pos) {
-//     return extract(full, pos, pos);
-// }
-//
-// uint32_t extract_single32(uint32_t full, int pos) {
-//     return extract32(full, pos, pos);
-// }
 
 void add_with_carry64(uint64_t operand1, uint64_t operand2, uint8_t carry, uint64_t* result, uint8_t* nzcv) {
     unsigned long long int unsigned_sum = operand1 + operand2 + carry;
@@ -277,16 +164,6 @@ uint32_t shift_reg32(uint32_t regVal, uint32_t type, uint32_t amt) {
     return result;
 }
 
-// uint64_t highest_set_bit7(string bitstring) {
-//     bitset<7> bs(bitstring);
-//     for ( int i = 6; i >= 0; i-- ) {
-//         if ( bs[i] == 1 ) {
-//             return i;
-//         }
-//     }
-//     return 0;
-// }
-
 uint64_t highest_set_bit7(uint8_t bs) {
     // bitset<7> bs(bitstring);
     for ( int i = 6; i >= 0; i-- ) {
@@ -330,14 +207,3 @@ void decode_bit_masks(uint64_t N, uint64_t imms, uint64_t immr, bool immediate, 
     }
     *tmask = replicate(telem, 64 / esize, esize);
 }
-
-// uint64_t set_reg_32(uint64_t origRegVal, uint32_t val) {
-//     // uint64_t newRegVal = (origRegVal >> 32) << 32;
-//     // newRegVal |= val;
-//     uint64_t newRegVal = val;
-//     return newRegVal;
-// }
-
-// bool is_instruction(uint64_t actual, uint64_t desired) {
-//     return ( (actual & desired) == desired ) && ( (actual | desired) == actual );
-// }

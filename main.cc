@@ -365,6 +365,42 @@ int main(int argc, const char * argv[]) {
             memory_set_32(address, data);
             address = address + offset;
             reg[n] = address;
+        } else if ( is_instruction(instr_int, 0xb7000000) ) {
+            // TBNZ 64
+            uint64_t t = extract(instr_int, 4, 0);
+            uint64_t bitpos = (1 << 4) | extract(instr_int, 23, 19);
+            uint64_t imm14 = extract(instr_int, 18, 5);
+            uint64_t offset = sign_extend_32(imm14 << 2, 16);
+            uint64_t regVal = 0;
+            if ( t != 31 ) {
+                regVal = reg[t];
+            }
+            bool isZero = true;
+            if ( extract_single(regVal, bitpos) != 0 ) {
+                isZero = false;
+            }
+            if ( !isZero ) {
+                pcChange = true;
+                pcLocal = pcLocal + offset;
+            }
+        } else if ( is_instruction(instr_int, 0xb6000000) ) {
+            // TBZ 64
+            uint64_t t = extract(instr_int, 4, 0);
+            uint64_t bitpos = (1 << 4) | extract(instr_int, 23, 19);
+            uint64_t imm14 = extract(instr_int, 18, 5);
+            uint64_t offset = sign_extend_32(imm14 << 2, 16);
+            uint64_t regVal = 0;
+            if ( t != 31 ) {
+                regVal = reg[t];
+            }
+            bool isZero = false;
+            if ( extract_single(regVal, bitpos) == 0 ) {
+                isZero = true;
+            }
+            if ( isZero ) {
+                pcChange = true;
+                pcLocal = pcLocal + offset;
+            }
         } else if ( is_instruction(instr_int, 0xb5000000) ) {
             // CBNZ 64
             // cout << "CBNZ 64" << endl;
@@ -499,6 +535,26 @@ int main(int argc, const char * argv[]) {
             reg[30] = pcLocal + 4;
             pcLocal += imm;
             pcChange = true;
+        } else if ( is_instruction(instr_int, 0x93000000) ) {
+            // SBFM 64
+            // cout << "SBFM 64" << endl;
+            uint64_t N = extract_single(instr_int, 22);
+            uint64_t d = extract(instr_int, 4, 0);
+            uint64_t n = extract(instr_int, 9, 5);
+            uint64_t immr = extract(instr_int, 21, 16);
+            uint64_t imms = extract(instr_int, 15, 10);
+            uint64_t wmask = 0;
+            uint64_t tmask = 0;
+            decode_bit_masks(N, imms, immr, false, &wmask, &tmask);
+            uint64_t src = 0;
+            if ( n != 31 ) {
+                src = reg[n];
+            }
+            uint64_t bot = rotate_right(src, immr) & wmask;
+            uint64_t top = replicate(extract_single(src, imms), 1, 64);
+            if ( d != 31 ) {
+                reg[d] = (top & ~tmask) | (bot & tmask);
+            }
         } else if ( is_instruction(instr_int, 0x92800000) ) {
             // MOVN 64
             // cout << "MOVN 64" << endl;
@@ -746,6 +802,42 @@ int main(int argc, const char * argv[]) {
                 reg[t] = data;
             }
             reg[n] = address;
+        } else if ( is_instruction(instr_int, 0x37000000) ) {
+            // TBNZ 32
+            uint64_t t = extract(instr_int, 4, 0);
+            uint64_t bitpos = extract(instr_int, 23, 19);
+            uint64_t imm14 = extract(instr_int, 18, 5);
+            uint64_t offset = sign_extend_32(imm14 << 2, 16);
+            uint64_t regVal = 0;
+            if ( t != 31 ) {
+                regVal = reg[t];
+            }
+            bool isZero = true;
+            if ( extract_single32(regVal, bitpos) != 0 ) {
+                isZero = false;
+            }
+            if ( !isZero ) {
+                pcChange = true;
+                pcLocal = pcLocal + offset;
+            }
+        } else if ( is_instruction(instr_int, 0x36000000) ) {
+            // TBZ 32
+            uint64_t t = extract(instr_int, 4, 0);
+            uint64_t bitpos = extract(instr_int, 23, 19);
+            uint64_t imm14 = extract(instr_int, 18, 5);
+            uint64_t offset = sign_extend_32(imm14 << 2, 16);
+            uint64_t regVal = 0;
+            if ( t != 31 ) {
+                regVal = reg[t];
+            }
+            bool isZero = false;
+            if ( extract_single32(regVal, bitpos) == 0 ) {
+                isZero = true;
+            }
+            if ( isZero ) {
+                pcChange = true;
+                pcLocal = pcLocal + offset;
+            }
         } else if ( is_instruction(instr_int, 0x35000000) ) {
             // CBNZ 32
             // cout << "CBNZ 32" << endl;
