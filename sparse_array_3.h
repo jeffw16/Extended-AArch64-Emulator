@@ -67,7 +67,15 @@ public:
             arrs[address >> 44]->set_64(extract(address, 43, 0), data);
         }
     }
-    // uint8_t &operator[](uint64_t data);
+
+    inline void set_128(uint64_t address, unsigned __int128 data) {
+        if ( arrs[address >> 44] != NULL ) {
+            arrs[address >> 44]->set_128(extract(address, 43, 0), data);
+        } else {
+            arrs[address >> 44] = new A2;
+            arrs[address >> 44]->set_128(extract(address, 43, 0), data);
+        }
+    }
 };
 
 #endif // SPARSE_ARRAY_3_H

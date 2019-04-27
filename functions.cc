@@ -55,18 +55,23 @@ uint32_t rotate_right32(uint32_t orig, unsigned int scale) {
     return logical_shift_right32(orig, m) | logical_shift_left32(orig, N - m);
 }
 
-bool termin(uint64_t address, unsigned long instruction, uint64_t* reg) {
+bool termin(uint64_t address, unsigned long instruction, uint64_t* reg, unsigned __int128* simd_reg, bool debug) {
+    if ( debug ) {
+        printf("unknown instruction %lx at %lx\n", instruction, address);
+        for ( int i = 0; i < 32; i++ ) {
+            uint64_t val = reg[i];
+            if ( i == 31 ) {
+                printf("XSP : %016lX\n", val);
+            } else {
+                printf("X%02d : %016lX\n", i, val);
+            }
+        }
 
-    printf("unknown instruction %lx at %lx\n", instruction, address);
-    for ( int i = 0; i < 32; i++ ) {
-        unsigned long val = reg[i];
-        if ( i == 31 ) {
-            printf("XSP : %016lX\n", val);
-        } else {
-            printf("X%02d : %016lX\n", i, val);
+        for ( int i = 0; i < 32; i++ ) {
+            unsigned __int128 val = simd_reg[i];
+            printf("Q%02d : %032llX\n", i, (unsigned long long) val);
         }
     }
-
     exit(0);
     return true;
 }

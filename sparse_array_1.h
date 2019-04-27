@@ -53,7 +53,10 @@ public:
         // *((uint64_t*) (arr + (address % CHUNKSIZE))) = data;
         *((uint64_t*) (arr + extract(address, 21, 0))) = data;
     }
-    // uint8_t &operator[](uint64_t data);
+
+    inline void set_128(uint64_t address, unsigned __int128 data) {
+        *((unsigned __int128*) (arr + extract(address, 21, 0))) = data;
+    }
 };
 
 #endif // SPARSE_ARRAY_1_H

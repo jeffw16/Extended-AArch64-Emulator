@@ -46,7 +46,7 @@ uint64_t rotate_right(uint64_t orig, unsigned int scale);
 
 uint32_t rotate_right32(uint32_t orig, unsigned int scale);
 
-bool termin(uint64_t address, unsigned long instruction, uint64_t* reg);
+bool termin(uint64_t address, unsigned long instruction, uint64_t* reg, unsigned __int128* simd_reg, bool debug);
 
 int finalTermin();
 
@@ -65,6 +65,10 @@ inline void memory_set_32(uint64_t address, uint32_t data) {
 
 inline void memory_set_64(uint64_t address, uint64_t data) {
     memory->set_64(address, data);
+}
+
+inline void memory_set_128(uint64_t address, unsigned __int128 data) {
+    memory->set_128(address, data);
 }
 
 inline uint8_t memory_get(uint64_t address) {

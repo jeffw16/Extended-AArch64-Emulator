@@ -18,11 +18,13 @@ using namespace std;
 A3 *memory = new A3();
 
 int main(int argc, const char * argv[]) {
-    // initialize iterator
+    bool debug = true;
     uint64_t reg[NUMREG];
+    unsigned __int128 simd_reg[NUMREG];
     // initializing registers
     for ( int i = 0; i < 32; i++ ) {
         reg[i] = 0;
+        simd_reg[i] = 0;
     }
     const char* fileName = argv[1];
     uint64_t entry = loadElf(fileName); // entry = init value for PC (program counter)
@@ -107,7 +109,9 @@ int main(int argc, const char * argv[]) {
         // > 32 10111000000000000000110000000000
         // > 64 11111000000000000000110000000000
         // STRB immediate - unsigned offset (32)    00111001000000000000000000000000
-        printf("instruction %x at address %lx\n", instr_int, pcLocal);
+        if ( debug ) {
+            printf("instruction %x at address %lx\n", instr_int, pcLocal);
+        }
         // emergency break debug
         // if ( pcLocal == 0x419780 ) {
             // exit(0);
@@ -437,6 +441,25 @@ int main(int argc, const char * argv[]) {
                 pcChange = true;
                 pcLocal = pcLocal + offset;
             }
+        } else if ( is_instruction(instr_int, 0xb3000000) ) {
+            // ADDS immediate 64
+            // cout << "ADDS immediate 64" << endl;
+            uint64_t d = extract(instr_int, 4, 0);
+            uint64_t n = extract(instr_int, 9, 5);
+            uint64_t imm = extract(instr_int, 21, 10);
+            uint64_t shift = extract_single32(instr_int, 22);
+            if ( shift == 1 ) {
+                imm = imm << 12;
+            }
+            uint64_t result = 0;
+            uint64_t operand1 = reg[n];
+            uint64_t operand2 = imm;
+            uint8_t nzcv_temp = 0;
+            add_with_carry64(operand1, operand2, 0, &result, &nzcv_temp);
+            nzcvLocal = nzcv_temp;
+            if ( d != 31 ) {
+                reg[d] = result;
+            }
         } else if ( is_instruction(instr_int, 0x1b000000) ) {
             // MADD 32
             // cout << "MADD 32" << endl;
@@ -447,6 +470,35 @@ int main(int argc, const char * argv[]) {
             uint64_t aval = a != 31 ? reg[a] : 0, nval = n != 31 ? reg[n] : 0, mval = m != 31 ? reg[m] : 0;
             if ( d != 31 ) {
                 reg[d] = aval + (nval * mval);
+            }
+        } else if ( is_instruction(instr_int, 0xab000000) ) {
+            // ADDS shifted register 64
+            // cout << "ADD shifted register 64" << endl;
+            uint64_t d = extract(instr_int, 4, 0);
+            uint64_t n = extract(instr_int, 9, 5);
+            uint64_t m = extract(instr_int, 20, 16);
+            uint64_t imm = extract(instr_int, 15, 10);
+            // shift = 0 => LSL
+            // shift = 1 => LSR
+            // shift = 2 => ASR
+            // shift = 3 => ROR
+            uint64_t shift_type = extract(instr_int, 23, 22);
+            uint64_t shift_amt = imm;
+            uint64_t operand1 = 0;
+            if ( n != 31 ) {
+                operand1 = reg[n];
+            }
+            uint64_t operand2 = 0;
+            if ( m != 31 ) {
+                operand2 = reg[m];
+            }
+            operand2 = shift_reg64(operand2, shift_type, shift_amt);
+            uint64_t result = 0;
+            uint8_t nzcv_temp = 0; // useless
+            add_with_carry64(operand1, operand2, 0, &result, &nzcv_temp);
+            nzcvLocal = nzcv_temp;
+            if ( d != 31 ) {
+                reg[d] = result;
             }
         } else if ( is_instruction(instr_int, 0xaa000000) ) {
             // ORR shifted register 64
@@ -487,6 +539,22 @@ int main(int argc, const char * argv[]) {
             memory_set_64(address, data);
             memory_set_64(address + 8, data2);
             reg[n] = address;
+        } else if ( is_instruction(instr_int, 0xa9400000) ) {
+            // LDP signed offset 64-bit
+            uint64_t n = extract(instr_int, 9, 5);
+            uint64_t t = extract(instr_int, 4, 0);
+            uint64_t t2 = extract(instr_int, 14, 10);
+            uint64_t offset = sign_extend_64(extract(instr_int, 21, 15), 7) << 3;
+            uint64_t address = reg[n];
+            address = address + offset;
+            uint64_t data = memory_get_64(address);
+            uint64_t data2 = memory_get_64(address + 8);
+            if ( t != 31 ) {
+                reg[t] = data;
+            }
+            if ( t2 != 31 ) {
+                reg[t2] = data2;
+            }
         } else if ( is_instruction(instr_int, 0xa9000000) ) {
             // STP signed offset 64-bit
             uint64_t n = extract(instr_int, 9, 5);
@@ -747,6 +815,16 @@ int main(int argc, const char * argv[]) {
             if ( d != 31 ) {
                 reg[d] = result;
             }
+        } else if ( is_instruction(instr_int, 0x3d800000) ) {
+            // STR immediate unsigned offset SIMD 128
+            uint64_t t = extract(instr_int, 4, 0);
+            uint64_t n = extract(instr_int, 9, 5);
+            uint64_t imm = extract(instr_int, 21, 10);
+            uint64_t offset = imm << 4;
+            uint64_t address = reg[n];
+            address = address + offset;
+            unsigned __int128 data = simd_reg[t];
+            memory_set_128(address, data);
         } else if ( is_instruction(instr_int, 0x39400000) ) {
             // LDRB immediate unsigned offset 32
             // cout << "LDRB immediate unsigned offset 32" << endl;
@@ -874,6 +952,25 @@ int main(int argc, const char * argv[]) {
                 pcChange = true;
                 pcLocal = pcLocal + offset;
             }
+        } else if ( is_instruction(instr_int, 0x33000000) ) {
+            // ADDS immediate 32
+            // cout << "ADDS immediate 32" << endl;
+            uint32_t d = extract32(instr_int, 4, 0);
+            uint32_t n = extract32(instr_int, 9, 5);
+            uint32_t imm = extract32(instr_int, 21, 10);
+            uint32_t shift = extract_single32(instr_int, 22);
+            if ( shift == 1 ) {
+                imm = imm << 12;
+            }
+            uint32_t result = 0;
+            uint32_t operand1 = reg[n];
+            uint32_t operand2 = imm;
+            uint8_t nzcv_temp = 0;
+            add_with_carry32(operand1, operand2, 0, &result, &nzcv_temp);
+            nzcvLocal = nzcv_temp;
+            if ( d != 31 ) {
+                reg[d] = result;
+            }
         } else if ( is_instruction(instr_int, 0x2a000000) ) {
             // ORR shifted register 32
             // cout << "ORR shifted register 32" << endl;
@@ -925,6 +1022,35 @@ int main(int argc, const char * argv[]) {
             uint64_t data2 = reg[t2];
             memory_set_32(address, data);
             memory_set_32(address + 4, data2);
+        } else if ( is_instruction(instr_int, 0x2b000000) ) {
+            // ADDS shifted register 32
+            // cout << "ADD shifted register 32" << endl;
+            uint32_t d = extract32(instr_int, 4, 0);
+            uint32_t n = extract32(instr_int, 9, 5);
+            uint32_t m = extract32(instr_int, 20, 16);
+            uint32_t imm = extract32(instr_int, 15, 10);
+            // shift = 0 => LSL
+            // shift = 1 => LSR
+            // shift = 2 => ASR
+            // shift = 3 => ROR
+            uint32_t shift_type = extract32(instr_int, 23, 22);
+            uint32_t shift_amt = imm;
+            uint32_t operand1 = 0;
+            if ( n != 31 ) {
+                operand1 = reg[n];
+            }
+            uint32_t operand2 = 0;
+            if ( m != 31 ) {
+                operand2 = reg[m];
+            }
+            operand2 = shift_reg32(operand2, shift_type, shift_amt);
+            uint32_t result = 0;
+            uint8_t nzcv_temp = 0;
+            add_with_carry32(operand1, operand2, 0, &result, &nzcv_temp);
+            nzcvLocal = nzcv_temp;
+            if ( d != 31 ) {
+                reg[d] = result;
+            }
         } else if ( is_instruction(instr_int, 0x28c00000) ) {
             // LDP post-index 32-bit
             uint64_t n = extract(instr_int, 9, 5);
@@ -1019,7 +1145,7 @@ int main(int argc, const char * argv[]) {
                 reg[d] = result;
             }
         } else {
-            allTerminated = termin(pcLocal, instr_int, reg);
+            allTerminated = termin(pcLocal, instr_int, reg, simd_reg, debug);
         }
         /*
         printf("instruction %x at address %lx\n", instr_int, pcLocal);
