@@ -101,8 +101,24 @@ main.o: main.cc /usr/include/stdc-predef.h /usr/include/c++/5/cstdio \
  /usr/include/c++/5/bits/locale_facets.tcc \
  /usr/include/c++/5/bits/basic_ios.tcc \
  /usr/include/c++/5/bits/ostream.tcc /usr/include/c++/5/istream \
- /usr/include/c++/5/bits/istream.tcc /usr/include/c++/5/vector \
- /usr/include/c++/5/bits/stl_construct.h \
+ /usr/include/c++/5/bits/istream.tcc /usr/include/linux/kernel.h \
+ /usr/include/linux/sysinfo.h /usr/include/linux/types.h \
+ /usr/include/x86_64-linux-gnu/asm/types.h \
+ /usr/include/asm-generic/types.h /usr/include/asm-generic/int-ll64.h \
+ /usr/include/x86_64-linux-gnu/asm/bitsperlong.h \
+ /usr/include/asm-generic/bitsperlong.h /usr/include/linux/posix_types.h \
+ /usr/include/linux/stddef.h \
+ /usr/include/x86_64-linux-gnu/asm/posix_types.h \
+ /usr/include/x86_64-linux-gnu/asm/posix_types_64.h \
+ /usr/include/asm-generic/posix_types.h /usr/include/unistd.h \
+ /usr/include/x86_64-linux-gnu/bits/posix_opt.h \
+ /usr/include/x86_64-linux-gnu/bits/environments.h \
+ /usr/include/x86_64-linux-gnu/bits/confname.h /usr/include/getopt.h \
+ /usr/include/x86_64-linux-gnu/bits/unistd.h /usr/include/linux/aio_abi.h \
+ /usr/include/x86_64-linux-gnu/asm/byteorder.h \
+ /usr/include/linux/byteorder/little_endian.h /usr/include/linux/swab.h \
+ /usr/include/x86_64-linux-gnu/asm/swab.h mem.h elf.h functions.h \
+ /usr/include/c++/5/vector /usr/include/c++/5/bits/stl_construct.h \
  /usr/include/c++/5/bits/stl_uninitialized.h \
  /usr/include/c++/5/bits/stl_vector.h \
  /usr/include/c++/5/bits/stl_bvector.h /usr/include/c++/5/bits/vector.tcc \
@@ -111,5 +127,5 @@ main.o: main.cc /usr/include/stdc-predef.h /usr/include/c++/5/cstdio \
  /usr/include/c++/5/bits/stl_map.h /usr/include/c++/5/tuple \
  /usr/include/c++/5/utility /usr/include/c++/5/bits/stl_relops.h \
  /usr/include/c++/5/array /usr/include/c++/5/bits/uses_allocator.h \
- /usr/include/c++/5/bits/stl_multimap.h mem.h elf.h functions.h \
- core_functions.h sparse_array_3.h sparse_array_2.h sparse_array_1.h
+ /usr/include/c++/5/bits/stl_multimap.h core_functions.h sparse_array_3.h \
+ sparse_array_2.h sparse_array_1.h

@@ -1,8 +1,10 @@
 #include <cstdio>
 #include <cstdlib>
 #include <iostream>
-#include <vector>
-#include <map>
+
+#include <linux/kernel.h>
+#include <unistd.h>
+#include <linux/aio_abi.h>
 
 #include "mem.h"
 #include "elf.h"
@@ -28,6 +30,9 @@ int main(int argc, const char * argv[]) {
     uint8_t nzcvLocal = 0;
     // have ALL the cores been terminated yet?
     bool allTerminated = false;
+    // syscall variables
+    // unsigned nr_events = 1;
+    // aio_context_t* ctx_idp = (aio_context_t*) calloc(1, sizeof(aio_context_t));
     while ( !allTerminated ) {
         // whether to change the PC
         bool pcChange = false;
@@ -103,6 +108,10 @@ int main(int argc, const char * argv[]) {
         // > 64 11111000000000000000110000000000
         // STRB immediate - unsigned offset (32)    00111001000000000000000000000000
         printf("instruction %x at address %lx\n", instr_int, pcLocal);
+        // emergency break debug
+        // if ( pcLocal == 0x419780 ) {
+            // exit(0);
+        // }
         if ( is_instruction(instr_int, 0xf9400000) ) {
             // LDR immediate unsigned offset 64
             // cout << "LDR immediate unsigned offset 64" << endl;
@@ -218,6 +227,15 @@ int main(int argc, const char * argv[]) {
             pcLocal = n == 31 ? 0 : reg[n];
         } else if ( is_instruction(instr_int, 0xd503201f) ) {
             // NOP
+        } else if ( is_instruction(instr_int, 0xd4000001) ) {
+            // SVC
+            // Supervisor Call
+            uint64_t imm16 = extract(instr_int, 20, 5);
+            // if ( imm16 == 0x0 ) {
+                // I/O setup
+                // io_setup(nr_events, ctx_idp);
+            // }
+            syscall(imm16);
         } else if ( is_instruction(instr_int, 0xd3000000) ) {
             // UBFM 64
             // cout << "UBFM 64" << endl;
@@ -433,6 +451,18 @@ int main(int argc, const char * argv[]) {
             memory_set_64(address, data);
             memory_set_64(address + 8, data2);
             reg[n] = address;
+        } else if ( is_instruction(instr_int, 0xa9000000) ) {
+            // STP signed offset 64-bit
+            uint64_t n = extract(instr_int, 9, 5);
+            uint64_t t = extract(instr_int, 4, 0);
+            uint64_t t2 = extract(instr_int, 14, 10);
+            uint64_t offset = sign_extend_64(extract(instr_int, 21, 15), 7) << 3;
+            uint64_t address = reg[n];
+            address = address + offset;
+            uint64_t data = reg[t];
+            uint64_t data2 = reg[t2];
+            memory_set_64(address, data);
+            memory_set_64(address + 8, data2);
         } else if ( is_instruction(instr_int, 0xa8c00000) ) {
             // LDP post-index 64-bit
             uint64_t n = extract(instr_int, 9, 5);
@@ -791,6 +821,18 @@ int main(int argc, const char * argv[]) {
             memory_set_32(address, data);
             memory_set_32(address + 4, data2);
             reg[n] = address;
+        } else if ( is_instruction(instr_int, 0x29000000) ) {
+            // STP signed offset 32-bit
+            uint64_t n = extract(instr_int, 9, 5);
+            uint64_t t = extract(instr_int, 4, 0);
+            uint64_t t2 = extract(instr_int, 14, 10);
+            uint64_t offset = sign_extend_32(extract32(instr_int, 21, 15), 7) << 2;
+            uint64_t address = reg[n];
+            address = address + offset;
+            uint64_t data = reg[t];
+            uint64_t data2 = reg[t2];
+            memory_set_32(address, data);
+            memory_set_32(address + 4, data2);
         } else if ( is_instruction(instr_int, 0x28c00000) ) {
             // LDP post-index 32-bit
             uint64_t n = extract(instr_int, 9, 5);
