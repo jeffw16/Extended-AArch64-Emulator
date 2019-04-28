@@ -534,8 +534,8 @@ int main(int argc, const char * argv[]) {
             uint64_t offset = sign_extend_64(extract(instr_int, 21, 15), 7) << 3;
             uint64_t address = reg[n];
             address = address + offset;
-            uint64_t data = reg[t];
-            uint64_t data2 = reg[t2];
+            uint64_t data = t == 31 ? 0 : reg[t];
+            uint64_t data2 = t2 == 31 ? 0 : reg[t2];
             memory_set_64(address, data);
             memory_set_64(address + 8, data2);
             reg[n] = address;
@@ -563,8 +563,8 @@ int main(int argc, const char * argv[]) {
             uint64_t offset = sign_extend_64(extract(instr_int, 21, 15), 7) << 3;
             uint64_t address = reg[n];
             address = address + offset;
-            uint64_t data = reg[t];
-            uint64_t data2 = reg[t2];
+            uint64_t data = t == 31 ? 0 : reg[t];
+            uint64_t data2 = t2 == 31 ? 0 : reg[t2];
             memory_set_64(address, data);
             memory_set_64(address + 8, data2);
         } else if ( is_instruction(instr_int, 0xa8c00000) ) {
@@ -1005,8 +1005,8 @@ int main(int argc, const char * argv[]) {
             uint64_t offset = sign_extend_32(extract32(instr_int, 21, 15), 7) << 2;
             uint64_t address = reg[n];
             address = address + offset;
-            uint64_t data = reg[t];
-            uint64_t data2 = reg[t2];
+            uint64_t data = t == 31 ? 0 : reg[t];
+            uint64_t data2 = t2 == 31 ? 0 : reg[t2];
             memory_set_32(address, data);
             memory_set_32(address + 4, data2);
             reg[n] = address;
@@ -1018,8 +1018,8 @@ int main(int argc, const char * argv[]) {
             uint64_t offset = sign_extend_32(extract32(instr_int, 21, 15), 7) << 2;
             uint64_t address = reg[n];
             address = address + offset;
-            uint64_t data = reg[t];
-            uint64_t data2 = reg[t2];
+            uint64_t data = t == 31 ? 0 : reg[t];
+            uint64_t data2 = t2 == 31 ? 0 : reg[t2];
             memory_set_32(address, data);
             memory_set_32(address + 4, data2);
         } else if ( is_instruction(instr_int, 0x2b000000) ) {
