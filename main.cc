@@ -18,7 +18,7 @@ using namespace std;
 A3 *memory = new A3();
 
 int main(int argc, const char * argv[]) {
-    bool debug = true;
+    bool debug = false;
     uint64_t reg[NUMREG];
     unsigned __int128 simd_reg[NUMREG];
     // initializing registers
@@ -314,6 +314,27 @@ int main(int argc, const char * argv[]) {
             address = address + offset;
             uint64_t data = reg[t];
             memory_set_32(address, data);
+        } else if ( is_instruction(instr_int, 0xb8800400) ) {
+            // LDRSW immediate post-index
+            // cout << "LDRSW immediate post-index" << endl;
+
+            uint64_t Rt = extract(instr_int, 4, 0);
+            uint64_t Rn = extract(instr_int, 9, 5);
+            uint64_t imm9 = extract(instr_int, 20, 12);
+            
+            uint64_t offset = sign_extend_64(imm9, 9);
+
+            uint64_t address = reg[n];
+            uint32_t data = memory_get_32(address);
+            
+            if (Rt != 31) {
+                reg[Rt] = sign_extend_64(data, 32);
+            }
+
+            address = address + offset;
+
+            reg[Rn] = address;
+
         } else if ( is_instruction(instr_int, 0xb8400c00) ) {
             // LDR immediate pre-index 32
             // cout << "LDR immediate pre-index 32" << endl;
@@ -815,6 +836,19 @@ int main(int argc, const char * argv[]) {
             if ( d != 31 ) {
                 reg[d] = result;
             }
+        } else if ( is_instruction(instr_int, 0x4b0003e0) ) {
+            // NEG shifted register
+            // cout << "NEG shifted register" << endl;
+
+            uint64_t Rd = extract(instr_int, 4, 0);
+            uint64_t imm6 = extract(instr_int, 15, 10);
+            uint64_t Rm = extract(instr_int, 20, 16);
+
+            uint64_t shift = extract(instr_int, 23, 22);
+
+            uint64_t sf = extract(instr_int, 31, 31);
+
+
         } else if ( is_instruction(instr_int, 0x3d800000) ) {
             // STR immediate unsigned offset SIMD 128
             uint64_t t = extract(instr_int, 4, 0);
