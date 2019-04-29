@@ -253,7 +253,7 @@ int main(int argc, const char * argv[]) {
             if ( d != 31 ) {
                 reg[d] = result;
             }
-        } else if( is_instruction(instr_int, 0xea200000) ){
+         } else if ( is_instruction(instr_int, 0xea200000) ){
             //bics 64 bit
             //BICS 64
             uint64_t d = extract(instr_int, 4, 0);
@@ -278,8 +278,21 @@ int main(int argc, const char * argv[]) {
             if(d != 31){
                 reg[d] = result;
             }
-
-        }else if ( is_instruction(instr_int, 0xd65f0000) ) {
+        } else if ( is_instruction(instr_int, 0xdac00800) ) {
+            // REV
+            uint64_t n = extract(instr_int, 9, 5);
+            uint64_t d = extract(instr_int, 4, 0);
+            if ( n == 31 && d != 31 ) {
+                reg[d] = 0;
+            } else if ( n != 31 && d != 31 ) {
+                uint64_t orig = n == 31 ? 0 : reg[n];
+                uint64_t rev = 0;
+                for ( int i = 0; i < 64; i++ ) {
+                    rev |= ((orig >> i) & 1) << (63 - i);
+                }
+                reg[d] = rev;
+            }
+        } else if ( is_instruction(instr_int, 0xd65f0000) ) {
             // RET
             // cout << "RET" << endl;
             uint64_t n = extract(instr_int, 9, 5);
@@ -792,9 +805,46 @@ int main(int argc, const char * argv[]) {
             if(d != 31){
                 reg[d] = result;
             }
-
-        }
-        else if ( is_instruction(instr_int, 0x71000000) ) {
+        } else if ( is_instruction(instr_int, 0x7a400800) ) {
+            // CCMP immediate 32
+            uint64_t n = extract(instr_int, 9, 5);
+            uint64_t imm5 = extract(instr_int, 20, 16);
+            uint8_t flags = extract(instr_int, 3, 0);
+            uint8_t cond = extract32(instr_int, 15, 13);
+            uint8_t condLast = extract_single32(instr_int, 12);
+            bool condHolds = false;
+            if ( cond == 0 ) {
+                condHolds = (extract_single32(nzcvLocal, 2) == 1); // Z == 1 <-> EQ or NE
+            } else if ( cond == 1 ) {
+                condHolds = (extract_single32(nzcvLocal, 1) == 1); // C == 1 <-> CS or CC
+            } else if ( cond == 2 ) {
+                condHolds = (extract_single32(nzcvLocal, 3) == 1); // N == 1 <-> MI or PL
+            } else if ( cond == 3 ) {
+                condHolds = (extract_single32(nzcvLocal, 0) == 1); // V == 1 <-> VS or VC
+            } else if ( cond == 4 ) {
+                condHolds = (extract_single32(nzcvLocal, 1) == 1 && extract_single32(nzcvLocal, 2) == 0); // C == 1 && Z == 0 <-> HI or LS
+            } else if ( cond == 5 ) {
+                condHolds = (extract_single32(nzcvLocal, 3) == extract_single32(nzcvLocal, 0)); // N == V <-> GE or LT
+            } else if ( cond == 6 ) {
+                condHolds = (extract_single32(nzcvLocal, 3) == extract_single32(nzcvLocal, 0) && extract_single32(nzcvLocal, 2) == 0); // N == V && Z == 0 <-> GT or LE
+            } else {
+                condHolds = true; // AL
+            }
+            if ( extract_single32(condLast, 0) == 1 && cond != 7 ) {
+                condHolds = !condHolds;
+            }
+            uint64_t operand1 = reg[n];
+            uint64_t operand2 = 0;
+            uint64_t result_throwaway = 0;
+            uint8_t flags_result = 0;
+            if ( condHolds ) {
+                operand2 = ~imm5;
+                add_with_carry32(operand1, operand2, 1, &result_throwaway, &flags_result);
+                nzcvLocal = flags_result;
+            } else {
+                nzcvLocal = flags;
+            }
+        } else if ( is_instruction(instr_int, 0x71000000) ) {
             // SUBS immediate 32
             // cout << "SUBS immediate 32" << endl;
             uint32_t d = extract32(instr_int, 4, 0);
