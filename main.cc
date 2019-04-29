@@ -324,7 +324,7 @@ int main(int argc, const char * argv[]) {
             
             uint64_t offset = sign_extend_64(imm9, 9);
 
-            uint64_t address = reg[n];
+            uint64_t address = reg[Rn];
             uint32_t data = memory_get_32(address);
             
             if (Rt != 31) {
@@ -840,13 +840,13 @@ int main(int argc, const char * argv[]) {
             // NEG shifted register
             // cout << "NEG shifted register" << endl;
 
-            uint64_t Rd = extract(instr_int, 4, 0);
-            uint64_t imm6 = extract(instr_int, 15, 10);
-            uint64_t Rm = extract(instr_int, 20, 16);
+            //uint64_t Rd = extract(instr_int, 4, 0);
+            //uint64_t imm6 = extract(instr_int, 15, 10);
+            //uint64_t Rm = extract(instr_int, 20, 16);
 
-            uint64_t shift = extract(instr_int, 23, 22);
+            //uint64_t shift = extract(instr_int, 23, 22);
 
-            uint64_t sf = extract(instr_int, 31, 31);
+            //uint64_t sf = extract(instr_int, 31, 31);
 
 
         } else if ( is_instruction(instr_int, 0x3d800000) ) {
