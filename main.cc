@@ -116,7 +116,46 @@ int main(int argc, const char * argv[]) {
         // if ( pcLocal == 0x419670 ) {
         //     printf("X30: %lX\n", reg[30]);
         // }
-        if ( is_instruction(instr_int, 0xf9400000) ) {
+        if ( is_instruction(instr_int, 0xfa400800) ) {
+            // CCMP immediate 64
+            uint64_t n = extract(instr_int, 9, 5);
+            uint64_t imm5 = extract(instr_int, 20, 16);
+            uint8_t flags = extract(instr_int, 3, 0);
+            uint8_t cond = extract32(instr_int, 15, 13);
+            uint8_t condLast = extract_single32(instr_int, 12);
+            bool condHolds = false;
+            if ( cond == 0 ) {
+                condHolds = (extract_single32(nzcvLocal, 2) == 1); // Z == 1 <-> EQ or NE
+            } else if ( cond == 1 ) {
+                condHolds = (extract_single32(nzcvLocal, 1) == 1); // C == 1 <-> CS or CC
+            } else if ( cond == 2 ) {
+                condHolds = (extract_single32(nzcvLocal, 3) == 1); // N == 1 <-> MI or PL
+            } else if ( cond == 3 ) {
+                condHolds = (extract_single32(nzcvLocal, 0) == 1); // V == 1 <-> VS or VC
+            } else if ( cond == 4 ) {
+                condHolds = (extract_single32(nzcvLocal, 1) == 1 && extract_single32(nzcvLocal, 2) == 0); // C == 1 && Z == 0 <-> HI or LS
+            } else if ( cond == 5 ) {
+                condHolds = (extract_single32(nzcvLocal, 3) == extract_single32(nzcvLocal, 0)); // N == V <-> GE or LT
+            } else if ( cond == 6 ) {
+                condHolds = (extract_single32(nzcvLocal, 3) == extract_single32(nzcvLocal, 0) && extract_single32(nzcvLocal, 2) == 0); // N == V && Z == 0 <-> GT or LE
+            } else {
+                condHolds = true; // AL
+            }
+            if ( extract_single32(condLast, 0) == 1 && cond != 7 ) {
+                condHolds = !condHolds;
+            }
+            uint64_t operand1 = reg[n];
+            uint64_t operand2 = 0;
+            uint64_t result_throwaway = 0;
+            uint8_t flags_result = 0;
+            if ( condHolds ) {
+                operand2 = ~imm5;
+                add_with_carry64(operand1, operand2, 1, &result_throwaway, &flags_result);
+                nzcvLocal = flags_result;
+            } else {
+                nzcvLocal = flags;
+            }
+        } else if ( is_instruction(instr_int, 0xf9400000) ) {
             // LDR immediate unsigned offset 64
             // cout << "LDR immediate unsigned offset 64" << endl;
             uint64_t imm12 = extract(instr_int, 21, 10);
