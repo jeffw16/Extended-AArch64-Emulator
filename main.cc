@@ -253,7 +253,33 @@ int main(int argc, const char * argv[]) {
             if ( d != 31 ) {
                 reg[d] = result;
             }
-        } else if ( is_instruction(instr_int, 0xd65f0000) ) {
+        } else if( is_instruction(instr_int, 0xea200000) ){
+            //bics 64 bit
+            //BICS 64
+            uint64_t d = extract(instr_int, 4, 0);
+            uint64_t n = extract(instr_int, 9, 5);
+            uint64_t m = extract(instr_int, 20, 16);
+            
+            uint64_t shift_amount = extract(instr_int, 10, 15);
+            uint64_t shift_type = extract(instr_int, 23, 22); 
+            
+            //uint64_t datasize = 32;
+
+            uint64_t operand1 = 0;
+            if(n != 31){
+                operand1 = reg[n];
+            }
+
+            uint64_t operand2 = shift_reg64(m, shift_type, shift_amount);
+            operand2 = ~operand2;
+            uint64_t result = operand1 & operand2;
+            nzcvLocal = (extract_single(result, 63) << 3) | ((result == 0) << 2) | 0;
+
+            if(d != 31){
+                reg[d] = result;
+            }
+
+        }else if ( is_instruction(instr_int, 0xd65f0000) ) {
             // RET
             // cout << "RET" << endl;
             uint64_t n = extract(instr_int, 9, 5);
@@ -743,7 +769,32 @@ int main(int argc, const char * argv[]) {
             if ( d != 31 ) {
                 reg[d] = result;
             }
-        } else if ( is_instruction(instr_int, 0x71000000) ) {
+        } else if(is_instruction(instr_int, 0x8a200000) ){
+            //bic 64
+            //BIC 64
+            uint64_t d = extract(instr_int, 4, 0);
+            uint64_t n = extract(instr_int, 9, 5);
+            uint64_t m = extract(instr_int, 20, 16);
+            
+            uint64_t shift_amount = extract(instr_int, 10, 15);
+            uint64_t shift_type = extract(instr_int, 23, 22); 
+            
+//            uint64_t datasize = 64;
+
+            uint64_t operand1 = 0;
+            if(n != 31){
+                operand1 = reg[n];
+            }
+
+            uint64_t operand2 = shift_reg64(m, shift_type, shift_amount);
+            operand2 = ~operand2;
+            uint64_t result = operand1 & operand2;
+            if(d != 31){
+                reg[d] = result;
+            }
+
+        }
+        else if ( is_instruction(instr_int, 0x71000000) ) {
             // SUBS immediate 32
             // cout << "SUBS immediate 32" << endl;
             uint32_t d = extract32(instr_int, 4, 0);
@@ -763,7 +814,33 @@ int main(int argc, const char * argv[]) {
                 // reg[d] = set_reg_32(reg[d], result);
                 reg[d] = result;
             }
-        } else if ( is_instruction(instr_int, 0x58000000) ) {
+        }else if( is_instruction(instr_int, 0x6a200000) ){
+            // bics 32 bit
+            // BICS 32 BIT
+            uint64_t d = extract(instr_int, 4, 0);
+            uint64_t n = extract(instr_int, 9, 5);
+            uint64_t m = extract(instr_int, 20, 16);
+            
+            uint64_t shift_amount = extract(instr_int, 10, 15);
+            uint64_t shift_type = extract(instr_int, 23, 22); 
+            
+            //uint64_t datasize = 32;
+
+            uint32_t operand1 = 0;
+            if(n != 31){
+                operand1 = reg[n];
+            }
+
+            uint32_t operand2 = shift_reg32(m, shift_type, shift_amount);
+            operand2 = ~operand2;
+            uint32_t result = operand1 & operand2;
+            nzcvLocal = (extract_single32(result, 31) << 3) | ((result == 0) << 2) | 0;
+
+            if(d != 31){
+                reg[d] = result;
+            }
+        }
+        else if ( is_instruction(instr_int, 0x58000000) ) {
             // LDR (literal) 64-bit
             uint64_t imm = extract(instr_int, 23, 5);
             uint64_t t = extract(instr_int, 4, 0);
@@ -1183,7 +1260,31 @@ int main(int argc, const char * argv[]) {
             if ( d != 31 ) {
                 reg[d] = result;
             }
-        } else {
+        }  else if( is_instruction(instr_int, 0xa200000) ){
+            //bic 32
+            //BIC 32
+            uint64_t d = extract(instr_int, 4, 0);
+            uint64_t n = extract(instr_int, 9, 5);
+            uint64_t m = extract(instr_int, 20, 16);
+            
+            uint64_t shift_amount = extract(instr_int, 10, 15);
+            uint64_t shift_type = extract(instr_int, 23, 22); 
+            
+            //uint64_t datasize = 32;
+
+            uint32_t operand1 = 0;
+            if(n != 31){
+                operand1 = reg[n];
+            }
+
+            uint32_t operand2 = shift_reg32(m, shift_type, shift_amount);
+            operand2 = ~operand2;
+            uint32_t result = operand1 & operand2;
+            if(d != 31){
+                reg[d] = result;
+            }
+        }
+        else {
             allTerminated = termin(pcLocal, instr_int, reg, simd_reg, debug);
         }
         /*
