@@ -112,9 +112,9 @@ int main(int argc, const char * argv[]) {
         if ( debug ) {
             printf("instruction %x at address %lx\n", instr_int, pcLocal);
         }
-        // emergency break debug
-        // if ( pcLocal == 0x419780 ) {
-            // exit(0);
+        // PC-specific debug
+        // if ( pcLocal == 0x419670 ) {
+        //     printf("X30: %lX\n", reg[30]);
         // }
         if ( is_instruction(instr_int, 0xf9400000) ) {
             // LDR immediate unsigned offset 64
@@ -441,7 +441,7 @@ int main(int argc, const char * argv[]) {
                 pcChange = true;
                 pcLocal = pcLocal + offset;
             }
-        } else if ( is_instruction(instr_int, 0xb3000000) ) {
+        } else if ( is_instruction(instr_int, 0xb1000000) ) {
             // ADDS immediate 64
             // cout << "ADDS immediate 64" << endl;
             uint64_t d = extract(instr_int, 4, 0);
@@ -952,7 +952,7 @@ int main(int argc, const char * argv[]) {
                 pcChange = true;
                 pcLocal = pcLocal + offset;
             }
-        } else if ( is_instruction(instr_int, 0x33000000) ) {
+        } else if ( is_instruction(instr_int, 0x31000000) ) {
             // ADDS immediate 32
             // cout << "ADDS immediate 32" << endl;
             uint32_t d = extract32(instr_int, 4, 0);
