@@ -33,82 +33,10 @@ int main(int argc, const char * argv[]) {
     // have ALL the cores been terminated yet?
     bool allTerminated = false;
     // syscall variables
-    // unsigned nr_events = 1;
-    // aio_context_t* ctx_idp = (aio_context_t*) calloc(1, sizeof(aio_context_t));
     while ( !allTerminated ) {
         // whether to change the PC
         bool pcChange = false;
         uint32_t instr_int = memory_get_32(pcLocal);
-
-        // List of instructions
-        // ** Arithmetic and logic **
-        // ADD immediate
-        // > 32 00010001000000000000000000000000
-        // > 64 10010001000000000000000000000000
-        // ADD shifted register
-        // > 32 00001011000000000000000000000000
-        // > 64 10001011000000000000000000000000
-        // MADD
-        // > 32 00011011000000000000000000000000
-        // > 64 10011011000000000000000000000000
-        // SUB immediate
-        // > 32 01010001000000000000000000000000
-        // > 64 11010001000000000000000000000000
-        // SUBS immediate
-        // > 32 01110001000000000000000000000000
-        // > 64 11110001000000000000000000000000
-        // AND immediate
-        // > 32 00010010000000000000000000000000
-        // > 64 10010010000000000000000000000000
-        // UBFM
-        // > 32 01010011000000000000000000000000
-        // > 64 11010011000000000000000000000000
-
-        // ** Control and branching **
-        // B        00010100000000000000000000000000
-        // B.cond   01010100000000000000000000000000
-        // CBNZ
-        // > 32 00110101000000000000000000000000
-        // > 64 10110101000000000000000000000000
-        // CBZ
-        // > 32 00110100000000000000000000000000
-        // > 64 10110100000000000000000000000000
-        // BL       10010100000000000000000000000000
-        // RET      11010110010111110000000000000000
-
-        // ** Memory-interfacing **
-        // ADRP 10010000000000000000000000000000
-        // LDR immediate - unsigned offset
-        // > 32 10111001010000000000000000000000
-        // > 64 11111001010000000000000000000000
-        // LDR immediate - pre-index
-        // > 32 10111000010000000000110000000000
-        // > 64 11111000010000000000110000000000
-        // LDR immediate - post-index
-        // > 32 10111000010000000000010000000000
-        // > 64 11111000010000000000010000000000
-        // LDRB immediate - unsigned offset (32)   00111001010000000000000000000000
-        // LDRB immediate - pre-index (32)         00111000010000000000110000000000
-        // LDRB immediate - post-index (32)        00111000010000000000010000000000
-        // MOVN
-        // > 32 00010010100000000000000000000000
-        // > 64 10010010100000000000000000000000
-        // MOVZ
-        // > 32 01010010100000000000000000000000
-        // > 64 11010010100000000000000000000000
-        // ORR shifted register
-        // > 32 00101010000000000000000000000000
-        // > 64 10101010000000000000000000000000
-        // STR immediate - unsigned offset
-        // > 32 10111001000000000000000000000000
-        // > 64 11111001000000000000000000000000
-        // STR immediate - post-index
-        // > 32 10111000000000000000010000000000
-        // > 64 11111000000000000000010000000000
-        // STR immediate - pre-index
-        // > 32 10111000000000000000110000000000
-        // > 64 11111000000000000000110000000000
-        // STRB immediate - unsigned offset (32)    00111001000000000000000000000000
         if ( debug ) {
             printf("instruction %x at address %lx\n", instr_int, pcLocal);
         }
@@ -259,10 +187,10 @@ int main(int argc, const char * argv[]) {
             uint64_t d = extract(instr_int, 4, 0);
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t m = extract(instr_int, 20, 16);
-            
+
             uint64_t shift_amount = extract(instr_int, 10, 15);
-            uint64_t shift_type = extract(instr_int, 23, 22); 
-            
+            uint64_t shift_type = extract(instr_int, 23, 22);
+
             //uint64_t datasize = 32;
 
             uint64_t operand1 = 0;
@@ -278,6 +206,20 @@ int main(int argc, const char * argv[]) {
             if(d != 31){
                 reg[d] = result;
             }
+        } else if( is_instruction(instr_int, 0xdac01000) ){
+          //clz 64 bit
+          //CLZ 64 bit
+          uint64_t d = extract(instr_int, 4, 0);
+          uint64_t n = extract(instr_int, 9, 5);
+          uint64_t result = 0;
+          uint64_t operand1 = 0;
+          if(n != 31){
+            operand1 = reg[n];
+          }
+          result = count_leading_zero_bits64(operand1);
+          if(d != 31){
+            reg[d] = result;
+          }
         } else if ( is_instruction(instr_int, 0xdac00800) ) {
             // REV
             uint64_t n = extract(instr_int, 9, 5);
@@ -633,6 +575,23 @@ int main(int argc, const char * argv[]) {
             if ( t2 != 31 ) {
                 reg[t2] = data2;
             }
+        } else if ( is_instruction(instr_int, 0xa9c00000) ) {
+            // LDP pre-index 64
+            uint64_t n = extract(instr_int, 9, 5);
+            uint64_t t = extract(instr_int, 4, 0);
+            uint64_t t2 = extract(instr_int, 14, 10);
+            uint64_t offset = sign_extend_64(extract(instr_int, 21, 15), 7) << 3;
+            uint64_t address = reg[n];
+            address = address + offset;
+            uint64_t data = memory_get_64(address);
+            uint64_t data2 = memory_get_64(address + 8);
+            if ( t != 31 ) {
+                reg[t] = data;
+            }
+            if ( t2 != 31 ) {
+                reg[t2] = data2;
+            }
+            reg[n] = address;
         } else if ( is_instruction(instr_int, 0xa9000000) ) {
             // STP signed offset 64-bit
             uint64_t n = extract(instr_int, 9, 5);
@@ -660,6 +619,19 @@ int main(int argc, const char * argv[]) {
             if ( t2 != 31 ) {
                 reg[t2] = data2;
             }
+            address = address + offset;
+            reg[n] = address;
+        } else if ( is_instruction(instr_int, 0xa8800000) ) {
+            // STP post-index 64-bit
+            uint64_t n = extract(instr_int, 9, 5);
+            uint64_t t = extract(instr_int, 4, 0);
+            uint64_t t2 = extract(instr_int, 14, 10);
+            uint64_t offset = sign_extend_64(extract(instr_int, 21, 15), 7) << 3;
+            uint64_t address = reg[n];
+            uint64_t data = t == 31 ? 0 : reg[t];
+            uint64_t data2 = t2 == 31 ? 0 : reg[t2];
+            memory_set_64(address, data);
+            memory_set_64(address + 8, data2);
             address = address + offset;
             reg[n] = address;
         } else if ( is_instruction(instr_int, 0x9b000000) ) {
@@ -788,10 +760,10 @@ int main(int argc, const char * argv[]) {
             uint64_t d = extract(instr_int, 4, 0);
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t m = extract(instr_int, 20, 16);
-            
+
             uint64_t shift_amount = extract(instr_int, 10, 15);
-            uint64_t shift_type = extract(instr_int, 23, 22); 
-            
+            uint64_t shift_type = extract(instr_int, 23, 22);
+
 //            uint64_t datasize = 64;
 
             uint64_t operand1 = 0;
@@ -835,7 +807,7 @@ int main(int argc, const char * argv[]) {
             }
             uint64_t operand1 = reg[n];
             uint64_t operand2 = 0;
-            uint64_t result_throwaway = 0;
+            uint32_t result_throwaway = 0;
             uint8_t flags_result = 0;
             if ( condHolds ) {
                 operand2 = ~imm5;
@@ -864,16 +836,16 @@ int main(int argc, const char * argv[]) {
                 // reg[d] = set_reg_32(reg[d], result);
                 reg[d] = result;
             }
-        }else if( is_instruction(instr_int, 0x6a200000) ){
+        } else if( is_instruction(instr_int, 0x6a200000) ){
             // bics 32 bit
             // BICS 32 BIT
             uint64_t d = extract(instr_int, 4, 0);
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t m = extract(instr_int, 20, 16);
-            
+
             uint64_t shift_amount = extract(instr_int, 10, 15);
-            uint64_t shift_type = extract(instr_int, 23, 22); 
-            
+            uint64_t shift_type = extract(instr_int, 23, 22);
+
             //uint64_t datasize = 32;
 
             uint32_t operand1 = 0;
@@ -889,6 +861,21 @@ int main(int argc, const char * argv[]) {
             if(d != 31){
                 reg[d] = result;
             }
+        }
+        else if( is_instruction(instr_int, 0x5ac01000) ){
+          //clz 32 bit
+          //CLZ 32 bit
+          uint64_t d = extract(instr_int, 4, 0);
+          uint64_t n = extract(instr_int, 9, 5);
+          uint32_t result = 0;
+          uint32_t operand1 = 0;
+          if(n != 31){
+            operand1 = reg[n];
+          }
+          result = count_leading_zero_bits32(operand1);
+          if(d != 31){
+            reg[d] = result;
+          }
         }
         else if ( is_instruction(instr_int, 0x58000000) ) {
             // LDR (literal) 64-bit
@@ -1016,6 +1003,29 @@ int main(int argc, const char * argv[]) {
             address = address + offset;
             uint8_t data = reg[t];
             memory_set(address, data);
+        } else if( is_instruction(instr_int, 0x38600800) ){
+            //ldrb register
+            //LDRB register
+            //LDRB REGISTER
+            // how the
+            // hell do we do this
+            // thats what they said
+            uint64_t t = extract(instr_int, 4, 0);
+            uint64_t n = extract(instr_int, 9, 5);
+            uint64_t m = extract(instr_int, 20, 16);
+            uint64_t option = extract(instr_int, 15, 13);
+            //uint64_t extend_type = decode_reg_extend(option);
+            uint64_t extend_type = option;
+            uint64_t offset = extend_reg64(m, extend_type, 0, reg);
+            uint64_t address;
+            uint8_t data;
+            address = reg[n];
+            address = address + offset;
+
+            data = memory_get(address);
+            if (t != 31) {
+              reg[t] = data;
+            }
         } else if ( is_instruction(instr_int, 0x38400c00) ) {
             // LDRB immediate pre-index 32
             // cout << "LDRB immediate pre-index 32" << endl;
@@ -1234,6 +1244,19 @@ int main(int argc, const char * argv[]) {
             }
             address = address + offset;
             reg[n] = address;
+        } else if ( is_instruction(instr_int, 0x28800000) ) {
+            // STP post-index 32
+            uint64_t n = extract(instr_int, 9, 5);
+            uint64_t t = extract(instr_int, 4, 0);
+            uint64_t t2 = extract(instr_int, 14, 10);
+            uint64_t offset = sign_extend_32(extract32(instr_int, 21, 15), 7) << 2;
+            uint64_t address = reg[n];
+            uint64_t data = t == 31 ? 0 : reg[t];
+            uint64_t data2 = t2 == 31 ? 0 : reg[t2];
+            memory_set_32(address, data);
+            memory_set_32(address + 4, data2);
+            address = address + offset;
+            reg[n] = address;
         } else if ( is_instruction(instr_int, 0x14000000) ) {
             // B
             // cout << "B" << endl;
@@ -1316,10 +1339,10 @@ int main(int argc, const char * argv[]) {
             uint64_t d = extract(instr_int, 4, 0);
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t m = extract(instr_int, 20, 16);
-            
+
             uint64_t shift_amount = extract(instr_int, 10, 15);
-            uint64_t shift_type = extract(instr_int, 23, 22); 
-            
+            uint64_t shift_type = extract(instr_int, 23, 22);
+
             //uint64_t datasize = 32;
 
             uint32_t operand1 = 0;

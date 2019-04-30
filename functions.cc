@@ -31,6 +31,32 @@ uint32_t sign_extend_32(uint32_t in, uint32_t most) {
     }
 }
 
+uint32_t count_leading_zero_bits32(uint32_t num){
+
+  uint8_t end = 31;
+
+  while(end >= 0){
+    if (extract_single32(num, end) == 1){
+      break;
+    }
+    --end;
+  }
+  return 32 - end - 1;
+}
+
+uint64_t count_leading_zero_bits64(uint64_t num){
+  uint8_t end = 63;
+
+  while(end >= 0){
+    if (extract_single(num, end) == 1){
+      break;
+    }
+    --end;
+  }
+  return 64 - end - 1;
+}
+
+
 uint64_t arithmetic_shift_right(uint64_t orig, unsigned int scale) {
     int64_t signedOrig = (int64_t) orig;
     signedOrig = signedOrig >> scale;
@@ -211,4 +237,27 @@ void decode_bit_masks(uint64_t N, uint64_t imms, uint64_t immr, bool immediate, 
         *wmask = replicate(rotate_right32(welem, R), 64 / esize, esize);
     }
     *tmask = replicate(telem, 64 / esize, esize);
+}
+
+uint64_t extend(uint64_t cutval, uint64_t n, bool unsign, uint64_t most) {
+  if(unsign){
+    return cutval;
+  }
+  else{
+    return sign_extend_64(cutval, most);
+  }
+}
+uint64_t extend_reg64(uint64_t m, uint64_t extend_type, uint64_t shift, uint64_t* reg) {
+  //assert shift >= 0 && shift <= 4;
+  uint64_t val = reg[m];
+  bool unsign = false;
+  uint64_t len = 0;
+  unsign = (extend_type <= 4);
+  len = 1 << (extract(extend_type, 1, 0) + 3);
+
+  if (64 - shift < len){
+    len = 64 - shift;
+  }
+
+  return extend(extract(val, len - 1, 0) << shift, 64, unsign, len - 1);
 }

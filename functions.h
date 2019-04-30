@@ -20,7 +20,11 @@ uint64_t sign_extend_64(uint64_t in, uint64_t most);
 
 uint32_t sign_extend_32(uint32_t in, uint32_t most);
 
-uint64_t zero_extend_x(string unextended_bitstr, uint64_t x);
+uint32_t count_leading_zero_bits32(uint32_t num);
+
+uint64_t count_leading_zero_bits64(uint64_t num);
+
+// uint64_t zero_extend_x(string unextended_bitstr, uint64_t x);
 
 inline uint64_t logical_shift_left(uint64_t orig, unsigned int scale) {
     return orig << scale;
@@ -104,5 +108,9 @@ inline uint64_t set_reg_32(uint64_t origRegVal, uint32_t val) {
 inline bool is_instruction(uint64_t actual, uint64_t desired) {
     return ( (actual & desired) == desired ) && ( (actual | desired) == actual );
 }
+
+uint64_t extend(uint64_t cutval, uint64_t n, bool unsign, uint64_t most);
+
+uint64_t extend_reg64(uint64_t m, uint64_t extend_type, uint64_t shift, uint64_t* reg);
 
 #endif // FUNCTIONS_H
