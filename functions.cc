@@ -33,25 +33,26 @@ uint32_t sign_extend_32(uint32_t in, uint32_t most) {
 
 uint32_t count_leading_zero_bits32(uint32_t num){
 
-  uint8_t end = 31;
+  int8_t end = 31;
 
   while(end >= 0){
-    if (extract_single32(num, end) == 1){
+    if (extract_single32(num, end--) == 1){
       break;
     }
-    --end;
+    //--end;
   }
   return 32 - end - 1;
 }
 
 uint64_t count_leading_zero_bits64(uint64_t num){
-  uint8_t end = 63;
+
+  int8_t end = 63;
 
   while(end >= 0){
-    if (extract_single(num, end) == 1){
+    if (extract_single(num, end--) == 1){
       break;
     }
-    --end;
+    //--end;
   }
   return 64 - end - 1;
 }
