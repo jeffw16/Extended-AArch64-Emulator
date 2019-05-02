@@ -71,6 +71,14 @@ inline void memory_set_64(uint64_t address, uint64_t data) {
     memory->set_64(address, data);
 }
 
+inline void memory_set_32_atomic(uint64_t address, uint32_t data) {
+    memory->set_32_atomic(address, data);
+}
+
+inline void memory_set_64_atomic(uint64_t address, uint64_t data) {
+    memory->set_64_atomic(address, data);
+}
+
 inline void memory_set_128(uint64_t address, unsigned __int128 data) {
     memory->set_128(address, data);
 }
@@ -112,5 +120,7 @@ inline bool is_instruction(uint64_t actual, uint64_t desired) {
 uint64_t extend(uint64_t cutval, uint64_t n, bool unsign, uint64_t most);
 
 uint64_t extend_reg64(uint64_t m, uint64_t extend_type, uint64_t shift, uint64_t* reg);
+
+bool conditionHolds(uint8_t fullcond, uint8_t compareto);
 
 #endif // FUNCTIONS_H

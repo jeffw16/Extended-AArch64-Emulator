@@ -45,38 +45,40 @@ int main(int argc, const char * argv[]) {
             printf("instruction %x at address %lx\n", instr_int, pcLocal);
         }
         // PC-specific debug
-        if ( pcLocal == 0x408c28 ) {
-            printf("%d\n", nzcvLocal);
-        }
+        // if ( pcLocal == 0x408c28 ) {
+        //     printf("%d\n", nzcvLocal);
+        //     printf(" X0: %lx\nX20: %lx\n", reg[0], reg[20]);
+        // }
         if ( is_instruction(instr_int, 0xfa400800) ) {
             // CCMP immediate 64
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t imm5 = extract(instr_int, 20, 16);
             uint8_t flags = extract(instr_int, 3, 0);
-            uint8_t cond = extract32(instr_int, 15, 13);
-            uint8_t condLast = extract_single32(instr_int, 12);
+            // uint8_t cond = extract32(instr_int, 15, 13);
+            // uint8_t condLast = extract_single32(instr_int, 12);
             uint8_t fullcond = extract32(instr_int, 15, 12);
-            bool condHolds = false;
-            if ( cond == 0 ) {
-                condHolds = (extract_single32(fullcond, 2) == 1); // Z == 1 <-> EQ or NE
-            } else if ( cond == 1 ) {
-                condHolds = (extract_single32(fullcond, 1) == 1); // C == 1 <-> CS or CC
-            } else if ( cond == 2 ) {
-                condHolds = (extract_single32(fullcond, 3) == 1); // N == 1 <-> MI or PL
-            } else if ( cond == 3 ) {
-                condHolds = (extract_single32(fullcond, 0) == 1); // V == 1 <-> VS or VC
-            } else if ( cond == 4 ) {
-                condHolds = (extract_single32(fullcond, 1) == 1 && extract_single32(fullcond, 2) == 0); // C == 1 && Z == 0 <-> HI or LS
-            } else if ( cond == 5 ) {
-                condHolds = (extract_single32(fullcond, 3) == extract_single32(fullcond, 0)); // N == V <-> GE or LT
-            } else if ( cond == 6 ) {
-                condHolds = (extract_single32(fullcond, 3) == extract_single32(fullcond, 0) && extract_single32(fullcond, 2) == 0); // N == V && Z == 0 <-> GT or LE
-            } else {
-                condHolds = true; // AL
-            }
-            if ( extract_single32(condLast, 0) == 1 && cond != 7 ) {
-                condHolds = !condHolds;
-            }
+            // bool condHolds = false;
+            // if ( cond == 0 ) {
+            //     condHolds = (extract_single32(fullcond, 2) == 1); // Z == 1 <-> EQ or NE
+            // } else if ( cond == 1 ) {
+            //     condHolds = (extract_single32(fullcond, 1) == 1); // C == 1 <-> CS or CC
+            // } else if ( cond == 2 ) {
+            //     condHolds = (extract_single32(fullcond, 3) == 1); // N == 1 <-> MI or PL
+            // } else if ( cond == 3 ) {
+            //     condHolds = (extract_single32(fullcond, 0) == 1); // V == 1 <-> VS or VC
+            // } else if ( cond == 4 ) {
+            //     condHolds = (extract_single32(fullcond, 1) == 1 && extract_single32(fullcond, 2) == 0); // C == 1 && Z == 0 <-> HI or LS
+            // } else if ( cond == 5 ) {
+            //     condHolds = (extract_single32(fullcond, 3) == extract_single32(fullcond, 0)); // N == V <-> GE or LT
+            // } else if ( cond == 6 ) {
+            //     condHolds = (extract_single32(fullcond, 3) == extract_single32(fullcond, 0) && extract_single32(fullcond, 2) == 0); // N == V && Z == 0 <-> GT or LE
+            // } else {
+            //     condHolds = true; // AL
+            // }
+            // if ( extract_single32(condLast, 0) == 1 && cond != 7 ) {
+            //     condHolds = !condHolds;
+            // }
+            bool condHolds = conditionHolds(fullcond, fullcond);
             uint64_t operand1 = reg[n];
             uint64_t operand2 = 0;
             uint64_t result_throwaway = 0;
@@ -168,7 +170,7 @@ int main(int argc, const char * argv[]) {
             address = address + offset;
             reg[n] = address;
         } else if( is_instruction(instr_int, 0xF2000000) ){
-            //ANDS immediate
+            //ANDS immediate 64
             uint64_t d = extract(instr_int, 4, 0);
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t imms = extract(instr_int, 15, 10);
@@ -177,11 +179,14 @@ int main(int argc, const char * argv[]) {
             uint64_t nah = 0;
             uint64_t imm = 0;
             decode_bit_masks(N, imms, immr, true, &imm, &nah);
-            uint64_t operand1 = reg[n];
+
+            uint64_t operand1 = n == 31 ? 0 : reg[n];
             uint64_t result = operand1 & imm;
             uint32_t lastBit = result >> 63;
             nzcvLocal = (lastBit << 3) | ((result==0) <<2);
-            reg[d] = result;
+            if(d != 31){
+              reg[d] = result;
+            }
         } else if ( is_instruction(instr_int, 0xf1000000) ) {
             // SUBS immediate 64
             // cout << "SUBS immediate 64" << endl;
@@ -201,21 +206,19 @@ int main(int argc, const char * argv[]) {
             if ( d != 31 ) {
                 reg[d] = result;
             }
-         } else if ( is_instruction(instr_int, 0xeb0003e0) ) {
-           //NEGS (alias of SUBS shifted register) - 64-bit
-
+         } else if ( is_instruction(instr_int, 0xeb000000) ) {
+           // SUBS shifted register 64
            uint64_t Rd = extract(instr_int, 4, 0);
            uint64_t Rn = extract(instr_int, 9, 5);
            uint64_t imm6 = extract(instr_int, 15, 10);
            uint64_t Rm = extract(instr_int, 20, 16);
            uint64_t shift = extract(instr_int, 23, 22);
-           //uint64_t sf = extract(instr_int, 31, 31);
 
-           uint64_t result;
-           uint64_t operand1 = reg[Rn];
-           uint64_t operand2 = shift_reg64(Rm, shift, imm6);
+           uint64_t result = 0;
+           uint64_t operand1 = Rn == 31 ? 0 : reg[Rn];
+           uint64_t operand2 = shift_reg64(reg[Rm], shift, imm6);
 
-           uint8_t nzcv;
+           uint8_t nzcv = 0;
 
            operand2 = ~(operand2);
 
@@ -271,14 +274,40 @@ int main(int argc, const char * argv[]) {
             if ( n == 31 && d != 31 ) {
                 reg[d] = 0;
             } else if ( n != 31 && d != 31 ) {
-                uint64_t orig = n == 31 ? 0 : reg[n];
+                uint64_t orig = reg[n];
                 uint64_t rev = 0;
                 for ( int i = 0; i < 64; i++ ) {
                     rev |= ((orig >> i) & 1) << (63 - i);
                 }
                 reg[d] = rev;
             }
-        } else if ( is_instruction(instr_int, 0xd65f0000) ) {
+        } else if( is_instruction(instr_int, 0xda800000) ){
+          //csinv 64 bit
+          //CSINV 64 bit
+          uint64_t d = extract(instr_int, 4, 0);
+          uint64_t n = extract(instr_int, 9, 5);
+          uint64_t m = extract(instr_int, 20, 16);
+          uint8_t cond = extract(instr_int, 15, 12);
+          uint64_t result = 0;
+          uint64_t operand1 = 0;
+          if(n != 31){
+            operand1 = reg[n];
+          }
+          uint64_t operand2 = 0;
+          if(m != 31){
+            operand2 = reg[m];
+          }
+          if(conditionHolds(cond, nzcvLocal)){
+            result = operand1;
+          }
+          else{
+            result = ~operand2;
+          }
+          if(d != 31){
+            reg[d] = result;
+          }
+        }
+        else if ( is_instruction(instr_int, 0xd65f0000) ) {
             // RET
             // cout << "RET" << endl;
             uint64_t n = extract(instr_int, 9, 5);
@@ -366,6 +395,26 @@ int main(int argc, const char * argv[]) {
             if ( d != 31 ) {
                 reg[d] = result;
             }
+        } else if ( is_instruction(instr_int, 0xc85ffc00) ) {
+            // LDAXR 64
+            uint64_t t = extract(instr_int, 4, 0);
+            uint64_t n = extract(instr_int, 9, 5);
+            uint64_t address = reg[n];
+            uint64_t data = memory_get_64(address);
+            if ( t != 31 ) {
+                reg[t] = data;
+            }
+        } else if ( is_instruction(instr_int, 0xc8007c00) ) {
+            // STXR 64
+            uint64_t t = extract(instr_int, 4, 0);
+            uint64_t n = extract(instr_int, 9, 5);
+            uint64_t s = extract(instr_int, 20, 16);
+            uint64_t address = reg[n];
+            uint64_t data = reg[t];
+            memory_set_64(address, data);
+            if ( s != 31 ) {
+                reg[s] = 0;
+            }
         } else if ( is_instruction(instr_int, 0xb9400000) ) {
             // LDR immediate unsigned offset 32
             // cout << "LDR immediate unsigned offset 32" << endl;
@@ -391,6 +440,27 @@ int main(int argc, const char * argv[]) {
             address = address + offset;
             uint64_t data = reg[t];
             memory_set_32(address, data);
+        } else if ( is_instruction(instr_int, 0xb8800400) ) {
+            // LDRSW immediate post-index
+            // cout << "LDRSW immediate post-index" << endl;
+
+            uint64_t Rt = extract(instr_int, 4, 0);
+            uint64_t Rn = extract(instr_int, 9, 5);
+            uint64_t imm9 = extract(instr_int, 20, 12);
+
+            uint64_t offset = sign_extend_64(imm9, 9);
+
+            uint64_t address = reg[Rn];
+            uint32_t data = memory_get_32(address);
+
+            if (Rt != 31) {
+                reg[Rt] = sign_extend_64(data, 32);
+            }
+
+            address = address + offset;
+
+            reg[Rn] = address;
+
         } else if ( is_instruction(instr_int, 0xb8400c00) ) {
             // LDR immediate pre-index 32
             // cout << "LDR immediate pre-index 32" << endl;
@@ -702,6 +772,41 @@ int main(int argc, const char * argv[]) {
             if ( d != 31 ) {
                 reg[d] = aval + (nval * mval);
             }
+        } else if ( is_instruction(instr_int, 0x9a800400) ) {
+            // CSINC 64
+            uint64_t d = extract(instr_int, 4, 0);
+            uint64_t n = extract(instr_int, 9, 5);
+            uint64_t m = extract(instr_int, 20, 16);
+            uint8_t fullcond = extract32(instr_int, 15, 12);
+            uint64_t result = 0;
+            uint64_t operand1 = n == 31 ? 0 : reg[n];
+            uint64_t operand2 = m == 31 ? 0 : reg[m];
+            bool condHolds = conditionHolds(fullcond, nzcvLocal);
+            if ( condHolds ) {
+                result = operand1;
+            } else {
+                result = operand2 + 1;
+            }
+            if ( d != 31 ) {
+                reg[d] = result;
+            }
+        } else if( is_instruction(instr_int, 0x9a800000) ){
+            //CSEL 64
+            uint64_t d = extract(instr_int, 4, 0);
+            uint64_t n = extract(instr_int, 9, 5);
+            uint8_t cond = extract(instr_int, 15, 12);
+            uint64_t m = extract(instr_int, 20, 16);
+            uint64_t result = 0;
+            uint64_t operand1 = n == 31 ? 0 : reg[n];
+            uint64_t operand2 = m == 31 ? 0 : reg[m];
+
+            if(conditionHolds(cond, nzcvLocal))
+              result = operand1;
+            else
+              result = operand2;
+            if ( d != 31 ) {
+                reg[d] = result;
+            }
         } else if ( is_instruction(instr_int, 0x94000000) ) {
             // BL
             // cout << "BL" << endl;
@@ -834,34 +939,73 @@ int main(int argc, const char * argv[]) {
             if(d != 31){
                 reg[d] = result;
             }
+        } else if(is_instruction(instr_int, 0x8a000000) ){
+          //and shifted register 64
+          //AND SHIFTED REGISTER 64
+          uint64_t d = extract(instr_int, 4, 0);
+          uint64_t n = extract(instr_int, 9, 5);
+          uint64_t m = extract(instr_int, 20, 16);
+          uint64_t shift_type = extract(instr_int, 23, 22);
+          uint64_t shift_amount = extract(instr_int, 15, 10);
+
+          uint64_t operand1 = 0;
+          if(n != 31){
+            operand1 = reg[n];
+          }
+          uint64_t operand2 = shift_reg64(m, shift_type, shift_amount);
+          uint64_t result = operand1 & operand2;
+          if(d != 31){
+            reg[d] = result;
+          }
+        }
+        else if ( is_instruction(instr_int, 0x885ffc00) ) {
+            // LDAXR 32
+            uint64_t t = extract(instr_int, 4, 0);
+            uint64_t n = extract(instr_int, 9, 5);
+            uint64_t address = reg[n];
+            uint32_t data = memory_get_32(address);
+            if ( t != 31 ) {
+                reg[t] = data;
+            }
+        } else if ( is_instruction(instr_int, 0x88007c00) ) {
+            // STXR 32
+            uint64_t t = extract(instr_int, 4, 0);
+            uint64_t n = extract(instr_int, 9, 5);
+            uint64_t s = extract(instr_int, 20, 16);
+            uint64_t address = reg[n];
+            uint32_t data = reg[t];
+            memory_set_32(address, data);
+            if ( s != 31 ) {
+                reg[s] = 0;
+            }
         } else if ( is_instruction(instr_int, 0x7a400800) ) {
             // CCMP immediate 32
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t imm5 = extract(instr_int, 20, 16);
             uint8_t flags = extract(instr_int, 3, 0);
-            uint8_t cond = extract32(instr_int, 15, 13);
-            uint8_t condLast = extract_single32(instr_int, 12);
-            bool condHolds = false;
-            if ( cond == 0 ) {
-                condHolds = (extract_single32(nzcvLocal, 2) == 1); // Z == 1 <-> EQ or NE
-            } else if ( cond == 1 ) {
-                condHolds = (extract_single32(nzcvLocal, 1) == 1); // C == 1 <-> CS or CC
-            } else if ( cond == 2 ) {
-                condHolds = (extract_single32(nzcvLocal, 3) == 1); // N == 1 <-> MI or PL
-            } else if ( cond == 3 ) {
-                condHolds = (extract_single32(nzcvLocal, 0) == 1); // V == 1 <-> VS or VC
-            } else if ( cond == 4 ) {
-                condHolds = (extract_single32(nzcvLocal, 1) == 1 && extract_single32(nzcvLocal, 2) == 0); // C == 1 && Z == 0 <-> HI or LS
-            } else if ( cond == 5 ) {
-                condHolds = (extract_single32(nzcvLocal, 3) == extract_single32(nzcvLocal, 0)); // N == V <-> GE or LT
-            } else if ( cond == 6 ) {
-                condHolds = (extract_single32(nzcvLocal, 3) == extract_single32(nzcvLocal, 0) && extract_single32(nzcvLocal, 2) == 0); // N == V && Z == 0 <-> GT or LE
-            } else {
-                condHolds = true; // AL
-            }
-            if ( extract_single32(condLast, 0) == 1 && cond != 7 ) {
-                condHolds = !condHolds;
-            }
+            uint8_t fullcond = extract32(instr_int, 15, 12);
+            // bool condHolds = false;
+            // if ( cond == 0 ) {
+            //     condHolds = (extract_single32(nzcvLocal, 2) == 1); // Z == 1 <-> EQ or NE
+            // } else if ( cond == 1 ) {
+            //     condHolds = (extract_single32(nzcvLocal, 1) == 1); // C == 1 <-> CS or CC
+            // } else if ( cond == 2 ) {
+            //     condHolds = (extract_single32(nzcvLocal, 3) == 1); // N == 1 <-> MI or PL
+            // } else if ( cond == 3 ) {
+            //     condHolds = (extract_single32(nzcvLocal, 0) == 1); // V == 1 <-> VS or VC
+            // } else if ( cond == 4 ) {
+            //     condHolds = (extract_single32(nzcvLocal, 1) == 1 && extract_single32(nzcvLocal, 2) == 0); // C == 1 && Z == 0 <-> HI or LS
+            // } else if ( cond == 5 ) {
+            //     condHolds = (extract_single32(nzcvLocal, 3) == extract_single32(nzcvLocal, 0)); // N == V <-> GE or LT
+            // } else if ( cond == 6 ) {
+            //     condHolds = (extract_single32(nzcvLocal, 3) == extract_single32(nzcvLocal, 0) && extract_single32(nzcvLocal, 2) == 0); // N == V && Z == 0 <-> GT or LE
+            // } else {
+            //     condHolds = true; // AL
+            // }
+            // if ( extract_single32(condLast, 0) == 1 && cond != 7 ) {
+            //     condHolds = !condHolds;
+            // }
+            bool condHolds = conditionHolds(fullcond, nzcvLocal);
             uint64_t operand1 = reg[n];
             uint64_t operand2 = 0;
             uint32_t result_throwaway = 0;
@@ -883,11 +1027,13 @@ int main(int argc, const char * argv[]) {
             uint64_t nah = 0;
             uint64_t imm = 0;
             decode_bit_masks(N, imms, immr, true, &imm, &nah);
-            uint32_t operand1 = reg[n];
+            uint32_t operand1 = n == 31 ? 0 : reg[n];
             uint32_t result = operand1 & imm;
             uint32_t lastBit = result >> 31;
             nzcvLocal = (lastBit << 3) | ((result==0) <<2);
-            reg[d] = result;
+            if(d != 31){
+              reg[d] = result;
+            }
         } else if ( is_instruction(instr_int, 0x71000000) ) {
             // SUBS immediate 32
             // cout << "SUBS immediate 32" << endl;
@@ -971,6 +1117,32 @@ int main(int argc, const char * argv[]) {
             reg[d] = result;
           }
         }
+        else if( is_instruction(instr_int, 0x5a800000) ){
+          //csinv 32 bit
+          //CSINV 32 bit
+          uint64_t d = extract(instr_int, 4, 0);
+          uint64_t n = extract(instr_int, 9, 5);
+          uint64_t m = extract(instr_int, 20, 16);
+          uint8_t cond = extract(instr_int, 15, 12);
+          uint32_t result = 0;
+          uint32_t operand1 = 0;
+          if(n != 31){
+            operand1 = reg[n];
+          }
+          uint32_t operand2 = 0;
+          if(m != 31){
+            operand2 = reg[m];
+          }
+          if(conditionHolds(cond, nzcvLocal)){
+            result = operand1;
+          }
+          else{
+            result = ~operand2;
+          }
+          if(d != 31){
+            reg[d] = result;
+          }
+        }
         else if ( is_instruction(instr_int, 0x58000000) ) {
             // LDR (literal) 64-bit
             uint64_t imm = extract(instr_int, 23, 5);
@@ -986,29 +1158,31 @@ int main(int argc, const char * argv[]) {
             // cout << "B.cond" << endl;
             uint64_t imm = extract(instr_int, 23, 5);
             uint64_t offset = sign_extend_64(imm << 2, 21);
-            uint8_t cond = extract32(instr_int, 3, 1);
-            uint8_t condLast = extract_single32(instr_int, 0);
-            bool condHolds = false;
-            if ( cond == 0 ) {
-                condHolds = (extract_single32(nzcvLocal, 2) == 1); // Z == 1 <-> EQ or NE
-            } else if ( cond == 1 ) {
-                condHolds = (extract_single32(nzcvLocal, 1) == 1); // C == 1 <-> CS or CC
-            } else if ( cond == 2 ) {
-                condHolds = (extract_single32(nzcvLocal, 3) == 1); // N == 1 <-> MI or PL
-            } else if ( cond == 3 ) {
-                condHolds = (extract_single32(nzcvLocal, 0) == 1); // V == 1 <-> VS or VC
-            } else if ( cond == 4 ) {
-                condHolds = (extract_single32(nzcvLocal, 1) == 1 && extract_single32(nzcvLocal, 2) == 0); // C == 1 && Z == 0 <-> HI or LS
-            } else if ( cond == 5 ) {
-                condHolds = (extract_single32(nzcvLocal, 3) == extract_single32(nzcvLocal, 0)); // N == V <-> GE or LT
-            } else if ( cond == 6 ) {
-                condHolds = (extract_single32(nzcvLocal, 3) == extract_single32(nzcvLocal, 0) && extract_single32(nzcvLocal, 2) == 0); // N == V && Z == 0 <-> GT or LE
-            } else {
-                condHolds = true; // AL
-            }
-            if ( extract_single32(condLast, 0) == 1 && cond != 7 ) {
-                condHolds = !condHolds;
-            }
+            // uint8_t cond = extract32(instr_int, 3, 1);
+            // uint8_t condLast = extract_single32(instr_int, 0);
+            uint8_t fullcond = extract32(instr_int, 3, 0);
+            // bool condHolds = false;
+            // if ( cond == 0 ) {
+            //     condHolds = (extract_single32(nzcvLocal, 2) == 1); // Z == 1 <-> EQ or NE
+            // } else if ( cond == 1 ) {
+            //     condHolds = (extract_single32(nzcvLocal, 1) == 1); // C == 1 <-> CS or CC
+            // } else if ( cond == 2 ) {
+            //     condHolds = (extract_single32(nzcvLocal, 3) == 1); // N == 1 <-> MI or PL
+            // } else if ( cond == 3 ) {
+            //     condHolds = (extract_single32(nzcvLocal, 0) == 1); // V == 1 <-> VS or VC
+            // } else if ( cond == 4 ) {
+            //     condHolds = (extract_single32(nzcvLocal, 1) == 1 && extract_single32(nzcvLocal, 2) == 0); // C == 1 && Z == 0 <-> HI or LS
+            // } else if ( cond == 5 ) {
+            //     condHolds = (extract_single32(nzcvLocal, 3) == extract_single32(nzcvLocal, 0)); // N == V <-> GE or LT
+            // } else if ( cond == 6 ) {
+            //     condHolds = (extract_single32(nzcvLocal, 3) == extract_single32(nzcvLocal, 0) && extract_single32(nzcvLocal, 2) == 0); // N == V && Z == 0 <-> GT or LE
+            // } else {
+            //     condHolds = true; // AL
+            // }
+            // if ( extract_single32(condLast, 0) == 1 && cond != 7 ) {
+            //     condHolds = !condHolds;
+            // }
+            bool condHolds = conditionHolds(fullcond, nzcvLocal);
             if ( condHolds ) {
                 pcChange = true;
                 pcLocal = pcLocal + offset;
@@ -1351,6 +1525,41 @@ int main(int argc, const char * argv[]) {
             memory_set_32(address + 4, data2);
             address = address + offset;
             reg[n] = address;
+        } else if ( is_instruction(instr_int, 0x1a800400) ) {
+            // CSINC 32
+            uint32_t d = extract(instr_int, 4, 0);
+            uint32_t n = extract(instr_int, 9, 5);
+            uint32_t m = extract(instr_int, 20, 16);
+            uint8_t fullcond = extract32(instr_int, 15, 12);
+            uint32_t result = 0;
+            uint32_t operand1 = n == 31 ? 0 : reg[n];
+            uint32_t operand2 = m == 31 ? 0 : reg[m];
+            bool condHolds = conditionHolds(fullcond, nzcvLocal);
+            if ( condHolds ) {
+                result = operand1;
+            } else {
+                result = operand2 + 1;
+            }
+            if ( d != 31 ) {
+                reg[d] = result;
+            }
+        } else if( is_instruction(instr_int, 0x1a800000) ){
+            //CSEL 32
+            uint64_t d = extract(instr_int, 4, 0);
+            uint64_t n = extract(instr_int, 9, 5);
+            uint64_t cond = extract(instr_int, 15, 12);
+            uint64_t m = extract(instr_int, 20, 16);
+            uint32_t result = 0;
+            uint32_t operand1 = n == 31 ? 0 : reg[n];
+            uint32_t operand2 = m == 31 ? 0 : reg[m];
+
+            if(conditionHolds((uint8_t)cond, nzcvLocal))
+              result = operand1;
+            else
+              result = operand2;
+            if ( d != 31 ) {
+                reg[d] = result;
+            }
         } else if ( is_instruction(instr_int, 0x14000000) ) {
             // B
             // cout << "B" << endl;
@@ -1449,6 +1658,24 @@ int main(int argc, const char * argv[]) {
             uint32_t result = operand1 & operand2;
             if(d != 31){
                 reg[d] = result;
+            }
+        } else if( is_instruction(instr_int, 0xa000000) ){
+            //and shifted register 32
+            //AND SHIFTED REGISTER 32
+            uint64_t d = extract(instr_int, 4, 0);
+            uint64_t n = extract(instr_int, 9, 5);
+            uint64_t m = extract(instr_int, 20, 16);
+            uint64_t shift_type = extract(instr_int, 23, 22);
+            uint64_t shift_amount = extract(instr_int, 15, 10);
+
+            uint32_t operand1 = 0;
+            if(n != 31){
+              operand1 = reg[n];
+            }
+            uint32_t operand2 = shift_reg32(m, shift_type, shift_amount);
+            uint32_t result = operand1 & operand2;
+            if(d != 31){
+              reg[d] = result;
             }
         } else {
             allTerminated = termin(pcLocal, instr_int, reg, simd_reg, debug);

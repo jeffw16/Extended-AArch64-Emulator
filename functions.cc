@@ -262,3 +262,30 @@ uint64_t extend_reg64(uint64_t m, uint64_t extend_type, uint64_t shift, uint64_t
 
   return extend(extract(val, len - 1, 0) << shift, 64, unsign, len - 1);
 }
+
+bool conditionHolds(uint8_t fullcond, uint8_t compareto) {
+    bool condHolds = false;
+    uint8_t cond = extract32(fullcond, 3, 1);
+    uint8_t condLast = extract_single32(fullcond, 0);
+    if ( cond == 0 ) {
+        condHolds = (extract_single32(compareto, 2) == 1); // Z == 1 <-> EQ or NE
+    } else if ( cond == 1 ) {
+        condHolds = (extract_single32(compareto, 1) == 1); // C == 1 <-> CS or CC
+    } else if ( cond == 2 ) {
+        condHolds = (extract_single32(compareto, 3) == 1); // N == 1 <-> MI or PL
+    } else if ( cond == 3 ) {
+        condHolds = (extract_single32(compareto, 0) == 1); // V == 1 <-> VS or VC
+    } else if ( cond == 4 ) {
+        condHolds = (extract_single32(compareto, 1) == 1 && extract_single32(compareto, 2) == 0); // C == 1 && Z == 0 <-> HI or LS
+    } else if ( cond == 5 ) {
+        condHolds = (extract_single32(compareto, 3) == extract_single32(compareto, 0)); // N == V <-> GE or LT
+    } else if ( cond == 6 ) {
+        condHolds = (extract_single32(compareto, 3) == extract_single32(compareto, 0) && extract_single32(compareto, 2) == 0); // N == V && Z == 0 <-> GT or LE
+    } else {
+        condHolds = true; // AL
+    }
+    if ( extract_single32(condLast, 0) == 1 && cond != 7 ) {
+        condHolds = !condHolds;
+    }
+    return condHolds;
+}

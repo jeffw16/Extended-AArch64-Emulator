@@ -40,6 +40,21 @@ public:
         return 0;
     }
 
+    inline atomic32data* get_32_atomic(uint64_t address) {
+        if ( arrs[address >> 44] != NULL ) {
+            return arrs[address >> 44]->get_32_atomic(extract(address, 43, 0));
+        } else {
+            return new atomic32data;
+        }
+    }
+
+    inline atomic64data* get_64_atomic(uint64_t address) {
+        if ( arrs[address >> 44] != NULL ) {
+            return arrs[address >> 44]->get_64_atomic(extract(address, 43, 0));
+        }
+        return new atomic64data;
+    }
+
     inline void set(uint64_t address, uint8_t data) {
         // cout << address << " " << address >> 44 << " " << extract(address, 43, 0) << endl;
         if ( arrs[address >> 44] != NULL ) {
@@ -65,6 +80,24 @@ public:
         } else {
             arrs[address >> 44] = new A2;
             arrs[address >> 44]->set_64(extract(address, 43, 0), data);
+        }
+    }
+
+    inline void set_32_atomic(uint64_t address, uint32_t data) {
+        if ( arrs[address >> 44] != NULL ) {
+            arrs[address >> 44]->set_32_atomic(extract(address, 43, 0), data);
+        } else {
+            arrs[address >> 44] = new A2;
+            arrs[address >> 44]->set_32_atomic(extract(address, 43, 0), data);
+        }
+    }
+
+    inline void set_64_atomic(uint64_t address, uint64_t data) {
+        if ( arrs[address >> 44] != NULL ) {
+            arrs[address >> 44]->set_64_atomic(extract(address, 43, 0), data);
+        } else {
+            arrs[address >> 44] = new A2;
+            arrs[address >> 44]->set_64_atomic(extract(address, 43, 0), data);
         }
     }
 
