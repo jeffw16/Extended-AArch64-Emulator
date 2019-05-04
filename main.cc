@@ -42,7 +42,8 @@ int main(int argc, const char * argv[]) {
         bool pcChange = false;
         uint32_t instr_int = memory_get_32(pcLocal);
         if ( debug ) {
-            printf("instruction %x at address %lx\n", instr_int, pcLocal);
+            printf("instruction %x at address %lx ", instr_int, pcLocal);
+            printf("X30: %lx\n", reg[30]);
         }
         // PC-specific debug
         // if ( pcLocal == 0x408c28 ) {
@@ -226,7 +227,9 @@ int main(int argc, const char * argv[]) {
 
            nzcvLocal = nzcv;
 
-           reg[Rd] = result;
+           if ( Rd != 31 ) {
+              reg[Rd] = result;
+           }
 
          } else if ( is_instruction(instr_int, 0xea200000) ){
             //bics 64 bit
@@ -341,11 +344,18 @@ int main(int argc, const char * argv[]) {
             // SVC
             // Supervisor Call
             uint64_t imm16 = extract(instr_int, 20, 5);
-            // if ( imm16 == 0x0 ) {
+            if ( imm16 == 0x0 ) {
                 // I/O setup
                 // io_setup(nr_events, ctx_idp);
-            // }
-            syscall(imm16);
+                reg[0] = 10000000;
+                printf("io_setup\n");
+            } else {
+                printf("\n\n%ld\n\n\n", imm16);
+            }
+            // syscall(imm16);
+        // } else if (is_instruction(instr_int, 0xd4200000)) {
+            // BRK
+            // exit(0);
         } else if ( is_instruction(instr_int, 0xd3000000) ) {
             // UBFM 64
             // cout << "UBFM 64" << endl;
@@ -887,7 +897,9 @@ int main(int argc, const char * argv[]) {
             uint64_t imm = sign_extend_64(((immhi << 2) | immlo) << 12, 33);
             uint64_t base = pcLocal;
             base = (base >> 12) << 12;
-            reg[d] = base + imm;
+            if ( d != 31 ) {
+                reg[d] = base + imm;
+            }
         } else if ( is_instruction(instr_int, 0x8b000000) ) {
             // ADD shifted register 64
             // cout << "ADD shifted register 64" << endl;
@@ -1051,11 +1063,10 @@ int main(int argc, const char * argv[]) {
             add_with_carry32(operand1, operand2, 1, &result, &nzcv_temp);
             nzcvLocal = nzcv_temp;
             if ( d != 31 ) {
-                // reg[d] = set_reg_32(reg[d], result);
                 reg[d] = result;
             }
         } else if ( is_instruction(instr_int, 0x6b0003e0) ) {
-            //NEGS (alias of SUBS shifted register) - 32-bit
+            // SUBS shifted register 32
 
             uint64_t Rd = extract(instr_int, 4, 0);
             uint64_t Rn = extract(instr_int, 9, 5);
@@ -1074,7 +1085,9 @@ int main(int argc, const char * argv[]) {
 
             add_with_carry32(operand1, operand2, (uint8_t) 1, &result, &nzcv);
 
-            reg[Rd] = result;
+            if ( Rd != 31 ) {
+                reg[Rd] = result;
+            }
 
         } else if( is_instruction(instr_int, 0x6a200000) ){
             // bics 32 bit
