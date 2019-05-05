@@ -1,0 +1,900 @@
+instruction d280001d at address 400948 X30: 0 X0: 0
+instruction d280001e at address 40094c X30: 0 X0: 0
+instruction aa0003e5 at address 400950 X30: 0 X0: 0
+instruction f94003e1 at address 400954 X30: 0 X0: 0
+instruction 910023e2 at address 400958 X30: 0 X0: 0
+instruction 910003e6 at address 40095c X30: 0 X0: 0
+instruction 580000c0 at address 400960 X30: 0 X0: 0
+instruction 580000e3 at address 400964 X30: 0 X0: 400ad8
+instruction 58000104 at address 400968 X30: 0 X0: 400ad8
+instruction 94000063 at address 40096c X30: 0 X0: 400ad8
+instruction a9ab7bfd at address 400af8 X30: 400970 X0: 400ad8
+instruction 910003fd at address 400afc X30: 400970 X0: 400ad8
+instruction 58001547 at address 400b00 X30: 400970 X0: 400ad8
+instruction a9025bf5 at address 400b04 X30: 400970 X0: 400ad8
+instruction aa0403f5 at address 400b08 X30: 400970 X0: 400ad8
+instruction a90153f3 at address 400b0c X30: 400970 X0: 400ad8
+instruction aa0503f6 at address 400b10 X30: 400970 X0: 400ad8
+instruction a90363f7 at address 400b14 X30: 400970 X0: 400ad8
+instruction aa0303f4 at address 400b18 X30: 400970 X0: 400ad8
+instruction a9058ba0 at address 400b1c X30: 400970 X0: 400ad8
+instruction b9006fa1 at address 400b20 X30: 400970 X0: 400ad8
+instruction f90023f9 at address 400b24 X30: 400970 X0: 400ad8
+instruction b4000a07 at address 400b28 X30: 400970 X0: 400ad8
+instruction 52800002 at address 400c68 X30: 400970 X0: 400ad8
+instruction 17ffffb3 at address 400c6c X30: 400970 X0: 400ad8
+instruction b0000481 at address 400b38 X30: 400970 X0: 400ad8
+instruction b9806fa0 at address 400b3c X30: 400970 X0: 400ad8
+instruction f94033a3 at address 400b40 X30: 400970 X0: 400ad8
+instruction 91000400 at address 400b44 X30: 400970 X0: 400ad8
+instruction b9014822 at address 400b48 X30: 400970 X0: 400ad9
+instruction d0000482 at address 400b4c X30: 400970 X0: 400ad9
+instruction f0000461 at address 400b50 X30: 400970 X0: 400ad9
+instruction 8b000c60 at address 400b54 X30: 400970 X0: 400ad9
+instruction f9001440 at address 400b58 X30: 400970 X0: 20056d0
+instruction f9054826 at address 400b5c X30: 400970 X0: 20056d0
+instruction f8408401 at address 400b60 X30: 400970 X0: 20056d0
+instruction b5ffffe1 at address 400b64 X30: 400970 X0: 20056d8
+instruction 94005eec at address 400b68 X30: 400970 X0: 20056d8
+instruction d00003c2 at address 418718 X30: 400b6c X0: 20056d8
+instruction f9400001 at address 41871c X30: 400b6c X0: 20056d8
+instruction f905a840 at address 418720 X30: 400b6c X0: 20056d8
+instruction b4001481 at address 418724 X30: 400b6c X0: 20056d8
+instruction d65f03c0 at address 4189b4 X30: 400b6c X0: 20056d8
+instruction d0000481 at address 400b6c X30: 400b6c X0: 20056d8
+instruction 58001200 at address 400b70 X30: 400b6c X0: 20056d8
+instruction f945bc22 at address 400b74 X30: 400b6c X0: 400000
+instruction f100005f at address 400b78 X30: 400b6c X0: 400000
+instruction fa400804 at address 400b7c X30: 400b6c X0: 400000
+instruction 54000240 at address 400b80 X30: 400b6c X0: 400000
+instruction b0000480 at address 400bc8 X30: 400b6c X0: 400000
+instruction b9414800 at address 400bcc X30: 400b6c X0: 491000
+instruction 34000300 at address 400bd0 X30: 400b6c X0: 0
+instruction 94006260 at address 400c30 X30: 400b6c X0: 0
+instruction a9a17bfd at address 4195b0 X30: 400c34 X0: 0
+instruction 910003fd at address 4195b4 X30: 400c34 X0: 0
+instruction 9101a3a0 at address 4195b8 X30: 400c34 X0: 0
+instruction a90153f3 at address 4195bc X30: 400c34 X0: fffffffffffffd28
+instruction 940081ac at address 4195c0 X30: 400c34 X0: fffffffffffffd28
+instruction d2801408 at address 439c70 X30: 4195c4 X0: fffffffffffffd28
+instruction d4000001 at address 439c74 X30: 4195c4 X0: fffffffffffffd28
+X8: a0
+X0: -728
+X1: 4792320
+X2: 0
+X3: 8
+X4: 4198856
+X5: 0
+ffffffffffffffff
+instruction b13ffc1f at address 439c78 X30: 4195c4 X0: ffffffffffffffff
+instruction 54000042 at address 439c7c X30: 4195c4 X0: ffffffffffffffff
+instruction 17ff7ebf at address 439c84 X30: 4195c4 X0: ffffffffffffffff
+instruction d00003a1 at address 419780 X30: 4195c4 X0: ffffffffffffffff
+instruction f9459421 at address 419784 X30: 4195c4 X0: ffffffffffffffff
+instruction d53bd042 at address 419788 X30: 4195c4 X0: ffffffffffffffff
+instruction 4b0003e3 at address 41978c X30: 4195c4 X0: ffffffffffffffff
+1instruction 92800000 at address 419790 X30: 4195c4 X0: ffffffffffffffff
+instruction b8216843 at address 419794 X30: 4195c4 X0: ffffffffffffffff
+instruction d65f03c0 at address 419798 X30: 4195c4 X0: ffffffffffffffff
+instruction 9103aba3 at address 4195c4 X30: 4195c4 X0: ffffffffffffffff
+instruction 35000500 at address 4195c8 X30: 4195c4 X0: ffffffffffffffff
+instruction d0000240 at address 419668 X30: 4195c4 X0: ffffffffffffffff
+instruction 52800001 at address 41966c X30: 4195c4 X0: 463000
+instruction 910f8000 at address 419670 X30: 4195c4 X0: 463000
+instruction 97fff381 at address 419674 X30: 4195c4 X0: 4633e0
+instruction a9b07bfd at address 416478 X30: 419678 X0: 4633e0
+instruction 2a0103e8 at address 41647c X30: 419678 X0: 4633e0
+instruction aa0003e1 at address 416480 X30: 419678 X0: 4633e0
+instruction 910003fd at address 416484 X30: 419678 X0: 4633e0
+instruction a90153f3 at address 416488 X30: 419678 X0: 4633e0
+instruction a90d0fa2 at address 41648c X30: 419678 X0: 4633e0
+instruction d2800003 at address 416490 X30: 419678 X0: 4633e0
+instruction a90e17a4 at address 416494 X30: 419678 X0: 4633e0
+instruction a90f1fa6 at address 416498 X30: 419678 X0: 4633e0
+instruction 3d8017a0 at address 41649c X30: 419678 X0: 4633e0
+instruction 3d801ba1 at address 4164a0 X30: 419678 X0: 4633e0
+instruction 3d801fa2 at address 4164a4 X30: 419678 X0: 4633e0
+instruction 3d8023a3 at address 4164a8 X30: 419678 X0: 4633e0
+instruction 3d8027a4 at address 4164ac X30: 419678 X0: 4633e0
+instruction 3d802ba5 at address 4164b0 X30: 419678 X0: 4633e0
+instruction 3d802fa6 at address 4164b4 X30: 419678 X0: 4633e0
+instruction 3d8033a7 at address 4164b8 X30: 419678 X0: 4633e0
+instruction 373001e8 at address 4164bc X30: 419678 X0: 4633e0
+instruction 900003e0 at address 4164c0 X30: 419678 X0: 4633e0
+instruction b94af000 at address 4164c4 X30: 419678 X0: 492000
+instruction 350002e0 at address 4164c8 X30: 419678 X0: 0
+instruction 93407d02 at address 4164cc X30: 419678 X0: 0
+instruction 92800c60 at address 4164d0 X30: 419678 X0: 0
+instruction d2800708 at address 4164d4 X30: 419678 X0: ffffffffffffff9c
+instruction d4000001 at address 4164d8 X30: 419678 X0: ffffffffffffff9c
+X8: 38
+X0: -100
+X1: 4600800
+X2: 0
+X3: 0
+X4: 4198856
+X5: 0
+1
+/proc/sys/kernel/osreleaseinstruction b140041f at address 4164dc X30: 419678 X0: 1
+instruction 540004c8 at address 4164e0 X30: 419678 X0: 1
+instruction 2a0003f3 at address 4164e4 X30: 419678 X0: 1
+instruction 2a1303e0 at address 4164e8 X30: 419678 X0: 1
+instruction a94153f3 at address 4164ec X30: 419678 X0: 1
+instruction a8d07bfd at address 4164f0 X30: 419678 X0: 1
+instruction d65f03c0 at address 4164f4 X30: 419678 X0: 1
+instruction 2a0003f4 at address 419678 X30: 419678 X0: 1
+instruction 37f80220 at address 41967c X30: 419678 X0: 1
+instruction 9100a3a1 at address 419680 X30: 419678 X0: 1
+instruction d2800802 at address 419684 X30: 419678 X0: 1
+instruction 97fff402 at address 419688 X30: 419678 X0: 1
+instruction 900003f0 at address 416690 X30: 41968c X0: 1
+instruction b94af210 at address 416694 X30: 41968c X0: 1
+instruction 34fffed0 at address 416698 X30: 41968c X0: 1
+instruction d28007e8 at address 416670 X30: 41968c X0: 1
+instruction d4000001 at address 416674 X30: 41968c X0: 1
+X8: 3f
+X0: 1
+X1: -792
+X2: 64
+X3: 0
+X4: 4198856
+X5: 0
+4.9.80-v7instruction b13ffc1f at address 416678 X30: 41968c X0: 40
+instruction 54000042 at address 41667c X30: 41968c X0: 40
+instruction d65f03c0 at address 416680 X30: 41968c X0: 40
+instruction aa0003f3 at address 41968c X30: 41968c X0: 40
+instruction 2a1403e0 at address 419690 X30: 41968c X0: 40
+instruction 97fff49f at address 419694 X30: 41968c X0: 1
+instruction 900003f0 at address 416910 X30: 419698 X0: 1
+instruction b94af210 at address 416914 X30: 419698 X0: 1
+instruction 34fffed0 at address 416918 X30: 419698 X0: 1
+instruction d2800728 at address 4168f0 X30: 419698 X0: 1
+instruction d4000001 at address 4168f4 X30: 419698 X0: 1
+X8: 39
+X0: 1
+X1: -792
+X2: 64
+X3: 0
+X4: 4198856
+X5: 0
+instruction b13ffc1f at address 4168f8 X30: 419698 X0: 0
+instruction 54000042 at address 4168fc X30: 419698 X0: 0
+instruction d65f03c0 at address 416900 X30: 419698 X0: 0
+instruction f100027f at address 419698 X30: 419698 X0: 0
+instruction 5400012d at address 41969c X30: 419698 X0: 0
+instruction d28007e0 at address 4196a0 X30: 419698 X0: 0
+instruction d13843a1 at address 4196a4 X30: 419698 X0: 3f
+instruction eb00027f at address 4196a8 X30: 419698 X0: 3f
+instruction 9100a3a3 at address 4196ac X30: 419698 X0: 3f
+instruction 9a80d260 at address 4196b0 X30: 419698 X0: 3f
+instruction 8b000020 at address 4196b4 X30: 419698 X0: 3f
+instruction 3938e01f at address 4196b8 X30: 419698 X0: ffffffffffffeeef
+instruction 17ffffc4 at address 4196bc X30: 419698 X0: ffffffffffffeeef
+instruction 52800006 at address 4195cc X30: 419698 X0: ffffffffffffeeef
+instruction 52800000 at address 4195d0 X30: 419698 X0: ffffffffffffeeef
+instruction 39400061 at address 4195d4 X30: 419698 X0: 0
+instruction 5100c021 at address 4195d8 X30: 419698 X0: 0
+instruction 53001c22 at address 4195dc X30: 419698 X0: 0
+instruction 7100245f at address 4195e0 X30: 419698 X0: 0
+instruction 54000348 at address 4195e4 X30: 419698 X0: 0
+instruction 39400464 at address 4195e8 X30: 419698 X0: 0
+instruction 91000463 at address 4195ec X30: 419698 X0: 0
+instruction 5100c082 at address 4195f0 X30: 419698 X0: 0
+instruction 53001c45 at address 4195f4 X30: 419698 X0: 0
+instruction 710024bf at address 4195f8 X30: 419698 X0: 0
+instruction 54000108 at address 4195fc X30: 419698 X0: 0
+instruction 7100b89f at address 41961c X30: 419698 X0: 0
+instruction 110004c6 at address 419620 X30: 419698 X0: 0
+instruction 2a002020 at address 419624 X30: 419698 X0: 0
+instruction 91000463 at address 419628 X30: 419698 X0: 4
+instruction 540000c1 at address 41962c X30: 419698 X0: 4
+instruction 71000cdf at address 419630 X30: 419698 X0: 4
+instruction 54fffd01 at address 419634 X30: 419698 X0: 4
+instruction 39400061 at address 4195d4 X30: 419698 X0: 4
+instruction 5100c021 at address 4195d8 X30: 419698 X0: 4
+instruction 53001c22 at address 4195dc X30: 419698 X0: 4
+instruction 7100245f at address 4195e0 X30: 419698 X0: 4
+instruction 54000348 at address 4195e4 X30: 419698 X0: 4
+instruction 39400464 at address 4195e8 X30: 419698 X0: 4
+instruction 91000463 at address 4195ec X30: 419698 X0: 4
+instruction 5100c082 at address 4195f0 X30: 419698 X0: 4
+instruction 53001c45 at address 4195f4 X30: 419698 X0: 4
+instruction 710024bf at address 4195f8 X30: 419698 X0: 4
+instruction 54000108 at address 4195fc X30: 419698 X0: 4
+instruction 7100b89f at address 41961c X30: 419698 X0: 4
+instruction 110004c6 at address 419620 X30: 419698 X0: 4
+instruction 2a002020 at address 419624 X30: 419698 X0: 4
+instruction 91000463 at address 419628 X30: 419698 X0: 409
+instruction 540000c1 at address 41962c X30: 419698 X0: 409
+instruction 71000cdf at address 419630 X30: 419698 X0: 409
+instruction 54fffd01 at address 419634 X30: 419698 X0: 409
+instruction 39400061 at address 4195d4 X30: 419698 X0: 409
+instruction 5100c021 at address 4195d8 X30: 419698 X0: 409
+instruction 53001c22 at address 4195dc X30: 419698 X0: 409
+instruction 7100245f at address 4195e0 X30: 419698 X0: 409
+instruction 54000348 at address 4195e4 X30: 419698 X0: 409
+instruction 39400464 at address 4195e8 X30: 419698 X0: 409
+instruction 91000463 at address 4195ec X30: 419698 X0: 409
+instruction 5100c082 at address 4195f0 X30: 419698 X0: 409
+instruction 53001c45 at address 4195f4 X30: 419698 X0: 409
+instruction 710024bf at address 4195f8 X30: 419698 X0: 409
+instruction 54000108 at address 4195fc X30: 419698 X0: 409
+instruction b010821 at address 419600 X30: 419698 X0: 409
+instruction 38401c64 at address 419604 X30: 419698 X0: 409
+instruction b010441 at address 419608 X30: 419698 X0: 409
+instruction 5100c082 at address 41960c X30: 419698 X0: 409
+instruction 53001c45 at address 419610 X30: 419698 X0: 409
+instruction 710024bf at address 419614 X30: 419698 X0: 409
+instruction 54ffff49 at address 419618 X30: 419698 X0: 409
+instruction 7100b89f at address 41961c X30: 419698 X0: 409
+instruction 110004c6 at address 419620 X30: 419698 X0: 409
+instruction 2a002020 at address 419624 X30: 419698 X0: 409
+instruction 91000463 at address 419628 X30: 419698 X0: 40950
+instruction 540000c1 at address 41962c X30: 419698 X0: 40950
+instruction 71000cdf at address 419644 X30: 419698 X0: 40950
+instruction 54ffff80 at address 419648 X30: 419698 X0: 40950
+instruction a94153f3 at address 419638 X30: 419698 X0: 40950
+instruction a8df7bfd at address 41963c X30: 419698 X0: 40950
+instruction d65f03c0 at address 419640 X30: 400c34 X0: 40950
+instruction 37f80a60 at address 400c34 X30: 400c34 X0: 40950
+6
+ X0: 40950
+instruction d0000481 at address 400c38 X30: 400c34 X0: 40950
+instruction b94bd021 at address 400c3c X30: 400c34 X0: 40950
+instruction 35000801 at address 400c40 X30: 400c34 X0: 40950
+instruction d0000481 at address 400c44 X30: 400c34 X0: 40950
+instruction b90bd020 at address 400c48 X30: 400c34 X0: 40950
+instruction 5280dfe1 at address 400c4c X30: 400c34 X0: 40950
+instruction 72a00061 at address 400c50 X30: 400c34 X0: 40950
+instruction 6b01001f at address 400c54 X30: 400c34 X0: 40950
+instruction 54fffbec at address 400c58 X30: 400c34 X0: 40950
+instruction 58000e73 at address 400bd4 X30: 400c34 X0: 40950
+instruction 58000f18 at address 400bd8 X30: 400c34 X0: 40950
+instruction eb18027f at address 400bdc X30: 400c34 X0: 40950
+instruction 54000482 at address 400be0 X30: 400c34 X0: 40950
+instruction 9400011e at address 400c70 X30: 400c34 X0: 40950
+instruction d2800201 at address 4010e8 X30: 400c74 X0: 40950
+instruction aa0103e0 at address 4010ec X30: 400c74 X0: 40950
+instruction 17ffff74 at address 4010f0 X30: 400c74 X0: 10
+instruction a9ba7bfd at address 400ec0 X30: 400c74 X0: 10
+instruction d0000482 at address 400ec4 X30: 400c74 X0: 10
+instruction 910003fd at address 400ec8 X30: 400c74 X0: 10
+instruction a9025bf5 at address 400ecc X30: 400c74 X0: 10
+instruction aa0103f5 at address 400ed0 X30: 400c74 X0: 10
+instruction f945bc41 at address 400ed4 X30: 400c74 X0: 10
+instruction a90153f3 at address 400ed8 X30: 400c74 X0: 10
+instruction a90363f7 at address 400edc X30: 400c74 X0: 10
+instruction a9046bf9 at address 400ee0 X30: 400c74 X0: 10
+instruction f9002bfb at address 400ee4 X30: 400c74 X0: 10
+instruction b4000381 at address 400ee8 X30: 400c74 X0: 10
+instruction d280001a at address 400f58 X30: 400c74 X0: 10
+instruction d2800019 at address 400f5c X30: 400c74 X0: 10
+instruction d2800014 at address 400f60 X30: 400c74 X0: 10
+instruction d2800016 at address 400f64 X30: 400c74 X0: 10
+instruction d2800021 at address 400f68 X30: 400c74 X0: 10
+instruction f000047b at address 400f6c X30: 400c74 X0: 10
+instruction 9b007c37 at address 400f70 X30: 400c74 X0: 10
+instruction 8b150280 at address 400f74 X30: 400c74 X0: 10
+instruction cb1503f8 at address 400f78 X30: 400c74 X0: 10
+instruction f945d761 at address 400f7c X30: 400c74 X0: 10
+instruction 911bc021 at address 400f80 X30: 400c74 X0: 10
+instruction 8b000020 at address 400f84 X30: 400c74 X0: 10
+instruction 8b170000 at address 400f88 X30: 400c74 X0: f00
+instruction 940057f7 at address 400f8c X30: 400c74 X0: f10
+instruction a9bd7bfd at address 416f68 X30: 400f90 X0: f10
+instruction 910003fd at address 416f6c X30: 400f90 X0: f10
+instruction f90013f5 at address 416f70 X30: 400f90 X0: f10
+instruction 900003f5 at address 416f74 X30: 400f90 X0: f10
+instruction a90153f3 at address 416f78 X30: 400f90 X0: f10
+instruction aa0003f4 at address 416f7c X30: 400f90 X0: f10
+instruction f9415eb3 at address 416f80 X30: 400f90 X0: f10
+instruction b4000233 at address 416f84 X30: 400f90 X0: f10
+instruction d2800000 at address 416fc8 X30: 400f90 X0: f10
+instruction 94008c31 at address 416fcc X30: 400f90 X0: 0
+instruction aa0003e2 at address 43a090 X30: 416fd0 X0: 0
+instruction d2801ac8 at address 43a094 X30: 416fd0 X0: 0
+instruction d4000001 at address 43a098 X30: 416fd0 X0: 0
+X8: d6
+X0: 0
+X1: 3824
+X2: 0
+X3: -785
+X4: 45
+X5: 253
+instruction 900002c1 at address 43a09c X30: 416fd0 X0: 0
+instruction eb00005f at address 43a0a0 X30: 416fd0 X0: 0
+instruction f9015c20 at address 43a0a4 X30: 416fd0 X0: 0
+instruction 54000088 at address 43a0a8 X30: 416fd0 X0: 0
+instruction 52800000 at address 43a0ac X30: 416fd0 X0: 0
+instruction d65f03c0 at address 43a0b0 X30: 416fd0 X0: 0
+instruction 37f80080 at address 416fd0 X30: 416fd0 X0: 0
+instruction f9415eb3 at address 416fd4 X30: 416fd0 X0: 0
+instruction 17ffffef at address 416fd8 X30: 416fd0 X0: 0
+instruction f100029f at address 416f94 X30: 416fd0 X0: 0
+instruction 540000e0 at address 416f98 X30: 416fd0 X0: 0
+instruction 540002ed at address 416f9c X30: 416fd0 X0: 0
+instruction 8b140260 at address 416fa0 X30: 416fd0 X0: 0
+instruction eb00027f at address 416fa4 X30: 416fd0 X0: f10
+instruction 540001c8 at address 416fa8 X30: 416fd0 X0: f10
+instruction 94008c39 at address 416fac X30: 416fd0 X0: f10
+instruction aa0003e2 at address 43a090 X30: 416fb0 X0: f10
+instruction d2801ac8 at address 43a094 X30: 416fb0 X0: f10
+instruction d4000001 at address 43a098 X30: 416fb0 X0: f10
+X8: d6
+X0: 3856
+X1: 4792320
+X2: 3856
+X3: -785
+X4: 45
+X5: 253
+instruction 900002c1 at address 43a09c X30: 416fb0 X0: 0
+instruction eb00005f at address 43a0a0 X30: 416fb0 X0: 0
+instruction f9015c20 at address 43a0a4 X30: 416fb0 X0: 0
+instruction 54000088 at address 43a0a8 X30: 416fb0 X0: 0
+instruction b00002a1 at address 43a0b8 X30: 416fb0 X0: 0
+instruction f9459421 at address 43a0bc X30: 416fb0 X0: 0
+instruction d53bd042 at address 43a0c0 X30: 416fb0 X0: 0
+instruction 52800183 at address 43a0c4 X30: 416fb0 X0: 0
+instruction 12800000 at address 43a0c8 X30: 416fb0 X0: 0
+instruction b8216843 at address 43a0cc X30: 416fb0 X0: ffffffff
+instruction d65f03c0 at address 43a0d0 X30: 416fb0 X0: ffffffff
+instruction 37f80180 at address 416fb0 X30: 416fb0 X0: ffffffff
+instruction 92800013 at address 416fe0 X30: 416fb0 X0: ffffffff
+instruction f94013f5 at address 416fe4 X30: 416fb0 X0: ffffffff
+instruction aa1303e0 at address 416fe8 X30: 416fb0 X0: ffffffff
+instruction a94153f3 at address 416fec X30: 416fb0 X0: ffffffffffffffff
+instruction a8c37bfd at address 416ff0 X30: 416fb0 X0: ffffffffffffffff
+instruction d65f03c0 at address 416ff4 X30: 400f90 X0: ffffffffffffffff
+instruction 8b150000 at address 400f90 X30: 400f90 X0: ffffffffffffffff
+instruction 911bbc00 at address 400f94 X30: 400f90 X0: f
+instruction d0000483 at address 400f98 X30: 400f90 X0: 6fe
+instruction 8a180018 at address 400f9c X30: 400f90 X0: 6fe
+instruction b0000480 at address 400fa0 X30: 400f90 X0: 6fe
+instruction 911ae061 at address 400fa4 X30: 400f90 X0: 491000
+instruction aa1903e2 at address 400fa8 X30: 400f90 X0: 491000
+instruction d28007c4 at address 400fac X30: 400f90 X0: 491000
+instruction f9404013 at address 400fb0 X30: 400f90 X0: 491000
+instruction 8b170300 at address 400fb4 X30: 400f90 X0: 491000
+instruction a9027c20 at address 400fb8 X30: 400f90 X0: 700
+instruction aa1a03e1 at address 400fbc X30: 400f90 X0: 700
+instruction f9035c64 at address 400fc0 X30: 400f90 X0: 700
+instruction f9021e77 at address 400fc4 X30: 400f90 X0: 700
+instruction 9400516e at address 400fc8 X30: 400f90 X0: 700
+instruction aa0003e6 at address 415580 X30: 400fcc X0: 700
+instruction f101005f at address 415584 X30: 400fcc X0: 700
+instruction 5400048a at address 415588 X30: 400fcc X0: 700
+instruction f1003c5f at address 41558c X30: 400fcc X0: 700
+instruction 540002ad at address 415590 X30: 400fcc X0: 700
+instruction 36180062 at address 4155e4 X30: 400fcc X0: 700
+instruction 36100062 at address 4155f0 X30: 400fcc X0: 700
+instruction 36080062 at address 4155fc X30: 400fcc X0: 700
+instruction 36000062 at address 415608 X30: 400fcc X0: 700
+instruction d65f03c0 at address 415614 X30: 400fcc X0: 700
+instruction d0000480 at address 400fcc X30: 400fcc X0: 700
+instruction 911b2000 at address 400fd0 X30: 400fcc X0: 492000
+instruction f9000300 at address 400fd4 X30: 400fcc X0: 4926c8
+instruction d51bd058 at address 400fd8 X30: 400fcc X0: 4926c8
+instruction b0000481 at address 400fdc X30: 400fcc X0: 4926c8
+instruction d0000483 at address 400fe0 X30: 400fcc X0: 4926c8
+instruction 91170022 at address 400fe4 X30: 400fcc X0: 4926c8
+instruction d0000484 at address 400fe8 X30: 400fcc X0: 4926c8
+instruction d2800020 at address 400fec X30: 400fcc X0: 4926c8
+instruction f9055c62 at address 400ff0 X30: 400fcc X0: 1
+instruction f9001453 at address 400ff4 X30: 400fcc X0: 1
+instruction d2800802 at address 400ff8 X30: 400fcc X0: 1
+instruction f9035880 at address 400ffc X30: 400fcc X0: 1
+instruction f902e022 at address 401000 X30: 400fcc X0: 1
+instruction 91100261 at address 401004 X30: 400fcc X0: 1
+instruction a901643a at address 401008 X30: 400fcc X0: 1
+instruction a9025834 at address 40100c X30: 400fcc X0: 1
+instruction f9022260 at address 401010 X30: 400fcc X0: 1
+instruction b40000b6 at address 401014 X30: 400fcc X0: 1
+instruction f945d761 at address 401028 X30: 400fcc X0: 1
+instruction d503201f at address 40102c X30: 400fcc X0: 1
+instruction 9b145c00 at address 401030 X30: 400fcc X0: 1
+instruction d2800202 at address 401034 X30: 400fcc X0: 10
+instruction b0000486 at address 401038 X30: 400fcc X0: 10
+instruction b0000485 at address 40103c X30: 400fcc X0: 10
+instruction b0000483 at address 401040 X30: 400fcc X0: 10
+instruction 91003c21 at address 401044 X30: 400fcc X0: 10
+instruction eb0202bf at address 401048 X30: 400fcc X0: 10
+instruction 8b000021 at address 40104c X30: 400fcc X0: 10
+instruction d2800024 at address 401050 X30: 400fcc X0: 10
+instruction 9a8222b5 at address 401054 X30: 400fcc X0: 10
+instruction 927cec21 at address 401058 X30: 400fcc X0: 10
+instruction f905d761 at address 40105c X30: 400fcc X0: 10
+instruction f90354b5 at address 401060 X30: 400fcc X0: 10
+instruction a94153f3 at address 401064 X30: 400fcc X0: 10
+instruction f90350c0 at address 401068 X30: 400fcc X0: 10
+instruction a9425bf5 at address 40106c X30: 400fcc X0: 10
+instruction f9056864 at address 401070 X30: 400fcc X0: 10
+instruction a94363f7 at address 401074 X30: 400fcc X0: 10
+instruction a9446bf9 at address 401078 X30: 400fcc X0: 10
+instruction f9402bfb at address 40107c X30: 400fcc X0: 10
+instruction a8c67bfd at address 401080 X30: 400fcc X0: 10
+instruction d65f03c0 at address 401084 X30: 400c74 X0: 10
+instruction f0000460 at address 400c74 X30: 400c74 X0: 10
+instruction f0000461 at address 400c78 X30: 400c74 X0: 48f000
+instruction 9127e023 at address 400c7c X30: 400c74 X0: 48f000
+instruction f9450402 at address 400c80 X30: 400c74 X0: 48f000
+instruction a9400840 at address 400c84 X30: 400c74 X0: 48f000
+instruction f9000462 at address 400c88 X30: 400c74 X0: 0
+instruction 9278dc00 at address 400c8c X30: 400c74 X0: 0
+instruction f904fc20 at address 400c90 X30: 400c74 X0: 0
+instruction b40000b6 at address 400c94 X30: 400c74 X0: 0
+instruction d0000482 at address 400ca8 X30: 400c74 X0: 0
+instruction b9406fa0 at address 400cac X30: 400c74 X0: 0
+instruction f94033a1 at address 400cb0 X30: 400c74 X0: 400ad8
+instruction f9401442 at address 400cb4 X30: 400c74 X0: 400ad8
+instruction 94006284 at address 400cb8 X30: 400c74 X0: 400ad8
+instruction a9bd7bfd at address 4196c8 X30: 400cbc X0: 400ad8
+instruction 910003fd at address 4196cc X30: 400cbc X0: 400ad8
+instruction 580004c3 at address 4196d0 X30: 400cbc X0: 400ad8
+instruction a90153f3 at address 4196d4 X30: 400cbc X0: 400ad8
+instruction 2a0003f3 at address 4196d8 X30: 400cbc X0: 400ad8
+instruction f90013f5 at address 4196dc X30: 400cbc X0: 400ad8
+instruction aa0103f4 at address 4196e0 X30: 400cbc X0: 400ad8
+instruction aa0203f5 at address 4196e4 X30: 400cbc X0: 400ad8
+instruction b40002c3 at address 4196e8 X30: 400cbc X0: 400ad8
+instruction b00003c0 at address 419740 X30: 400cbc X0: 400ad8
+instruction b00003c1 at address 419744 X30: 400cbc X0: 492000
+instruction 900003c2 at address 419748 X30: 400cbc X0: 492000
+instruction b9418000 at address 41974c X30: 400cbc X0: 492000
+instruction b9404821 at address 419750 X30: 400cbc X0: 0
+instruction b901485f at address 419754 X30: 400cbc X0: 0
+instruction 6b01001f at address 419758 X30: 400cbc X0: 0
+instruction 54fffd20 at address 41975c X30: 400cbc X0: 0
+instruction b00003c2 at address 419700 X30: 400cbc X0: 0
+instruction b00003c1 at address 419704 X30: 400cbc X0: 0
+instruction b00003c0 at address 419708 X30: 400cbc X0: 0
+instruction b90be853 at address 41970c X30: 400cbc X0: 492000
+instruction f905f834 at address 419710 X30: 400cbc X0: 492000
+instruction f9001415 at address 419714 X30: 400cbc X0: 492000
+instruction 97ffff8e at address 419718 X30: 400cbc X0: 492000
+instruction b00003c0 at address 419550 X30: 41971c X0: 492000
+instruction b94be000 at address 419554 X30: 41971c X0: 492000
+instruction 34000040 at address 419558 X30: 41971c X0: 0
+instruction a9be7bfd at address 419560 X30: 41971c X0: 0
+instruction 910003fd at address 419564 X30: 41971c X0: 0
+instruction f9000bf3 at address 419568 X30: 41971c X0: 0
+instruction 940081cd at address 41956c X30: 41971c X0: 0
+instruction d28015e8 at address 439ca0 X30: 419570 X0: 0
+instruction d4000001 at address 439ca4 X30: 419570 X0: 0
+X8: af
+X0: 0
+X1: 4792320
+X2: 4792320
+X3: 0
+X4: 1
+X5: 4792320
+instruction d65f03c0 at address 439ca8 X30: 419570 X0: 0
+instruction 2a0003f3 at address 419570 X30: 419570 X0: 0
+instruction 940081c7 at address 419574 X30: 419570 X0: 0
+instruction d28015c8 at address 439c90 X30: 419578 X0: 0
+instruction d4000001 at address 439c94 X30: 419578 X0: 0
+X8: ae
+X0: 0
+X1: 4792320
+X2: 4792320
+X3: 0
+X4: 1
+X5: 4792320
+instruction d65f03c0 at address 439c98 X30: 419578 X0: 0
+instruction 6b00027f at address 419578 X30: 419578 X0: 0
+instruction 52800020 at address 41957c X30: 419578 X0: 0
+instruction 540000c0 at address 419580 X30: 419578 X0: 0
+instruction 940081ca at address 419598 X30: 419578 X0: 0
+instruction d2801628 at address 439cc0 X30: 41959c X0: 0
+instruction d4000001 at address 439cc4 X30: 41959c X0: 0
+X8: b1
+X0: 0
+X1: 4792320
+X2: 4792320
+X3: 0
+X4: 1
+X5: 4792320
+instruction d65f03c0 at address 439cc8 X30: 41959c X0: 0
+instruction 2a0003f3 at address 41959c X30: 41959c X0: 0
+instruction 940081c4 at address 4195a0 X30: 41959c X0: 0
+instruction d2801608 at address 439cb0 X30: 4195a4 X0: 0
+instruction d4000001 at address 439cb4 X30: 4195a4 X0: 0
+X8: b0
+X0: 0
+X1: 4792320
+X2: 4792320
+X3: 0
+X4: 1
+X5: 4792320
+instruction d65f03c0 at address 439cb8 X30: 4195a4 X0: 0
+instruction 6b00027f at address 4195a4 X30: 4195a4 X0: 0
+instruction 1a9f07e0 at address 4195a8 X30: 4195a4 X0: 0
+instruction 17fffff6 at address 4195ac X30: 4195a4 X0: 0
+instruction d00003a1 at address 419584 X30: 4195a4 X0: 0
+instruction f9400bf3 at address 419588 X30: 4195a4 X0: 0
+instruction a8c27bfd at address 41958c X30: 4195a4 X0: 0
+instruction b90a9820 at address 419590 X30: 41971c X0: 0
+instruction d65f03c0 at address 419594 X30: 41971c X0: 0
+instruction 97fffca9 at address 41971c X30: 41971c X0: 0
+instruction a9ba7bfd at address 4189c0 X30: 419720 X0: 0
+instruction 910003fd at address 4189c4 X30: 419720 X0: 0
+instruction a9025bf5 at address 4189c8 X30: 419720 X0: 0
+instruction d00003d5 at address 4189cc X30: 419720 X0: 0
+instruction a90153f3 at address 4189d0 X30: 419720 X0: 0
+instruction 900003d4 at address 4189d4 X30: 419720 X0: 0
+instruction a90363f7 at address 4189d8 X30: 419720 X0: 0
+instruction d00003d6 at address 4189dc X30: 419720 X0: 0
+instruction a9046bf9 at address 4189e0 X30: 419720 X0: 0
+instruction 9400a4bf at address 4189e4 X30: 419720 X0: 0
+instruction d14007ff at address 441ce0 X30: 4189e8 X0: 0
+instruction f0000181 at address 441ce4 X30: 4189e8 X0: 0
+instruction 92800c60 at address 441ce8 X30: 4189e8 X0: 0
+instruction 91032021 at address 441cec X30: 4189e8 X0: ffffffffffffff9c
+instruction d2820003 at address 441cf0 X30: 4189e8 X0: ffffffffffffff9c
+instruction d28009c8 at address 441cf4 X30: 4189e8 X0: ffffffffffffff9c
+instruction a9bd7bfd at address 441cf8 X30: 4189e8 X0: ffffffffffffff9c
+instruction 910003fd at address 441cfc X30: 4189e8 X0: ffffffffffffff9c
+instruction a90153f3 at address 441d00 X30: 4189e8 X0: ffffffffffffff9c
+instruction 9100c3a2 at address 441d04 X30: 4189e8 X0: ffffffffffffff9c
+instruction f90013f5 at address 441d08 X30: 4189e8 X0: ffffffffffffff9c
+instruction d4000001 at address 441d0c X30: 4189e8 X0: ffffffffffffff9c
+X8: 4e
+X0: -100
+X1: 4669640
+X2: -480
+X3: 4096
+X4: 1
+X5: 4792320
+instruction 3140041f at address 441d10 X30: 4189e8 X0: ffffffffffffff9c
+instruction 7a409804 at address 441d14 X30: 4189e8 X0: ffffffffffffff9c
+instruction 540003cd at address 441d18 X30: 4189e8 X0: ffffffffffffff9c
+instruction b0000280 at address 441d90 X30: 4189e8 X0: ffffffffffffff9c
+instruction f945c413 at address 441d94 X30: 4189e8 X0: 492000
+instruction b40003d3 at address 441d98 X30: 4189e8 X0: 492000
+instruction 92800014 at address 441e10 X30: 4189e8 X0: 492000
+instruction f94013f5 at address 441e14 X30: 4189e8 X0: 492000
+instruction aa1403e0 at address 441e18 X30: 4189e8 X0: 492000
+instruction a94153f3 at address 441e1c X30: 4189e8 X0: ffffffffffffffff
+instruction a8c37bfd at address 441e20 X30: 4189e8 X0: ffffffffffffffff
+instruction 914007ff at address 441e24 X30: 4189e8 X0: ffffffffffffffff
+instruction d65f03c0 at address 441e28 X30: 4189e8 X0: ffffffffffffffff
+instruction 912da281 at address 4189e8 X30: 4189e8 X0: ffffffffffffffff
+instruction f0000242 at address 4189ec X30: 4189e8 X0: ffffffffffffffff
+instruction f945bea3 at address 4189f0 X30: 4189e8 X0: ffffffffffffffff
+instruction f901a020 at address 4189f4 X30: 4189e8 X0: ffffffffffffffff
+instruction 91092040 at address 4189f8 X30: 4189e8 X0: ffffffffffffffff
+instruction f945dac2 at address 4189fc X30: 4189e8 X0: 463248
+instruction f9015423 at address 418a00 X30: 4189e8 X0: 463248
+instruction 79057022 at address 418a04 X30: 4189e8 X0: 463248
+instruction 97ffb598 at address 418a08 X30: 4189e8 X0: 463248
+instruction a9bc7bfd at address 406068 X30: 418a0c X0: 463248
+instruction 910003fd at address 40606c X30: 418a0c X0: 463248
+instruction a90153f3 at address 406070 X30: 418a0c X0: 463248
+instruction a9025bf5 at address 406074 X30: 418a0c X0: 463248
+instruction aa0003f6 at address 406078 X30: 418a0c X0: 463248
+instruction a90363f7 at address 40607c X30: 418a0c X0: 463248
+instruction 94003830 at address 406080 X30: 418a0c X0: 463248
+instruction b200c3eb at address 414140 X30: 406084 X0: 463248
+instruction 927cec01 at address 414144 X30: 406084 X0: 463248
+instruction f2400c07 at address 414148 X30: 406084 X0: 463248
+instruction 54000261 at address 41414c X30: 406084 X0: 463248
+instruction f10020ff at address 414198 X30: 406084 X0: 463248
+instruction cb0703e7 at address 41419c X30: 406084 X0: 463248
+instruction a8c10c22 at address 4141a0 X30: 406084 X0: 463248
+instruction d37df0e7 at address 4141a4 X30: 406084 X0: 463248
+instruction 92800008 at address 4141a8 X30: 406084 X0: 463248
+instruction 9ac72508 at address 4141ac X30: 406084 X0: 463248
+instruction aa080042 at address 4141b0 X30: 406084 X0: 463248
+instruction aa080064 at address 4141b4 X30: 406084 X0: 463248
+instruction da9fd042 at address 4141b8 X30: 406084 X0: 463248
+instruction 9a84d063 at address 4141bc X30: 406084 X0: 463248
+instruction 17ffffe5 at address 4141c0 X30: 406084 X0: 463248
+instruction cb0b0047 at address 414154 X30: 406084 X0: 463248
+instruction b200d848 at address 414158 X30: 406084 X0: 463248
+instruction cb0b0069 at address 41415c X30: 406084 X0: 463248
+instruction b200d86a at address 414160 X30: 406084 X0: 463248
+instruction 8a2800e5 at address 414164 X30: 406084 X0: 463248
+instruction ea2a0126 at address 414168 X30: 406084 X0: 463248
+instruction fa4008a0 at address 41416c X30: 406084 X0: 463248
+instruction 54ffff00 at address 414170 X30: 406084 X0: 463248
+instruction cb000020 at address 414174 X30: 406084 X0: 463248
+instruction b4000065 at address 414178 X30: 406084 X0: 10
+instruction d1002000 at address 414184 X30: 406084 X0: 10
+instruction dac00cc6 at address 414188 X30: 406084 X0: 8
+instruction dac010cc at address 41418c X30: 406084 X0: 8
+instruction 8b4c0c00 at address 414190 X30: 406084 X0: 8
+instruction d65f03c0 at address 414194 X30: 406084 X0: c
+instruction aa0003f7 at address 406084 X30: 406084 X0: c
+instruction 90000460 at address 406088 X30: 406084 X0: c
+instruction f9401414 at address 40608c X30: 406084 X0: 492000
+instruction b4000614 at address 406090 X30: 406084 X0: 492000
+instruction 394002c0 at address 406094 X30: 406084 X0: 492000
+instruction 340005c0 at address 406098 X30: 406084 X0: 4c
+instruction 394006d5 at address 40609c X30: 406084 X0: 4c
+instruction f9400293 at address 4060a0 X30: 406084 X0: 4c
+instruction 35000275 at address 4060a4 X30: 406084 X0: 4c
+instruction 2a152015 at address 4060f0 X30: 406084 X0: 4c
+instruction d1000af8 at address 4060f4 X30: 406084 X0: 4c
+instruction 91000ad6 at address 4060f8 X30: 406084 X0: 4c
+instruction 13003eb5 at address 4060fc X30: 406084 X0: 4c
+instruction b5000093 at address 406100 X30: 406084 X0: 4c
+instruction 17fffff5 at address 406104 X30: 406084 X0: 4c
+instruction aa1303e0 at address 4060d8 X30: 406084 X0: 4c
+instruction a94153f3 at address 4060dc X30: 406084 X0: 0
+instruction a9425bf5 at address 4060e0 X30: 406084 X0: 0
+instruction a94363f7 at address 4060e4 X30: 406084 X0: 0
+instruction a8c47bfd at address 4060e8 X30: 406084 X0: 0
+instruction d65f03c0 at address 4060ec X30: 418a0c X0: 0
+instruction b4003ba0 at address 418a0c X30: 418a0c X0: 0
+instruction 900002c0 at address 419180 X30: 418a0c X0: 0
+instruction 91180000 at address 419184 X30: 418a0c X0: 471000
+instruction 17fffe22 at address 419188 X30: 418a0c X0: 471600
+instruction d00003d7 at address 418a10 X30: 418a0c X0: 471600
+instruction 39400000 at address 418a14 X30: 418a0c X0: 471600
+instruction d00003c1 at address 418a18 X30: 418a0c X0: 0
+instruction 7100001f at address 418a1c X30: 418a0c X0: 0
+instruction f945cee0 at address 418a20 X30: 418a0c X0: 0
+instruction 1a9f07e2 at address 418a24 X30: 418a0c X0: 0
+instruction b90ba822 at address 418a28 X30: 418a0c X0: 0
+instruction b4001fe0 at address 418a2c X30: 418a0c X0: 0
+instruction f0000240 at address 418e28 X30: 418a0c X0: 0
+instruction 910ca000 at address 418e2c X30: 418a0c X0: 463000
+instruction 97ffb48e at address 418e30 X30: 418a0c X0: 463328
+instruction a9bc7bfd at address 406068 X30: 418e34 X0: 463328
+instruction 910003fd at address 40606c X30: 418e34 X0: 463328
+instruction a90153f3 at address 406070 X30: 418e34 X0: 463328
+instruction a9025bf5 at address 406074 X30: 418e34 X0: 463328
+instruction aa0003f6 at address 406078 X30: 418e34 X0: 463328
+instruction a90363f7 at address 40607c X30: 418e34 X0: 463328
+instruction 94003830 at address 406080 X30: 418e34 X0: 463328
+instruction b200c3eb at address 414140 X30: 406084 X0: 463328
+instruction 927cec01 at address 414144 X30: 406084 X0: 463328
+instruction f2400c07 at address 414148 X30: 406084 X0: 463328
+instruction 54000261 at address 41414c X30: 406084 X0: 463328
+instruction f10020ff at address 414198 X30: 406084 X0: 463328
+instruction cb0703e7 at address 41419c X30: 406084 X0: 463328
+instruction a8c10c22 at address 4141a0 X30: 406084 X0: 463328
+instruction d37df0e7 at address 4141a4 X30: 406084 X0: 463328
+instruction 92800008 at address 4141a8 X30: 406084 X0: 463328
+instruction 9ac72508 at address 4141ac X30: 406084 X0: 463328
+instruction aa080042 at address 4141b0 X30: 406084 X0: 463328
+instruction aa080064 at address 4141b4 X30: 406084 X0: 463328
+instruction da9fd042 at address 4141b8 X30: 406084 X0: 463328
+instruction 9a84d063 at address 4141bc X30: 406084 X0: 463328
+instruction 17ffffe5 at address 4141c0 X30: 406084 X0: 463328
+instruction cb0b0047 at address 414154 X30: 406084 X0: 463328
+instruction b200d848 at address 414158 X30: 406084 X0: 463328
+instruction cb0b0069 at address 41415c X30: 406084 X0: 463328
+instruction b200d86a at address 414160 X30: 406084 X0: 463328
+instruction 8a2800e5 at address 414164 X30: 406084 X0: 463328
+instruction ea2a0126 at address 414168 X30: 406084 X0: 463328
+instruction fa4008a0 at address 41416c X30: 406084 X0: 463328
+instruction 54ffff00 at address 414170 X30: 406084 X0: 463328
+instruction cb000020 at address 414174 X30: 406084 X0: 463328
+instruction b4000065 at address 414178 X30: 406084 X0: 10
+instruction d1002000 at address 414184 X30: 406084 X0: 10
+instruction dac00cc6 at address 414188 X30: 406084 X0: 8
+instruction dac010cc at address 41418c X30: 406084 X0: 8
+instruction 8b4c0c00 at address 414190 X30: 406084 X0: 8
+instruction d65f03c0 at address 414194 X30: 406084 X0: c
+instruction aa0003f7 at address 406084 X30: 406084 X0: c
+instruction 90000460 at address 406088 X30: 406084 X0: c
+instruction f9401414 at address 40608c X30: 406084 X0: 492000
+instruction b4000614 at address 406090 X30: 406084 X0: 492000
+instruction 394002c0 at address 406094 X30: 406084 X0: 492000
+instruction 340005c0 at address 406098 X30: 406084 X0: 4c
+instruction 394006d5 at address 40609c X30: 406084 X0: 4c
+instruction f9400293 at address 4060a0 X30: 406084 X0: 4c
+instruction 35000275 at address 4060a4 X30: 406084 X0: 4c
+instruction 2a152015 at address 4060f0 X30: 406084 X0: 4c
+instruction d1000af8 at address 4060f4 X30: 406084 X0: 4c
+instruction 91000ad6 at address 4060f8 X30: 406084 X0: 4c
+instruction 13003eb5 at address 4060fc X30: 406084 X0: 4c
+instruction b5000093 at address 406100 X30: 406084 X0: 4c
+instruction 17fffff5 at address 406104 X30: 406084 X0: 4c
+instruction aa1303e0 at address 4060d8 X30: 406084 X0: 4c
+instruction a94153f3 at address 4060dc X30: 406084 X0: 0
+instruction a9425bf5 at address 4060e0 X30: 406084 X0: 0
+instruction a94363f7 at address 4060e4 X30: 406084 X0: 0
+instruction a8c47bfd at address 4060e8 X30: 406084 X0: 0
+instruction d65f03c0 at address 4060ec X30: 418e34 X0: 0
+instruction 94008f71 at address 418e34 X30: 418e34 X0: 0
+instruction a9bc7bfd at address 43cbf8 X30: 418e38 X0: 0
+instruction d00002a2 at address 43cbfc X30: 418e38 X0: 0
+instruction d00002a1 at address 43cc00 X30: 418e38 X0: 0
+instruction 910003fd at address 43cc04 X30: 418e38 X0: 0
+instruction a9025bf5 at address 43cc08 X30: 418e38 X0: 0
+instruction f0000295 at address 43cc0c X30: 418e38 X0: 0
+instruction a90363f7 at address 43cc10 X30: 418e38 X0: 0
+instruction aa0003f6 at address 43cc14 X30: 418e38 X0: 0
+instruction 912a82b7 at address 43cc18 X30: 418e38 X0: 0
+instruction f9459421 at address 43cc1c X30: 418e38 X0: 0
+instruction f945ac40 at address 43cc20 X30: 418e38 X0: 0
+instruction 910022e3 at address 43cc24 X30: 418e38 X0: 0
+instruction 910042e2 at address 43cc28 X30: 418e38 X0: 0
+instruction a90153f3 at address 43cc2c X30: 418e38 X0: 0
+instruction 94000da0 at address 43cc30 X30: 418e38 X0: 0
+instruction a9b67bfd at address 4402b0 X30: 43cc34 X0: 0
+instruction f100001f at address 4402b4 X30: 43cc34 X0: 0
+instruction 910003fd at address 4402b8 X30: 43cc34 X0: 0
+instruction a9046bf9 at address 4402bc X30: 43cc34 X0: 0
+instruction a90573fb at address 4402c0 X30: 43cc34 X0: 0
+instruction 9a9f07fc at address 4402c4 X30: 43cc34 X0: 0
+instruction a9068fa1 at address 4402c8 X30: 43cc34 X0: 0
+instruction d0000281 at address 4402cc X30: 43cc34 X0: 0
+instruction a9088ba0 at address 4402d0 X30: 43cc34 X0: 0
+instruction d0000280 at address 4402d4 X30: 43cc34 X0: 0
+instruction a90153f3 at address 4402d8 X30: 43cc34 X0: 492000
+instruction f9402821 at address 4402dc X30: 43cc34 X0: 492000
+instruction f9401c00 at address 4402e0 X30: 43cc34 X0: 492000
+instruction a9025bf5 at address 4402e4 X30: 43cc34 X0: 0
+instruction ea010019 at address 4402e8 X30: 43cc34 X0: 0
+instruction a90363f7 at address 4402ec X30: 43cc34 X0: 0
+instruction a90783a1 at address 4402f0 X30: 43cc34 X0: 0
+instruction 54000160 at address 4402f4 X30: 43cc34 X0: 0
+instruction d0000280 at address 440320 X30: 43cc34 X0: 0
+instruction f945b415 at address 440324 X30: 43cc34 X0: 492000
+instruction b4000ff5 at address 440328 X30: 43cc34 X0: 492000
+instruction 91000794 at address 440524 X30: 43cc34 X0: 492000
+instruction d2800020 at address 440528 X30: 43cc34 X0: 492000
+instruction d2800018 at address 44052c X30: 43cc34 X0: 1
+instruction d37cee81 at address 440530 X30: 43cc34 X0: 1
+instruction 91004021 at address 440534 X30: 43cc34 X0: 1
+instruction cb2163ff at address 440538 X30: 43cc34 X0: 1
+instruction 910003fa at address 44053c X30: 43cc34 X0: 1
+instruction b5fffcb9 at address 440540 X30: 43cc34 X0: 1
+instruction f94047a3 at address 440544 X30: 43cc34 X0: 1
+instruction aa1803e2 at address 440548 X30: 43cc34 X0: 1
+instruction b5000103 at address 44054c X30: 43cc34 X0: 1
+instruction aa0003e4 at address 440550 X30: 43cc34 X0: 1
+instruction aa0203e0 at address 440554 X30: 43cc34 X0: 1
+instruction 1400000b at address 440558 X30: 43cc34 X0: 0
+instruction d37cec00 at address 440584 X30: 43cc34 X0: 0
+instruction f0000181 at address 440588 X30: 43cc34 X0: 0
+instruction 8b000342 at address 44058c X30: 43cc34 X0: 0
+instruction 91348021 at address 440590 X30: 43cc34 X0: 0
+instruction d2800063 at address 440594 X30: 43cc34 X0: 0
+instruction eb04029f at address 440598 X30: 43cc34 X0: 0
+instruction f8206b41 at address 44059c X30: 43cc34 X0: 0
+instruction f9000443 at address 4405a0 X30: 43cc34 X0: 0
+instruction 54001ca1 at address 4405a4 X30: 43cc34 X0: 0
+instruction f100069f at address 4405a8 X30: 43cc34 X0: 0
+instruction 540015a0 at address 4405ac X30: 43cc34 X0: 0
+instruction f9404ba1 at address 440860 X30: 43cc34 X0: 0
+instruction d2800054 at address 440864 X30: 43cc34 X0: 0
+instruction f9400753 at address 440868 X30: 43cc34 X0: 0
+instruction 91008660 at address 44086c X30: 43cc34 X0: 0
+instruction 91000675 at address 440870 X30: 43cc34 X0: 24
+instruction f9000034 at address 440874 X30: 43cc34 X0: 24
+instruction 97ff43fe at address 440878 X30: 43cc34 X0: 24
+instruction a9bd7bfd at address 411870 X30: 44087c X0: 24
+instruction 910003fd at address 411874 X30: 44087c X0: 24
+instruction 58000e82 at address 411878 X30: 44087c X0: 24
+instruction a90153f3 at address 41187c X30: 44087c X0: 24
+instruction f9400042 at address 411880 X30: 44087c X0: 24
+instruction b5000a62 at address 411884 X30: 44087c X0: 24
+instruction aa1e03e1 at address 4119d0 X30: 44087c X0: 24
+instruction d63f0040 at address 4119d4 X30: 44087c X0: 24
+2instruction d00003e1 at address 412cd0 X30: 4119d8 X0: 24
+instruction 580001a2 at address 412cd4 X30: 4119d8 X0: 24
+instruction b94b3021 at address 412cd8 X30: 4119d8 X0: 24
+instruction f900005f at address 412cdc X30: 4119d8 X0: 24
+instruction 37f80041 at address 412ce0 X30: 4119d8 X0: 24
+instruction a9be7bfd at address 412ce8 X30: 4119d8 X0: 24
+instruction 910003fd at address 412cec X30: 4119d8 X0: 24
+instruction f9000fa0 at address 412cf0 X30: 4119d8 X0: 24
+instruction 97ffff1b at address 412cf4 X30: 4119d8 X0: 24
+instruction a9bb7bfd at address 412960 X30: 412cf8 X0: 24
+instruction 90000403 at address 412964 X30: 412cf8 X0: 24
+instruction d2a00000 at address 412968 X30: 412cf8 X0: 24
+instruction f2800700 at address 41296c X30: 412cf8 X0: 0
+instruction d53bd041 at address 412970 X30: 412cf8 X0: 0
+instruction 910003fd at address 412974 X30: 412cf8 X0: 0
+instruction a9025bf5 at address 412978 X30: 412cf8 X0: 0
+instruction d00003f5 at address 41297c X30: 412cf8 X0: 0
+instruction 9108c2a2 at address 412980 X30: 412cf8 X0: 0
+instruction a90153f3 at address 412984 X30: 412cf8 X0: 0
+instruction f9401474 at address 412988 X30: 412cf8 X0: 0
+instruction a90363f7 at address 41298c X30: 412cf8 X0: 0
+instruction a9046bf9 at address 412990 X30: 412cf8 X0: 0
+instruction f8206822 at address 412994 X30: 412cf8 X0: 0
+instruction b909005f at address 412998 X30: 412cf8 X0: 0
+instruction b4000794 at address 41299c X30: 412cf8 X0: 0
+instruction f0000261 at address 4129a0 X30: 412cf8 X0: 0
+instruction b00003e0 at address 4129a4 X30: 412cf8 X0: 0
+instruction 910cb038 at address 4129a8 X30: 412cf8 X0: 48f000
+instruction 912a6017 at address 4129ac X30: 412cf8 X0: 48f000
+instruction d2800016 at address 4129b0 X30: 412cf8 X0: 48f000
+instruction 90000299 at address 4129b4 X30: 412cf8 X0: 48f000
+instruction f9400293 at address 4129b8 X30: 412cf8 X0: 48f000
+instruction b50000b3 at address 4129bc X30: 412cf8 X0: 48f000
+instruction 14000030 at address 4129c0 X30: 412cf8 X0: 48f000
+instruction b4000076 at address 412a80 X30: 412cf8 X0: 48f000
+instruction 580011e0 at address 412a8c X30: 412cf8 X0: 48f000
+instruction f9400000 at address 412a90 X30: 412cf8 X0: 492020
+instruction b4000040 at address 412a94 X30: 412cf8 X0: 0
+instruction 9108c2b5 at address 412a9c X30: 412cf8 X0: 0
+instruction 52800020 at address 412aa0 X30: 412cf8 X0: 0
+instruction a94153f3 at address 412aa4 X30: 412cf8 X0: 0
+instruction a94363f7 at address 412aa8 X30: 412cf8 X0: 0
+instruction b90902a0 at address 412aac X30: 412cf8 X0: 0
+instruction a9446bf9 at address 412ab0 X30: 412cf8 X0: 0
+instruction a9425bf5 at address 412ab4 X30: 412cf8 X0: 0
+instruction a8c57bfd at address 412ab8 X30: 412cf8 X0: 0
+instruction d65f03c0 at address 412abc X30: 412cf8 X0: 0
+instruction f9400fa0 at address 412cf8 X30: 412cf8 X0: 0
+instruction a8c27bfd at address 412cfc X30: 412cf8 X0: 24
+instruction 17fffadc at address 412d00 X30: 4119d8 X0: 24
+instruction a9bd7bfd at address 411870 X30: 4119d8 X0: 24
+instruction 910003fd at address 411874 X30: 4119d8 X0: 24
+instruction 58000e82 at address 411878 X30: 4119d8 X0: 24
+instruction a90153f3 at address 41187c X30: 4119d8 X0: 24
+instruction f9400042 at address 411880 X30: 4119d8 X0: 24
+instruction b5000a62 at address 411884 X30: 4119d8 X0: 24
+instruction aa1e03e1 at address 4119d0 X30: 4119d8 X0: 24
+instruction d63f0040 at address 4119d4 X30: 4119d8 X0: 24
+2instruction d40 at address d10 X30: 4119d8 X0: 24
+unknown instruction d40 at d10
+X00 : 0000000000000024
+X01 : 00000000004119D8
+X02 : 0000000000000D10
+X03 : 0000000000492000
+X04 : 0000000000000001
+X05 : FFFFFFFF00000000
+X06 : 00000000822A1200
+X07 : FFFFFFFFFFFFFFCC
+X08 : 00000000FFFFFFCC
+X09 : 00485441505F5952
+X10 : 00000000505F5952
+X11 : 0000000000000000
+X12 : 0000000000000021
+X13 : 0000000000000000
+X14 : 0000000000000000
+X15 : 0000000000000000
+X16 : 0000000000000000
+X17 : 0000000000000000
+X18 : 0000000000000000
+X19 : 0000000000000003
+X20 : 0000000000000002
+X21 : 0000000000000004
+X22 : 0000000000000000
+X23 : 000000000048FAA0
+X24 : 0000000000000000
+X25 : 0000000000000000
+X26 : 0000000000000D40
+X27 : 0000000000000000
+X28 : 0000000000000000
+X29 : 0000000000000CE0
+X30 : 00000000004119D8
+XSP : 0000000000000CE0
+Q00 : 00000000000000000000000000000000
+Q01 : 00000000000000000000000000000000
+Q02 : 00000000000000000000000000000000
+Q03 : 00000000000000000000000000000000
+Q04 : 00000000000000000000000000000000
+Q05 : 00000000000000000000000000000000
+Q06 : 00000000000000000000000000000000
+Q07 : 00000000000000000000000000000000
+Q08 : 00000000000000000000000000000000
+Q09 : 00000000000000000000000000000000
+Q10 : 00000000000000000000000000000000
+Q11 : 00000000000000000000000000000000
+Q12 : 00000000000000000000000000000000
+Q13 : 00000000000000000000000000000000
+Q14 : 00000000000000000000000000000000
+Q15 : 00000000000000000000000000000000
+Q16 : 00000000000000000000000000000000
+Q17 : 00000000000000000000000000000000
+Q18 : 00000000000000000000000000000000
+Q19 : 00000000000000000000000000000000
+Q20 : 00000000000000000000000000000000
+Q21 : 00000000000000000000000000000000
+Q22 : 00000000000000000000000000000000
+Q23 : 00000000000000000000000000000000
+Q24 : 00000000000000000000000000000000
+Q25 : 00000000000000000000000000000000
+Q26 : 00000000000000000000000000000000
+Q27 : 00000000000000000000000000000000
+Q28 : 00000000000000000000000000000000
+Q29 : 00000000000000000000000000000000
+Q30 : 00000000000000000000000000000000
+Q31 : 00000000000000000000000000000000

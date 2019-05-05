@@ -134,8 +134,8 @@ void add_with_carry64(uint64_t operand1, uint64_t operand2, uint8_t carry, uint6
 }
 
 void add_with_carry32(uint32_t operand1, uint32_t operand2, uint8_t carry, uint32_t* result, uint8_t* nzcv) {
-    uint64_t unsigned_sum = operand1 + operand2 + carry;
-    *result = (uint32_t) unsigned_sum;
+    uint32_t unsigned_sum = operand1 + operand2 + carry;
+    *result = unsigned_sum;
     uint8_t n = 0;
     if ( ((int32_t) *result) < 0 ) {
         n = 1;

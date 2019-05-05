@@ -117,7 +117,15 @@ main.o: main.cc /usr/include/stdc-predef.h /usr/include/c++/5/cstdio \
  /usr/include/x86_64-linux-gnu/bits/unistd.h /usr/include/linux/aio_abi.h \
  /usr/include/x86_64-linux-gnu/asm/byteorder.h \
  /usr/include/linux/byteorder/little_endian.h /usr/include/linux/swab.h \
- /usr/include/x86_64-linux-gnu/asm/swab.h mem.h elf.h functions.h \
+ /usr/include/x86_64-linux-gnu/asm/swab.h \
+ /usr/include/x86_64-linux-gnu/sys/utsname.h \
+ /usr/include/x86_64-linux-gnu/bits/utsname.h \
+ /usr/include/x86_64-linux-gnu/sys/stat.h \
+ /usr/include/x86_64-linux-gnu/bits/stat.h /usr/include/fcntl.h \
+ /usr/include/x86_64-linux-gnu/bits/fcntl.h \
+ /usr/include/x86_64-linux-gnu/bits/fcntl-linux.h \
+ /usr/include/x86_64-linux-gnu/bits/uio.h \
+ /usr/include/x86_64-linux-gnu/bits/fcntl2.h mem.h elf.h functions.h \
  /usr/include/c++/5/vector /usr/include/c++/5/bits/stl_construct.h \
  /usr/include/c++/5/bits/stl_uninitialized.h \
  /usr/include/c++/5/bits/stl_vector.h \

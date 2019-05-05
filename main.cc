@@ -5,6 +5,10 @@
 #include <linux/kernel.h>
 #include <unistd.h>
 #include <linux/aio_abi.h>
+#include <sys/utsname.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 #include "mem.h"
 #include "elf.h"
@@ -43,13 +47,18 @@ int main(int argc, const char * argv[]) {
         uint32_t instr_int = memory_get_32(pcLocal);
         if ( debug ) {
             printf("instruction %x at address %lx ", instr_int, pcLocal);
-            printf("X30: %lx\n", reg[30]);
+            printf("X30: %lx", reg[30]);
+            printf(" X0: %lx\n", reg[0]);
+            if ( pcLocal == 0x408d58 || (pcLocal >= 0x405788 && pcLocal <= 0x405a8c) ) {
+                printf("Abort encountered. Stopping execution.\n");
+                exit(0);
+            }
         }
         // PC-specific debug
-        // if ( pcLocal == 0x408c28 ) {
-        //     printf("%d\n", nzcvLocal);
-        //     printf(" X0: %lx\nX20: %lx\n", reg[0], reg[20]);
-        // }
+        if ( pcLocal == 0x400c34 ) {
+            printf("%d\n", nzcvLocal);
+            printf(" X0: %lx\n", reg[0]);
+        }
         if ( is_instruction(instr_int, 0xfa400800) ) {
             // CCMP immediate 64
             uint64_t n = extract(instr_int, 9, 5);
@@ -158,7 +167,32 @@ int main(int argc, const char * argv[]) {
             uint64_t data = reg[t];
             memory_set_64(address, data);
             reg[n] = address;
-        } else if ( is_instruction(instr_int, 0xf8000400) ) {
+        } else if( is_instruction(instr_int, 0xf8200800) ) {
+          //str shifted register 64
+          //STR SHIFTED REGISTER 64
+          uint64_t t = extract(instr_int, 4, 0);
+          uint64_t n = extract(instr_int, 9, 5);
+          uint64_t extend_type = extract(instr_int, 15, 13);
+          uint8_t S = extract(instr_int, 12, 12);
+
+
+          uint64_t m = extract(instr_int, 20, 16);
+          uint64_t scale = 3;
+          uint64_t shift = S == 1 ? scale : 0;
+
+
+          uint64_t offset = extend_reg64(m, extend_type, shift, reg);
+          uint64_t address = reg[n];
+          uint64_t data;
+          address += offset;
+          data = 0;
+          if (t != 31){
+            data = reg[t];
+          }
+          memory_set_64(address, data);
+
+        }
+        else if ( is_instruction(instr_int, 0xf8000400) ) {
             // STR immediate post-index 64
             // cout << "STR immediate post-index 64" << endl;
             uint64_t t = extract(instr_int, 4, 0);
@@ -217,7 +251,7 @@ int main(int argc, const char * argv[]) {
 
            uint64_t result = 0;
            uint64_t operand1 = Rn == 31 ? 0 : reg[Rn];
-           uint64_t operand2 = shift_reg64(reg[Rm], shift, imm6);
+           uint64_t operand2 = shift_reg64(Rm == 31 ? 0 : reg[Rm], shift, imm6);
 
            uint8_t nzcv = 0;
 
@@ -248,7 +282,7 @@ int main(int argc, const char * argv[]) {
                 operand1 = reg[n];
             }
 
-            uint64_t operand2 = shift_reg64(m, shift_type, shift_amount);
+            uint64_t operand2 = shift_reg64(m == 31 ? 0 : reg[m], shift_type, shift_amount);
             operand2 = ~operand2;
             uint64_t result = operand1 & operand2;
             nzcvLocal = (extract_single(result, 63) << 3) | ((result == 0) << 2) | 0;
@@ -320,7 +354,21 @@ int main(int argc, const char * argv[]) {
             } else {
                 pcLocal = 0;
             }
-        } else if ( is_instruction(instr_int, 0xd61f0000) ) {
+        } else if ( is_instruction(instr_int, 0xd63f0000) ){
+          //blr
+          //BLR
+
+          uint64_t n = extract(instr_int, 9, 5);
+          printf("%ld", n);
+          uint64_t target = 0;
+          if(n != 31){
+            target = reg[n];
+          }
+          reg[30] = pcLocal + 4;
+          pcLocal = target;
+          pcChange = true;
+        }
+        else if ( is_instruction(instr_int, 0xd61f0000) ) {
             // BR
             uint64_t n = extract(instr_int, 9, 5);
             pcChange = true;
@@ -343,16 +391,67 @@ int main(int argc, const char * argv[]) {
         } else if ( is_instruction(instr_int, 0xd4000001) ) {
             // SVC
             // Supervisor Call
-            uint64_t imm16 = extract(instr_int, 20, 5);
-            if ( imm16 == 0x0 ) {
-                // I/O setup
-                // io_setup(nr_events, ctx_idp);
-                reg[0] = 10000000;
-                printf("io_setup\n");
-            } else {
-                printf("\n\n%ld\n\n\n", imm16);
-            }
+            // uint64_t imm16 = extract(instr_int, 20, 5);
+            // if ( imm16 == 0x0 ) {
+            //     // I/O setup
+            //     // io_setup(nr_events, ctx_idp);
+            //     printf("X0: %ld\nX1: %ld\nX2: %ld\nX3: %ld\nX4: %ld\nX5: %ld\n", reg[0], reg[1], reg[2], reg[3], reg[4], reg[5]);
+            //     reg[0] = 10000000;
+            //     printf("io_setup\n");
+            // } else {
+            //     printf("\n\n%ld\n\n\n", imm16);
+            // }
             // syscall(imm16);
+            printf("X8: %lx\n", reg[8]);
+            printf("X0: %ld\nX1: %ld\nX2: %ld\nX3: %ld\nX4: %ld\nX5: %ld\n", reg[0], reg[1], reg[2], reg[3], reg[4], reg[5]);
+            uint64_t syscall_num = reg[8];
+            if ( syscall_num == 0xa0 ) {
+                // uname
+                uint64_t result = uname((struct utsname*) reg[0]);
+                printf("%lx\n", result);
+                reg[0] = result;
+                // reg[0] = 0;
+            } else if ( syscall_num == 0x38 ) {
+                // openat
+                // uint64_t result = openat((int) reg[0], (const char *) reg[1], (int) reg[2]); //, (mode_t) reg[3]
+                uint64_t result = 1; // arbitrarily assign the file descriptor as 1 for now
+                printf("%lx\n", result);
+                int count = 0;
+                while ( memory_get(reg[1] + count) != 0 ) {
+                    printf("%c", memory_get(reg[1] + count++));
+                }
+                reg[0] = result;
+            } else if ( syscall_num == 0x40 ) {
+                // write
+                reg[0] = write((int) reg[0], (const void *) reg[1], (size_t) reg[2]);
+            } else if ( syscall_num == 0x39 ) {
+                // close
+                // returns 0 on success
+                reg[0] = 0;
+            } else if ( syscall_num == 0x3f ) {
+                // read
+                // give it the number of bytes that it requested
+                if ( reg[0] == 1 ) {
+                    char linuxversion[] = "4.9.80-v7+";
+                    int count = 0;
+                    while ( count < 9 ) {
+                        memory_set(reg[1] + count, linuxversion[count]);
+                        printf("%c", memory_get(reg[1] + count));
+                        count++;
+                        // printf("%c", memory_get(reg[1] + count++));
+                    }
+                }
+                reg[0] = reg[2];
+            }
+            else if ( syscall_num == 0xd6 ) {
+                // brk
+                reg[0] = 0;
+            }
+            // else if ( syscall_num == 0x0 ) {
+            //     //
+            //     reg[0] = 0;
+            // }
+
         // } else if (is_instruction(instr_int, 0xd4200000)) {
             // BRK
             // exit(0);
@@ -404,6 +503,29 @@ int main(int argc, const char * argv[]) {
             uint64_t result = operand1 + operand2 + 1;
             if ( d != 31 ) {
                 reg[d] = result;
+            }
+        } else if ( is_instruction(instr_int, 0xcb000000) ) {
+            // SUB shifted register 64
+            uint64_t Rd = extract(instr_int, 4, 0);
+            uint64_t Rn = extract(instr_int, 9, 5);
+            uint64_t imm6 = extract(instr_int, 15, 10);
+            uint64_t Rm = extract(instr_int, 20, 16);
+            uint64_t shift = extract(instr_int, 23, 22);
+
+            uint64_t result = 0;
+            uint64_t operand1 = Rn == 31 ? 0 : reg[Rn];
+            uint64_t operand2 = shift_reg64(Rm == 31 ? 0 : reg[Rm], shift, imm6);
+
+            uint8_t nzcv = 0;
+
+            operand2 = ~(operand2);
+
+            add_with_carry64(operand1, operand2, (uint8_t) 1, &result, &nzcv);
+
+            nzcvLocal = nzcv;
+
+            if ( Rd != 31 ) {
+               reg[Rd] = result;
             }
         } else if ( is_instruction(instr_int, 0xc85ffc00) ) {
             // LDAXR 64
@@ -501,6 +623,28 @@ int main(int argc, const char * argv[]) {
             }
             address = address + offset;
             reg[n] = address;
+        } else if( is_instruction(instr_int, 0xb8200800) ){
+            // str shifted register 32
+            // STR SHIFTED REGISTER 32
+            uint64_t t = extract(instr_int, 4, 0);
+            uint64_t n = extract(instr_int, 9, 5);
+            uint64_t extend_type = extract(instr_int, 15, 13);
+            uint8_t S = extract(instr_int, 12, 12);
+
+            uint64_t m = extract(instr_int, 20, 16);
+            uint64_t scale = 2;
+            uint64_t shift = S == 1 ? scale : 0;
+
+
+            uint64_t offset = extend_reg64(m, extend_type, shift, reg);
+            uint64_t address = reg[n];
+            uint32_t data;
+            address += offset;
+            data = 0;
+            if (t != 31){
+              data = reg[t];
+            }
+            memory_set_32(address, data);
         } else if ( is_instruction(instr_int, 0xb8000c00) ) {
             // STR immediate pre-index 32
             // cout << "STR immediate pre-index 32" << endl;
@@ -945,7 +1089,7 @@ int main(int argc, const char * argv[]) {
                 operand1 = reg[n];
             }
 
-            uint64_t operand2 = shift_reg64(m, shift_type, shift_amount);
+            uint64_t operand2 = shift_reg64(m == 31 ? 0 : reg[m], shift_type, shift_amount);
             operand2 = ~operand2;
             uint64_t result = operand1 & operand2;
             if(d != 31){
@@ -964,7 +1108,7 @@ int main(int argc, const char * argv[]) {
           if(n != 31){
             operand1 = reg[n];
           }
-          uint64_t operand2 = shift_reg64(m, shift_type, shift_amount);
+          uint64_t operand2 = shift_reg64(m == 31 ? 0 : reg[m], shift_type, shift_amount);
           uint64_t result = operand1 & operand2;
           if(d != 31){
             reg[d] = result;
@@ -1065,7 +1209,7 @@ int main(int argc, const char * argv[]) {
             if ( d != 31 ) {
                 reg[d] = result;
             }
-        } else if ( is_instruction(instr_int, 0x6b0003e0) ) {
+        } else if ( is_instruction(instr_int, 0x6b000000) ) {
             // SUBS shifted register 32
 
             uint64_t Rd = extract(instr_int, 4, 0);
@@ -1077,7 +1221,7 @@ int main(int argc, const char * argv[]) {
 
             uint32_t result;
             uint32_t operand1 = reg[Rn];
-            uint32_t operand2 = shift_reg32((uint32_t) Rm, (uint32_t) shift, (int) imm6);
+            uint32_t operand2 = shift_reg32((uint32_t) Rm == 31 ? 0 : reg[Rm], (uint32_t) shift, (int) imm6);
 
             uint8_t nzcv;
 
@@ -1106,7 +1250,7 @@ int main(int argc, const char * argv[]) {
                 operand1 = reg[n];
             }
 
-            uint32_t operand2 = shift_reg32(m, shift_type, shift_amount);
+            uint32_t operand2 = shift_reg32(m == 31 ? 0 : reg[m], shift_type, shift_amount);
             operand2 = ~operand2;
             uint32_t result = operand1 & operand2;
             nzcvLocal = (extract_single32(result, 31) << 3) | ((result == 0) << 2) | 0;
@@ -1231,7 +1375,7 @@ int main(int argc, const char * argv[]) {
                 result |= (extract_single32(imm, j++) << i);
             }
             if ( d != 31 ) {
-                reg[d] = result;
+                reg[d] = set_reg_32(result, 0);
             }
         } else if ( is_instruction(instr_int, 0x51000000) ) {
             // SUB immediate 32
@@ -1248,6 +1392,30 @@ int main(int argc, const char * argv[]) {
             uint32_t result = operand1 + operand2 + 1;
             if ( d != 31 ) {
                 reg[d] = result;
+            }
+        } else if ( is_instruction(instr_int, 0x4b000000) ) {
+            // SUB shifted register 32
+            uint64_t Rd = extract(instr_int, 4, 0);
+            uint64_t Rn = extract(instr_int, 9, 5);
+            uint64_t imm6 = extract(instr_int, 15, 10);
+            uint64_t Rm = extract(instr_int, 20, 16);
+            uint64_t shift = extract(instr_int, 23, 22);
+            //uint64_t sf = extract(instr_int, 31, 31);
+
+            uint32_t result;
+            uint32_t operand1 = Rn == 31 ? 0 : reg[Rn];
+            uint32_t operand2 = shift_reg32((uint32_t) Rm == 31 ? 0 : reg[Rm], (uint32_t) shift, (int) imm6);
+
+            uint8_t nzcv;
+            operand2 = ~(operand2);
+
+            add_with_carry32(operand1, operand2, (uint8_t) 1, &result, &nzcv);
+
+            if ( Rd != 31 ) {
+                reg[Rd] = result;
+                if ( debug ) {
+                  printf("%lx", reg[Rd]);
+                }
             }
         } else if ( is_instruction(instr_int, 0x3d800000) ) {
             // STR immediate unsigned offset SIMD 128
@@ -1282,7 +1450,7 @@ int main(int argc, const char * argv[]) {
             uint64_t address = reg[n];
             address = reg[n];
             address = address + offset;
-            uint8_t data = reg[t];
+            uint8_t data = t == 31 ? 0 : reg[t];
             memory_set(address, data);
         } else if( is_instruction(instr_int, 0x38600800) ){
             //ldrb register
@@ -1443,7 +1611,7 @@ int main(int argc, const char * argv[]) {
             uint32_t shift_amt = imm;
             uint32_t operand1 = 0;
             if ( n != 31 ) {
-                operand1 = reg[n];
+                operand1 = (uint32_t) reg[n];
             }
             uint32_t regVal = 0;
             if ( m != 31 ) {
@@ -1587,7 +1755,7 @@ int main(int argc, const char * argv[]) {
             uint32_t pos = extract32(instr_int, 22, 21);
             uint32_t imm = extract32(instr_int, 20, 5);
             pos = pos << 4;
-            uint64_t result = imm << pos;
+            uint32_t result = imm << pos;
             result = ~result;
             if ( d != 31 ) {
                 reg[d] = result;
@@ -1666,7 +1834,7 @@ int main(int argc, const char * argv[]) {
                 operand1 = reg[n];
             }
 
-            uint32_t operand2 = shift_reg32(m, shift_type, shift_amount);
+            uint32_t operand2 = shift_reg32(m == 31 ? 0 : reg[m], shift_type, shift_amount);
             operand2 = ~operand2;
             uint32_t result = operand1 & operand2;
             if(d != 31){
@@ -1685,7 +1853,7 @@ int main(int argc, const char * argv[]) {
             if(n != 31){
               operand1 = reg[n];
             }
-            uint32_t operand2 = shift_reg32(m, shift_type, shift_amount);
+            uint32_t operand2 = shift_reg32(m == 31 ? 0 : reg[m], shift_type, shift_amount);
             uint32_t result = operand1 & operand2;
             if(d != 31){
               reg[d] = result;

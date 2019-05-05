@@ -109,8 +109,15 @@ uint64_t replicate(uint64_t bits, unsigned int times, unsigned int size);
 
 void decode_bit_masks(uint64_t N, uint64_t imms, uint64_t immr, bool immediate, uint64_t* wmask, uint64_t* tmask);
 
+// inline uint64_t set_reg_32(uint64_t origRegVal, uint32_t val) {
+//     return val;
+// }
+
 inline uint64_t set_reg_32(uint64_t origRegVal, uint32_t val) {
-    return val;
+    uint64_t newRegVal = (origRegVal >> 32) << 32;
+    newRegVal |= val;
+    // uint64_t newRegVal = val;
+    return newRegVal;
 }
 
 inline bool is_instruction(uint64_t actual, uint64_t desired) {
