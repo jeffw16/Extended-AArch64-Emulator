@@ -55,9 +55,8 @@ int main(int argc, const char * argv[]) {
             }
         }
         // PC-specific debug
-        if ( pcLocal == 0x400c34 ) {
-            printf("%d\n", nzcvLocal);
-            printf(" X0: %lx\n", reg[0]);
+        if ( pcLocal == 0x41187c || pcLocal == 0x411884 ) {
+            printf(" X2: %lx\n", reg[2]);
         }
         if ( is_instruction(instr_int, 0xfa400800) ) {
             // CCMP immediate 64
@@ -100,7 +99,34 @@ int main(int argc, const char * argv[]) {
             } else {
                 nzcvLocal = flags;
             }
-        } else if ( is_instruction(instr_int, 0xf9400000) ) {
+        } else if( is_instruction(instr_int, 0xfa400000) ){
+            //ccmp register 64
+            //CCMP REGISTER 64
+            uint8_t flags = extract(instr_int, 4, 0);
+            uint64_t n = extract(instr_int, 9, 5);
+            uint64_t cond = extract(instr_int, 15, 12);
+            uint64_t m = extract(instr_int, 20, 16);
+
+            uint64_t operand1 = 0;
+            uint64_t operand2 = 0;
+
+            if(n != 31){
+              operand1 = reg[n];
+            }
+            if(m != 31){
+              operand2 = reg[m];
+            }
+            uint64_t result_throwaway = 0;
+            uint8_t flags_result = 0;
+            if(conditionHolds(cond, cond)){
+              operand2 = ~operand2;
+              add_with_carry64(operand1, operand2, 1, &result_throwaway, &flags_result);
+              flags = flags_result;
+            }
+
+            nzcvLocal = flags;
+        }
+        else if ( is_instruction(instr_int, 0xf9400000) ) {
             // LDR immediate unsigned offset 64
             // cout << "LDR immediate unsigned offset 64" << endl;
             uint64_t imm12 = extract(instr_int, 21, 10);
@@ -167,6 +193,18 @@ int main(int argc, const char * argv[]) {
             uint64_t data = reg[t];
             memory_set_64(address, data);
             reg[n] = address;
+        } else if ( is_instruction(instr_int, 0xF8400000) ) {
+            // LDRU 64
+            uint64_t imm9 = extract(instr_int, 20, 12);
+            uint64_t t = extract(instr_int, 4, 0);
+            uint64_t n = extract(instr_int, 9, 5);
+            uint64_t offset = sign_extend_32(imm9, 9);
+            uint64_t address = reg[n];
+            address = address + offset;
+            uint64_t data = memory_get_64(address);
+            if ( t != 31 ) {
+                reg[t] = data;
+            }
         } else if( is_instruction(instr_int, 0xf8200800) ) {
           //str shifted register 64
           //STR SHIFTED REGISTER 64
@@ -420,6 +458,7 @@ int main(int argc, const char * argv[]) {
                 while ( memory_get(reg[1] + count) != 0 ) {
                     printf("%c", memory_get(reg[1] + count++));
                 }
+                printf("\n");
                 reg[0] = result;
             } else if ( syscall_num == 0x40 ) {
                 // write
@@ -446,15 +485,36 @@ int main(int argc, const char * argv[]) {
             else if ( syscall_num == 0xd6 ) {
                 // brk
                 reg[0] = 0;
+            } else if ( syscall_num == 0xae || syscall_num == 0xaf || syscall_num == 0xb0 || syscall_num == 0xb1 ) {
+                // getuid32 (ae) and geteuid32 (af)
+                // getgid32 (b0) and getegid32 (b1)
+                reg[0] = 0;
+            } else if ( syscall_num == 0x4e ) {
+                // readlinkat
+                int count = 0;
+                printf("pathname: ");
+                while ( memory_get(reg[1] + count) != 0 ) {
+                    printf("%c", memory_get(reg[1] + count++));
+                }
+                printf("\n");
+                count = 0;
+                printf("buf: ");
+                while ( memory_get(reg[2] + count) != 0 ) {
+                    printf("%c", memory_get(reg[1] + count++));
+                }
+                printf("\n");
+                FILE* readfile = fopen(fileName, "r");
+                fseek(readfile, 0, SEEK_END);
+                // reg[0] = ftell(readfile); // get size of file
             }
             // else if ( syscall_num == 0x0 ) {
             //     //
             //     reg[0] = 0;
             // }
 
-        // } else if (is_instruction(instr_int, 0xd4200000)) {
+        } else if (is_instruction(instr_int, 0xd4200000)) {
             // BRK
-            // exit(0);
+            exit(0);
         } else if ( is_instruction(instr_int, 0xd3000000) ) {
             // UBFM 64
             // cout << "UBFM 64" << endl;
@@ -536,6 +596,30 @@ int main(int argc, const char * argv[]) {
             if ( t != 31 ) {
                 reg[t] = data;
             }
+        } else if ( is_instruction(instr_int, 0xc800fc00) ){
+            //stlxr 64 bit
+            //STLXR 64 bit
+            uint64_t t = extract(instr_int, 4, 0);
+            uint64_t n = extract(instr_int, 9, 5);
+            uint64_t s = extract(instr_int, 20, 16);
+            //uint8_t size = extract(instr_int, 31, 30);
+            //uint64_t elsize = 64;
+
+            uint64_t address = 0;
+            uint64_t data = 0;
+            //uint64_t dbytes = 4;
+
+            address = reg[n];
+
+            if(t != 31){
+              data = reg[t];
+            }
+
+            memory_set_64(address, data);
+            if(s != 31){
+              reg[s] = 0;
+            }
+
         } else if ( is_instruction(instr_int, 0xc8007c00) ) {
             // STXR 64
             uint64_t t = extract(instr_int, 4, 0);
@@ -623,6 +707,18 @@ int main(int argc, const char * argv[]) {
             }
             address = address + offset;
             reg[n] = address;
+        } else if ( is_instruction(instr_int, 0xb8400400) ) {
+            // LDRU 32
+            uint64_t imm9 = extract(instr_int, 20, 12);
+            uint64_t t = extract(instr_int, 4, 0);
+            uint64_t n = extract(instr_int, 9, 5);
+            uint64_t offset = sign_extend_32(imm9, 9);
+            uint64_t address = reg[n];
+            address = address + offset;
+            uint32_t data = memory_get_32(address);
+            if ( t != 31 ) {
+                reg[t] = data;
+            }
         } else if( is_instruction(instr_int, 0xb8200800) ){
             // str shifted register 32
             // STR SHIFTED REGISTER 32
@@ -1123,7 +1219,32 @@ int main(int argc, const char * argv[]) {
             if ( t != 31 ) {
                 reg[t] = data;
             }
-        } else if ( is_instruction(instr_int, 0x88007c00) ) {
+        } else if( is_instruction(instr_int, 0x8800fc00) ){
+          //stlxr 32
+          //STLXR 32
+          uint64_t t = extract(instr_int, 4, 0);
+          uint64_t n = extract(instr_int, 9, 5);
+          uint64_t s = extract(instr_int, 20, 16);
+          //uint8_t size = extract(instr_int, 31, 30);
+          //uint64_t elsize = 32;
+
+          uint64_t address = 0;
+          uint32_t data = 0;
+          //uint64_t dbytes = 4;
+
+          address = reg[n];
+
+          if(t != 31){
+            data = reg[t];
+          }
+
+          memory_set_32(address, data);
+          if(s != 31){
+            reg[s] = 0;
+          }
+        }
+
+        else if ( is_instruction(instr_int, 0x88007c00) ) {
             // STXR 32
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t n = extract(instr_int, 9, 5);
@@ -1173,6 +1294,41 @@ int main(int argc, const char * argv[]) {
             } else {
                 nzcvLocal = flags;
             }
+        } else if( is_instruction(instr_int, 0x7a400000) ){
+          //ccmp register 32
+          //CCMP REGISTER 32
+          uint8_t flags = extract(instr_int, 4, 0);
+          uint64_t n = extract(instr_int, 9, 5);
+          uint64_t cond = extract(instr_int, 15, 12);
+          uint64_t m = extract(instr_int, 20, 16);
+
+          uint32_t operand1 = 0;
+          uint32_t operand2 = 0;
+
+          if(n != 31){
+            operand1 = reg[n];
+          }
+          if(m != 31){
+            operand2 = reg[m];
+          }
+          uint32_t result_throwaway = 0;
+          uint8_t flags_result = 0;
+          if(conditionHolds(cond, cond)){
+            operand2 = ~operand2;
+            add_with_carry32(operand1, operand2, 1, &result_throwaway, &flags_result);
+            flags = flags_result;
+          }
+          nzcvLocal = flags;
+        } else if( is_instruction(instr_int, 0x79000000) ){
+            //STRH Immediate unsigned offset
+            uint32_t t = extract(instr_int, 4, 0);
+            uint32_t n = extract(instr_int, 9, 5);
+            uint32_t imm = extract(instr_int, 20, 12);
+            uint64_t offset = imm << 1;
+            uint64_t addr = reg[n] + offset;
+            uint32_t data = t==31 ? 0 : reg[t];
+            memory_set(addr, extract(data,7,0));
+            memory_set(addr, extract(data,15,8));
         } else if( is_instruction(instr_int, 0x72000000) ){
             //ANDS immediate 32
             uint32_t d = extract(instr_int, 4, 0);
@@ -1299,8 +1455,7 @@ int main(int argc, const char * argv[]) {
           if(d != 31){
             reg[d] = result;
           }
-        }
-        else if ( is_instruction(instr_int, 0x58000000) ) {
+        } else if ( is_instruction(instr_int, 0x58000000) ) {
             // LDR (literal) 64-bit
             uint64_t imm = extract(instr_int, 23, 5);
             uint64_t t = extract(instr_int, 4, 0);
@@ -1310,6 +1465,7 @@ int main(int argc, const char * argv[]) {
             if ( t != 31 ) {
                 reg[t] = data;
             }
+            printf("reg[t]: %lx", reg[t]);
         } else if ( is_instruction(instr_int, 0x54000000) ) {
             // B.cond
             // cout << "B.cond" << endl;
@@ -1635,7 +1791,42 @@ int main(int argc, const char * argv[]) {
             memory_set_32(address, data);
             memory_set_32(address + 4, data2);
             reg[n] = address;
-        } else if ( is_instruction(instr_int, 0x29000000) ) {
+        } else if ( is_instruction(instr_int, 0x29c00000) ) {
+            // LDP pre-index 32
+            uint64_t n = extract(instr_int, 9, 5);
+            uint64_t t = extract(instr_int, 4, 0);
+            uint64_t t2 = extract(instr_int, 14, 10);
+            uint64_t offset = sign_extend_32(extract32(instr_int, 21, 15), 7) << 2;
+            uint64_t address = reg[n];
+            address = address + offset;
+            uint32_t data = memory_get_32(address);
+            uint32_t data2 = memory_get_32(address + 4);
+            if ( t != 31 ) {
+                reg[t] = data;
+            }
+            if ( t2 != 31 ) {
+                reg[t2] = data2;
+            }
+            reg[n] = address;
+        }
+        else if ( is_instruction(instr_int, 0x29400000) ) {
+            // LDP signed offset 32-bit
+            uint64_t n = extract(instr_int, 9, 5);
+            uint64_t t = extract(instr_int, 4, 0);
+            uint64_t t2 = extract(instr_int, 14, 10);
+            uint64_t offset = sign_extend_64(extract(instr_int, 21, 15), 7) << 3;
+            uint64_t address = reg[n];
+            address = address + offset;
+            uint32_t data = memory_get_32(address);
+            uint32_t data2 = memory_get_32(address + 8);
+            if ( t != 31 ) {
+                reg[t] = data;
+            }
+            if ( t2 != 31 ) {
+                reg[t2] = data2;
+            }
+        }
+        else if ( is_instruction(instr_int, 0x29000000) ) {
             // STP signed offset 32-bit
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t t = extract(instr_int, 4, 0);
@@ -1740,6 +1931,16 @@ int main(int argc, const char * argv[]) {
               result = operand2;
             if ( d != 31 ) {
                 reg[d] = result;
+            }
+        } else if ( is_instruction(instr_int, 0x18000000) ) {
+            // LDR (literal) 32-bit
+            uint64_t imm = extract(instr_int, 23, 5);
+            uint64_t t = extract(instr_int, 4, 0);
+            uint64_t offset = sign_extend_32(imm << 2, 21);
+            uint64_t address = pcLocal + offset;
+            uint32_t data = memory_get_32(address);
+            if ( t != 31 ) {
+                reg[t] = data;
             }
         } else if ( is_instruction(instr_int, 0x14000000) ) {
             // B
