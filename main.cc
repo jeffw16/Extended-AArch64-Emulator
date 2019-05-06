@@ -57,7 +57,8 @@ int main(int argc, const char * argv[]) {
         // PC-specific debug
         if ( pcLocal == 0x41187c || pcLocal == 0x411884 ) {
             printf(" X2: %lx\n", reg[2]);
-        }
+            printf(" [X2]: %lx\n", memory_get_64(reg[2]));
+	}
         if ( is_instruction(instr_int, 0xfa400800) ) {
             // CCMP immediate 64
             uint64_t n = extract(instr_int, 9, 5);
