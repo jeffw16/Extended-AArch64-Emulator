@@ -43,6 +43,8 @@ int main(int argc, const char * argv[]) {
     // syscall variables
     while ( !allTerminated ) {
         // whether to change the PC
+	
+	printf("mem[490b48] %lx\n", memory_get_64(4787016));
         bool pcChange = false;
         uint32_t instr_int = memory_get_32(pcLocal);
         if ( debug ) {
@@ -55,7 +57,7 @@ int main(int argc, const char * argv[]) {
             }
         }
         // PC-specific debug
-        if ( pcLocal == 0x41187c || pcLocal == 0x411884 ) {
+        if ( pcLocal == 0x41187c || pcLocal == 0x411884 || pcLocal == 0x411878 || pcLocal == 0x41187c) {
             printf(" X2: %lx\n", reg[2]);
             printf(" [X2]: %lx\n", memory_get_64(reg[2]));
 	}
@@ -128,6 +130,7 @@ int main(int argc, const char * argv[]) {
             nzcvLocal = flags;
         }
         else if ( is_instruction(instr_int, 0xf9400000) ) {
+            printf("Reached ldr\n");
             // LDR immediate unsigned offset 64
             // cout << "LDR immediate unsigned offset 64" << endl;
             uint64_t imm12 = extract(instr_int, 21, 10);
@@ -150,8 +153,9 @@ int main(int argc, const char * argv[]) {
             uint64_t offset = logical_shift_left(imm, size);
             uint64_t address = reg[n];
             address = address + offset;
-            uint64_t data = reg[t];
-            memory_set_64(address, data);
+            uint64_t data = t==31 ? 0 : reg[t];
+            // ******** FIX ******
+	    memory_set_64(address, data);
         } else if ( is_instruction(instr_int, 0xf8400c00) ) {
             // LDR immediate pre-index 64
             // cout << "LDR immediate pre-index 64" << endl;
@@ -655,8 +659,9 @@ int main(int argc, const char * argv[]) {
             uint64_t offset = logical_shift_left32(imm, size);
             uint64_t address = reg[n];
             address = address + offset;
-            uint64_t data = reg[t];
-            memory_set_32(address, data);
+	    
+            uint64_t data = t==31 ? 0 : reg[t];
+	    memory_set_32(address, data);
         } else if ( is_instruction(instr_int, 0xb8800400) ) {
             // LDRSW immediate post-index
             // cout << "LDRSW immediate post-index" << endl;
@@ -751,7 +756,7 @@ int main(int argc, const char * argv[]) {
             uint64_t offset = sign_extend_64(imm, 9);
             uint64_t address = reg[n];
             address = address + offset;
-            uint64_t data = reg[t];
+            uint64_t data = t == 31 ? 0 : reg[t];
             memory_set_32(address, data);
             reg[n] = address;
         } else if ( is_instruction(instr_int, 0xb8000400) ) {
@@ -763,16 +768,16 @@ int main(int argc, const char * argv[]) {
             uint64_t offset = sign_extend_64(imm, 9);
             uint64_t address = reg[n];
 
-            uint64_t data = reg[t];
+            uint64_t data = t == 31 ? 0 : reg[t];
             memory_set_32(address, data);
             address = address + offset;
             reg[n] = address;
         } else if ( is_instruction(instr_int, 0xb7000000) ) {
             // TBNZ 64
             uint64_t t = extract(instr_int, 4, 0);
-            uint64_t bitpos = (1 << 4) | extract(instr_int, 23, 19);
+            uint64_t bitpos = (extract(instr_int, 31, 31) << 4) | extract(instr_int, 23, 19);
             uint64_t imm14 = extract(instr_int, 18, 5);
-            uint64_t offset = sign_extend_32(imm14 << 2, 16);
+            uint64_t offset = sign_extend_64(imm14 << 2, 16);
             uint64_t regVal = 0;
             if ( t != 31 ) {
                 regVal = reg[t];
@@ -788,9 +793,9 @@ int main(int argc, const char * argv[]) {
         } else if ( is_instruction(instr_int, 0xb6000000) ) {
             // TBZ 64
             uint64_t t = extract(instr_int, 4, 0);
-            uint64_t bitpos = (1 << 4) | extract(instr_int, 23, 19);
+            uint64_t bitpos = (extract(instr_int,31,31) << 4) | extract(instr_int, 23, 19);
             uint64_t imm14 = extract(instr_int, 18, 5);
-            uint64_t offset = sign_extend_32(imm14 << 2, 16);
+            uint64_t offset = sign_extend_64(imm14 << 2, 16);
             uint64_t regVal = 0;
             if ( t != 31 ) {
                 regVal = reg[t];
@@ -972,6 +977,7 @@ int main(int argc, const char * argv[]) {
             reg[n] = address;
         } else if ( is_instruction(instr_int, 0xa9000000) ) {
             // STP signed offset 64-bit
+	    printf("Entered stp\n");
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t t2 = extract(instr_int, 14, 10);
@@ -982,6 +988,8 @@ int main(int argc, const char * argv[]) {
             uint64_t data2 = t2 == 31 ? 0 : reg[t2];
             memory_set_64(address, data);
             memory_set_64(address + 8, data2);
+	    printf("STP addr1: %lx\n", address);
+	    printf("STP addr2: %lx\n", address+8);
         } else if ( is_instruction(instr_int, 0xa8c00000) ) {
             // LDP post-index 64-bit
             uint64_t n = extract(instr_int, 9, 5);
@@ -1458,7 +1466,8 @@ int main(int argc, const char * argv[]) {
           }
         } else if ( is_instruction(instr_int, 0x58000000) ) {
             // LDR (literal) 64-bit
-            uint64_t imm = extract(instr_int, 23, 5);
+            printf("reached LDR literal 64\n");
+	    uint64_t imm = extract(instr_int, 23, 5);
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t offset = sign_extend_64(imm << 2, 21);
             uint64_t address = pcLocal + offset;
@@ -1466,7 +1475,9 @@ int main(int argc, const char * argv[]) {
             if ( t != 31 ) {
                 reg[t] = data;
             }
-            printf("reg[t]: %lx", reg[t]);
+	    printf("Address: %lx\n", address);
+	    printf("Data: %lx\n", data);
+            printf("reg[t]: %lx\n", reg[t]);
         } else if ( is_instruction(instr_int, 0x54000000) ) {
             // B.cond
             // cout << "B.cond" << endl;
@@ -1586,8 +1597,8 @@ int main(int argc, const char * argv[]) {
             memory_set_128(address, data);
         } else if ( is_instruction(instr_int, 0x39400000) ) {
             // LDRB immediate unsigned offset 32
-            // cout << "LDRB immediate unsigned offset 32" << endl;
-            uint64_t imm = extract(instr_int, 21, 10);
+            // cout << "LDRB immediate unsigned offse;
+	    uint64_t imm = extract(instr_int, 21, 10);
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t offset = imm;
@@ -1667,7 +1678,7 @@ int main(int argc, const char * argv[]) {
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t bitpos = extract(instr_int, 23, 19);
             uint64_t imm14 = extract(instr_int, 18, 5);
-            uint64_t offset = sign_extend_32(imm14 << 2, 16);
+            uint64_t offset = sign_extend_64(imm14 << 2, 16);
             uint64_t regVal = 0;
             if ( t != 31 ) {
                 regVal = reg[t];
@@ -1685,7 +1696,7 @@ int main(int argc, const char * argv[]) {
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t bitpos = extract(instr_int, 23, 19);
             uint64_t imm14 = extract(instr_int, 18, 5);
-            uint64_t offset = sign_extend_32(imm14 << 2, 16);
+            uint64_t offset = sign_extend_64(imm14 << 2, 16);
             uint64_t regVal = 0;
             if ( t != 31 ) {
                 regVal = reg[t];
@@ -1935,7 +1946,8 @@ int main(int argc, const char * argv[]) {
             }
         } else if ( is_instruction(instr_int, 0x18000000) ) {
             // LDR (literal) 32-bit
-            uint64_t imm = extract(instr_int, 23, 5);
+            printf("Reached ldr literal\n");
+	    uint64_t imm = extract(instr_int, 23, 5);
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t offset = sign_extend_32(imm << 2, 21);
             uint64_t address = pcLocal + offset;
