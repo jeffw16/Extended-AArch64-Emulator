@@ -1,0 +1,4 @@
+_start:
+mov x8, #0x40
+
+svc #0x0

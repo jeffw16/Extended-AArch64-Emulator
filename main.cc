@@ -1,6 +1,8 @@
 #include <cstdio>
 #include <cstdlib>
 #include <iostream>
+#include <stdio.h>
+#include <string.h>
 
 #include <linux/kernel.h>
 #include <unistd.h>
@@ -43,24 +45,25 @@ int main(int argc, const char * argv[]) {
     // syscall variables
     while ( !allTerminated ) {
         // whether to change the PC
-	
-	printf("mem[490b48] %lx\n", memory_get_64(4787016));
         bool pcChange = false;
         uint32_t instr_int = memory_get_32(pcLocal);
         if ( debug ) {
-            printf("instruction %x at address %lx ", instr_int, pcLocal);
-            printf("X30: %lx", reg[30]);
-            printf(" X0: %lx\n", reg[0]);
+            printf("instruction %x at address %lx \n", instr_int, pcLocal);
+            // printf("X30: %lx", reg[30]);
+            // printf(" X0: %lx", reg[0]);
+            // printf(" X1: %lx", reg[1]);
+            // printf(" X2: %lx\n", reg[2]);
+          	// printf("mem[490b48] %lx\n", memory_get_64(4787016));
             if ( pcLocal == 0x408d58 || (pcLocal >= 0x405788 && pcLocal <= 0x405a8c) ) {
                 printf("Abort encountered. Stopping execution.\n");
                 exit(0);
             }
         }
         // PC-specific debug
-        if ( pcLocal == 0x41187c || pcLocal == 0x411884 || pcLocal == 0x411878 || pcLocal == 0x41187c) {
-            printf(" X2: %lx\n", reg[2]);
-            printf(" [X2]: %lx\n", memory_get_64(reg[2]));
-	}
+        // if ( pcLocal == 0x41187c || pcLocal == 0x411884 || pcLocal == 0x411878 || pcLocal == 0x41187c) {
+            // printf(" X2: %lx\n", reg[2]);
+            // printf(" [X2]: %lx\n", memory_get_64(reg[2]));
+        // }
         if ( is_instruction(instr_int, 0xfa400800) ) {
             // CCMP immediate 64
             uint64_t n = extract(instr_int, 9, 5);
@@ -130,7 +133,7 @@ int main(int argc, const char * argv[]) {
             nzcvLocal = flags;
         }
         else if ( is_instruction(instr_int, 0xf9400000) ) {
-            printf("Reached ldr\n");
+            // printf("Reached ldr\n");
             // LDR immediate unsigned offset 64
             // cout << "LDR immediate unsigned offset 64" << endl;
             uint64_t imm12 = extract(instr_int, 21, 10);
@@ -356,6 +359,25 @@ int main(int argc, const char * argv[]) {
             } else if ( n != 31 && d != 31 ) {
                 uint64_t orig = reg[n];
                 uint64_t rev = 0;
+                rev |= extract(orig, 7, 0) << 56;
+                rev |= extract(orig, 15, 8) << 48;
+                rev |= extract(orig, 23, 16) << 40;
+                rev |= extract(orig, 31, 24) << 32;
+                rev |= extract(orig, 39, 32) << 24;
+                rev |= extract(orig, 47, 40) << 16;
+                rev |= extract(orig, 55, 48) << 8;
+                rev |= extract(orig, 63, 56);
+                reg[d] = rev;
+            }
+        } else if ( is_instruction(instr_int, 0xdac00000) ) {
+            // RBIT 64
+            uint64_t n = extract(instr_int, 9, 5);
+            uint64_t d = extract(instr_int, 4, 0);
+            if ( n == 31 && d != 31 ) {
+                reg[d] = 0;
+            } else if ( n != 31 && d != 31 ) {
+                uint64_t orig = reg[n];
+                uint64_t rev = 0;
                 for ( int i = 0; i < 64; i++ ) {
                     rev |= ((orig >> i) & 1) << (63 - i);
                 }
@@ -508,9 +530,27 @@ int main(int argc, const char * argv[]) {
                     printf("%c", memory_get(reg[1] + count++));
                 }
                 printf("\n");
-                FILE* readfile = fopen(fileName, "r");
-                fseek(readfile, 0, SEEK_END);
+                // FILE* readfile = fopen(fileName, "r");
+                // fseek(readfile, 0, SEEK_END);
                 // reg[0] = ftell(readfile); // get size of file
+                printf("%s", fileName);
+                reg[0] = strlen(fileName);
+            } else if ( syscall_num == 0xde ) {
+                // mmap
+                // give it virtual memory address to work with
+                if ( reg[0] == 0 ) {
+                    reg[0] = 0x400000;
+                }
+                // if reg[0] is already nonzero then we just let it be
+                // that means we are giving them the address they requested
+            } else if ( syscall_num == 0xd7 ) {
+                // munmap
+                // success means return value is 0
+                reg[0] = 0;
+            } else if ( syscall_num == 0xe2 ) {
+                // mprotect
+                // success means return value is 0
+                reg[0] = 0;
             }
             // else if ( syscall_num == 0x0 ) {
             //     //
@@ -659,7 +699,7 @@ int main(int argc, const char * argv[]) {
             uint64_t offset = logical_shift_left32(imm, size);
             uint64_t address = reg[n];
             address = address + offset;
-	    
+
             uint64_t data = t==31 ? 0 : reg[t];
 	    memory_set_32(address, data);
         } else if ( is_instruction(instr_int, 0xb8800400) ) {
@@ -977,7 +1017,7 @@ int main(int argc, const char * argv[]) {
             reg[n] = address;
         } else if ( is_instruction(instr_int, 0xa9000000) ) {
             // STP signed offset 64-bit
-	    printf("Entered stp\n");
+	    // printf("Entered stp\n");
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t t2 = extract(instr_int, 14, 10);
@@ -988,8 +1028,8 @@ int main(int argc, const char * argv[]) {
             uint64_t data2 = t2 == 31 ? 0 : reg[t2];
             memory_set_64(address, data);
             memory_set_64(address + 8, data2);
-	    printf("STP addr1: %lx\n", address);
-	    printf("STP addr2: %lx\n", address+8);
+	    // printf("STP addr1: %lx\n", address);
+	    // printf("STP addr2: %lx\n", address+8);
         } else if ( is_instruction(instr_int, 0xa8c00000) ) {
             // LDP post-index 64-bit
             uint64_t n = extract(instr_int, 9, 5);
@@ -1066,6 +1106,14 @@ int main(int argc, const char * argv[]) {
             if ( d != 31 ) {
                 reg[d] = result;
             }
+        // } else if ( is_instruction(instr_int, 0x94000063) ) {
+            // special branch to main() instead of libc start
+            // because nobody has time for that
+            // if ( debug ) {
+                // printf("Special branch to main directly!\n");
+            // }
+            // pcLocal = memory_get_32(pcLocal + 0xc);
+            // pcChange = true;
         } else if ( is_instruction(instr_int, 0x94000000) ) {
             // BL
             // cout << "BL" << endl;
@@ -1423,6 +1471,20 @@ int main(int argc, const char * argv[]) {
             if(d != 31){
                 reg[d] = result;
             }
+        } else if ( is_instruction(instr_int, 0x5ac00000) ) {
+            // RBIT 32
+            uint64_t n = extract(instr_int, 9, 5);
+            uint64_t d = extract(instr_int, 4, 0);
+            if ( n == 31 && d != 31 ) {
+                reg[d] = 0;
+            } else if ( n != 31 && d != 31 ) {
+                uint32_t orig = reg[n];
+                uint32_t rev = 0;
+                for ( int i = 0; i < 32; i++ ) {
+                    rev |= ((orig >> i) & 1) << (31 - i);
+                }
+                reg[d] = rev;
+            }
         }
         else if( is_instruction(instr_int, 0x5ac01000) ){
           //clz 32 bit
@@ -1466,7 +1528,7 @@ int main(int argc, const char * argv[]) {
           }
         } else if ( is_instruction(instr_int, 0x58000000) ) {
             // LDR (literal) 64-bit
-            printf("reached LDR literal 64\n");
+            // printf("reached LDR literal 64\n");
 	    uint64_t imm = extract(instr_int, 23, 5);
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t offset = sign_extend_64(imm << 2, 21);
@@ -1475,9 +1537,9 @@ int main(int argc, const char * argv[]) {
             if ( t != 31 ) {
                 reg[t] = data;
             }
-	    printf("Address: %lx\n", address);
-	    printf("Data: %lx\n", data);
-            printf("reg[t]: %lx\n", reg[t]);
+	    // printf("Address: %lx\n", address);
+	    // printf("Data: %lx\n", data);
+      //       printf("reg[t]: %lx\n", reg[t]);
         } else if ( is_instruction(instr_int, 0x54000000) ) {
             // B.cond
             // cout << "B.cond" << endl;
@@ -1946,7 +2008,7 @@ int main(int argc, const char * argv[]) {
             }
         } else if ( is_instruction(instr_int, 0x18000000) ) {
             // LDR (literal) 32-bit
-            printf("Reached ldr literal\n");
+            // printf("Reached ldr literal\n");
 	    uint64_t imm = extract(instr_int, 23, 5);
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t offset = sign_extend_32(imm << 2, 21);
