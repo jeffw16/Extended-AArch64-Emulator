@@ -1,280 +1,556 @@
 instruction d280001d at address 400138  X0: 0 X28: 0
+movz
 instruction d280001e at address 40013c  X0: 0 X28: 0
+movz
 instruction 910003e0 at address 400140  X0: 0 X28: 0
+add
 instruction 90000001 at address 400144  X0: 0 X28: 0
+adrp
 instruction 91000021 at address 400148  X0: 0 X28: 0
+add
 instruction 927cec1f at address 40014c  X0: 0 X28: 0
+and
 instruction 14000001 at address 400150  X0: 0 X28: 0
+b
 instruction b0000021 at address 400154  X0: 0 X28: 0
+adrp
 instruction f81f0ffe at address 400158  X0: 0 X28: 0
+str
 instruction 91002002 at address 40015c  X0: 0 X28: 0
+add
 instruction d2800005 at address 400160  X0: 0 X28: 0
+movz
 instruction f944c024 at address 400164  X0: 0 X28: 0
+ldr
 instruction b0000021 at address 400168  X0: 0 X28: 0
+adrp
 instruction f944c423 at address 40016c  X0: 0 X28: 0
+ldr
 instruction b9400001 at address 400170  X0: 0 X28: 0
+ldr
 instruction 90000000 at address 400174  X0: 0 X28: 0
+adrp
 instruction 91046000 at address 400178  X0: 400000 X28: 0
+add
 instruction 940000d1 at address 40017c  X0: 400118 X28: 0
+bl
 instruction a9be53f3 at address 4004c0  X0: 400118 X28: 0
+stp
 instruction 2a0103f4 at address 4004c4  X0: 400118 X28: 0
+orr
 instruction aa0203f3 at address 4004c8  X0: 400118 X28: 0
+orr
 instruction a9017bf5 at address 4004cc  X0: 400118 X28: 0
+stp
 instruction aa0003f5 at address 4004d0  X0: 400118 X28: 0
+orr
 instruction 8b21cc40 at address 4004d4  X0: 400118 X28: 0
-instruction f9400041 at address 4004d8  X0: 8 X28: 0
-instruction 91002000 at address 4004dc  X0: 8 X28: 0
-instruction 97ffff6f at address 4004e0  X0: 10 X28: 0
-instruction a9a853f3 at address 40029c  X0: 10 X28: 0
-instruction aa0003f4 at address 4002a0  X0: 10 X28: 0
-instruction aa0103f3 at address 4002a4  X0: 10 X28: 0
-instruction d2802602 at address 4002a8  X0: 10 X28: 0
-instruction a9017bf5 at address 4002ac  X0: 10 X28: 0
-instruction 910143f5 at address 4002b0  X0: 10 X28: 0
-instruction aa1503e0 at address 4002b4  X0: 10 X28: 0
+add
+instruction f9400041 at address 4004d8  X0: 9 X28: 0
+ldr
+instruction 91002000 at address 4004dc  X0: 9 X28: 0
+add
+instruction 97ffff6f at address 4004e0  X0: 11 X28: 0
+bl
+instruction a9a853f3 at address 40029c  X0: 11 X28: 0
+stp
+instruction aa0003f4 at address 4002a0  X0: 11 X28: 0
+orr
+instruction aa0103f3 at address 4002a4  X0: 11 X28: 0
+orr
+instruction d2802602 at address 4002a8  X0: 11 X28: 0
+movz
+instruction a9017bf5 at address 4002ac  X0: 11 X28: 0
+stp
+instruction 910143f5 at address 4002b0  X0: 11 X28: 0
+add
+instruction aa1503e0 at address 4002b4  X0: 11 X28: 0
+orr
 instruction 52800001 at address 4002b8  X0: fffffffffffffea0 X28: 0
+movz
 instruction 94000797 at address 4002bc  X0: fffffffffffffea0 X28: 0
+bl
 instruction b4000722 at address 402118  X0: fffffffffffffea0 X28: 0
+cbz
 instruction 8b020004 at address 40211c  X0: fffffffffffffea0 X28: 0
+add
 instruction 53001c23 at address 402120  X0: fffffffffffffea0 X28: 0
+ubfm
 instruction 39000003 at address 402124  X0: fffffffffffffea0 X28: 0
+strb
 instruction f100085f at address 402128  X0: fffffffffffffea0 X28: 0
+subs
 instruction 381ff083 at address 40212c  X0: fffffffffffffea0 X28: 0
+sturb
 instruction 54000669 at address 402130  X0: fffffffffffffea0 X28: 0
+b.cond
 instruction 39000403 at address 402134  X0: fffffffffffffea0 X28: 0
+strb
 instruction f100185f at address 402138  X0: fffffffffffffea0 X28: 0
+subs
 instruction 39000803 at address 40213c  X0: fffffffffffffea0 X28: 0
+strb
 instruction 381fe083 at address 402140  X0: fffffffffffffea0 X28: 0
+sturb
 instruction 381fd083 at address 402144  X0: fffffffffffffea0 X28: 0
+sturb
 instruction 540005a9 at address 402148  X0: fffffffffffffea0 X28: 0
+b.cond
 instruction 39000c03 at address 40214c  X0: fffffffffffffea0 X28: 0
+strb
 instruction f100205f at address 402150  X0: fffffffffffffea0 X28: 0
+subs
 instruction 381fc083 at address 402154  X0: fffffffffffffea0 X28: 0
+sturb
 instruction 54000529 at address 402158  X0: fffffffffffffea0 X28: 0
+b.cond
 instruction cb0003e4 at address 40215c  X0: fffffffffffffea0 X28: 0
+sub
 instruction 12001c21 at address 402160  X0: fffffffffffffea0 X28: 0
+and
 instruction 92400484 at address 402164  X0: fffffffffffffea0 X28: 0
+and
 instruction 3200c3e3 at address 402168  X0: fffffffffffffea0 X28: 0
+and
 instruction cb040042 at address 40216c  X0: fffffffffffffea0 X28: 0
+sub
 instruction 8b040005 at address 402170  X0: fffffffffffffea0 X28: 0
+add
 instruction 927ef442 at address 402174  X0: fffffffffffffea0 X28: 0
+and
 instruction 1b037c21 at address 402178  X0: fffffffffffffea0 X28: 0
+madd
 instruction 8b0200a6 at address 40217c  X0: fffffffffffffea0 X28: 0
+add
 instruction f100205f at address 402180  X0: fffffffffffffea0 X28: 0
+subs
 instruction b8246801 at address 402184  X0: fffffffffffffea0 X28: 0
+str
 instruction b81fc0c1 at address 402188  X0: fffffffffffffea0 X28: 0
 instruction 54000389 at address 40218c  X0: fffffffffffffea0 X28: 0
+b.cond
 instruction 290084a1 at address 402190  X0: fffffffffffffea0 X28: 0
+stp
 instruction f100605f at address 402194  X0: fffffffffffffea0 X28: 0
+subs
 instruction 293e84c1 at address 402198  X0: fffffffffffffea0 X28: 0
+stp
 instruction 54000309 at address 40219c  X0: fffffffffffffea0 X28: 0
+b.cond
 instruction 4e040c20 at address 4021a0  X0: fffffffffffffea0 X28: 0
+and
 instruction d1006042 at address 4021a4  X0: 0 X28: 0
+sub
 instruction 927e00a7 at address 4021a8  X0: 0 X28: 0
+and
 instruction aa018023 at address 4021ac  X0: 0 X28: 0
+orr
 instruction cb070042 at address 4021b0  X0: 0 X28: 0
+sub
 instruction f1007c5f at address 4021b4  X0: 0 X28: 0
+subs
 instruction 3c80c0a0 at address 4021b8  X0: 0 X28: 0
+ldur and stur
 instruction 3c9e40c0 at address 4021bc  X0: 0 X28: 0
+ldur and stur
 instruction 540001e9 at address 4021c0  X0: 0 X28: 0
+b.cond
 instruction d1008041 at address 4021c4  X0: 0 X28: 0
+sub
 instruction 91006082 at address 4021c8  X0: 0 X28: 0
+add
 instruction 8b070042 at address 4021cc  X0: 0 X28: 0
+add
 instruction 4e080c60 at address 4021d0  X0: 0 X28: 0
+and
 instruction 8b020002 at address 4021d4  X0: 0 X28: 0
+add
 instruction d2800003 at address 4021d8  X0: 0 X28: 0
+movz
 instruction d345fc21 at address 4021dc  X0: 0 X28: 0
+lsr
 instruction 91000421 at address 4021e0  X0: 0 X28: 0
+add
 instruction 91000463 at address 4021e4  X0: 0 X28: 0
+add
 instruction 3d800040 at address 4021e8  X0: 0 X28: 0
+str
 instruction eb03003f at address 4021ec  X0: 0 X28: 0
+subs
 instruction 3d800440 at address 4021f0  X0: 0 X28: 0
+str
 instruction 91008042 at address 4021f4  X0: 0 X28: 0
+add
 instruction 54ffff68 at address 4021f8  X0: 0 X28: 0
+b.cond
 instruction 91000463 at address 4021e4  X0: 0 X28: 0
+add
 instruction 3d800040 at address 4021e8  X0: 0 X28: 0
+str
 instruction eb03003f at address 4021ec  X0: 0 X28: 0
+subs
 instruction 3d800440 at address 4021f0  X0: 0 X28: 0
+str
 instruction 91008042 at address 4021f4  X0: 0 X28: 0
+add
 instruction 54ffff68 at address 4021f8  X0: 0 X28: 0
+b.cond
 instruction 91000463 at address 4021e4  X0: 0 X28: 0
+add
 instruction 3d800040 at address 4021e8  X0: 0 X28: 0
+str
 instruction eb03003f at address 4021ec  X0: 0 X28: 0
+subs
 instruction 3d800440 at address 4021f0  X0: 0 X28: 0
+str
 instruction 91008042 at address 4021f4  X0: 0 X28: 0
+add
 instruction 54ffff68 at address 4021f8  X0: 0 X28: 0
+b.cond
 instruction 91000463 at address 4021e4  X0: 0 X28: 0
+add
 instruction 3d800040 at address 4021e8  X0: 0 X28: 0
+str
 instruction eb03003f at address 4021ec  X0: 0 X28: 0
+subs
 instruction 3d800440 at address 4021f0  X0: 0 X28: 0
+str
 instruction 91008042 at address 4021f4  X0: 0 X28: 0
+add
 instruction 54ffff68 at address 4021f8  X0: 0 X28: 0
+b.cond
 instruction 91000463 at address 4021e4  X0: 0 X28: 0
+add
 instruction 3d800040 at address 4021e8  X0: 0 X28: 0
+str
 instruction eb03003f at address 4021ec  X0: 0 X28: 0
+subs
 instruction 3d800440 at address 4021f0  X0: 0 X28: 0
+str
 instruction 91008042 at address 4021f4  X0: 0 X28: 0
+add
 instruction 54ffff68 at address 4021f8  X0: 0 X28: 0
+b.cond
 instruction 91000463 at address 4021e4  X0: 0 X28: 0
+add
 instruction 3d800040 at address 4021e8  X0: 0 X28: 0
+str
 instruction eb03003f at address 4021ec  X0: 0 X28: 0
+subs
 instruction 3d800440 at address 4021f0  X0: 0 X28: 0
+str
 instruction 91008042 at address 4021f4  X0: 0 X28: 0
+add
 instruction 54ffff68 at address 4021f8  X0: 0 X28: 0
+b.cond
 instruction 91000463 at address 4021e4  X0: 0 X28: 0
+add
 instruction 3d800040 at address 4021e8  X0: 0 X28: 0
+str
 instruction eb03003f at address 4021ec  X0: 0 X28: 0
+subs
 instruction 3d800440 at address 4021f0  X0: 0 X28: 0
+str
 instruction 91008042 at address 4021f4  X0: 0 X28: 0
+add
 instruction 54ffff68 at address 4021f8  X0: 0 X28: 0
+b.cond
 instruction 91000463 at address 4021e4  X0: 0 X28: 0
+add
 instruction 3d800040 at address 4021e8  X0: 0 X28: 0
+str
 instruction eb03003f at address 4021ec  X0: 0 X28: 0
+subs
 instruction 3d800440 at address 4021f0  X0: 0 X28: 0
+str
 instruction 91008042 at address 4021f4  X0: 0 X28: 0
+add
 instruction 54ffff68 at address 4021f8  X0: 0 X28: 0
+b.cond
 instruction d65f03c0 at address 4021fc  X0: 0 X28: 0
+ret
 instruction d00000a0 at address 4002c0  X0: 0 X28: 0
+adrp
 instruction f9053814 at address 4002c4  X0: 416000 X28: 0
+str
 instruction d2800000 at address 4002c8  X0: 416000 X28: 0
+movz
 instruction f8607a81 at address 4002cc  X0: 0 X28: 0
+ldru
 instruction 91000400 at address 4002d0  X0: 0 X28: 0
+add
 instruction b5ffffc1 at address 4002d4  X0: 1 X28: 0
+cbnz
 instruction 8b000e80 at address 4002d8  X0: 1 X28: 0
-instruction d00000b4 at address 4002dc  X0: 18 X28: 0
-instruction 9130c281 at address 4002e0  X0: 18 X28: 0
-instruction f9000820 at address 4002e4  X0: 18 X28: 0
-instruction f9400001 at address 4002e8  X0: 18 X28: 0
-instruction b50002a1 at address 4002ec  X0: 18 X28: 0
-instruction d00000a0 at address 4002f0  X0: 18 X28: 0
+add
+instruction d00000b4 at address 4002dc  X0: 19 X28: 0
+adrp
+instruction 9130c281 at address 4002e0  X0: 19 X28: 0
+add
+instruction f9000820 at address 4002e4  X0: 19 X28: 0
+str
+instruction f9400001 at address 4002e8  X0: 19 X28: 0
+ldr
+instruction b50002a1 at address 4002ec  X0: 19 X28: 0
+cbnz
+instruction d00000a0 at address 4002f0  X0: 19 X28: 0
+adrp
 instruction f9406be1 at address 4002f4  X0: 416000 X28: 0
+ldr
 instruction f9061401 at address 4002f8  X0: 416000 X28: 0
+str
 instruction d00000a0 at address 4002fc  X0: 416000 X28: 0
+adrp
 instruction f940abe1 at address 400300  X0: 416000 X28: 0
+ldr
 instruction f9065001 at address 400304  X0: 416000 X28: 0
+str
 instruction 9130c280 at address 400308  X0: 416000 X28: 0
+add
 instruction f94043e1 at address 40030c  X0: 416c30 X28: 0
+ldr
 instruction f9001c01 at address 400310  X0: 416c30 X28: 0
+str
 instruction b50000d3 at address 400314  X0: 416c30 X28: 0
+cbnz
 instruction f940a7f3 at address 400318  X0: 416c30 X28: 0
+ldr
 instruction b0000020 at address 40031c  X0: 416c30 X28: 0
+adrp
 instruction 912d5400 at address 400320  X0: 405000 X28: 0
+add
 instruction f100027f at address 400324  X0: 405b55 X28: 0
+subs
 instruction 9a930013 at address 400328  X0: 405b55 X28: 0
+csel
 instruction d00000a0 at address 40032c  X0: 405b55 X28: 0
+adrp
 instruction f9033013 at address 400330  X0: 416000 X28: 0
+str
 instruction d00000a0 at address 400334  X0: 416000 X28: 0
+adrp
 instruction f9032c13 at address 400338  X0: 416000 X28: 0
+str
 instruction 14000009 at address 40033c  X0: 416000 X28: 0
+b
 instruction 91000673 at address 400360  X0: 416000 X28: 0
+add
 instruction 385ff261 at address 400364  X0: 416000 X28: 0
+ldurb
 instruction 35ffff81 at address 400368  X0: 416000 X28: 0
+cbnz
 instruction aa1503e0 at address 40036c  X0: 416000 X28: 0
+orr
 instruction 940007fa at address 400370  X0: fffffffffffffea0 X28: 0
+bl
 instruction f81f0ffe at address 402358  X0: fffffffffffffea0 X28: 0
+str
 instruction 900000a4 at address 40235c  X0: fffffffffffffea0 X28: 0
+adrp
 instruction 529caa2a at address 402360  X0: fffffffffffffea0 X28: 0
+movz
 instruction 52800008 at address 402364  X0: fffffffffffffea0 X28: 0
+movz
 instruction f9400c09 at address 402368  X0: fffffffffffffea0 X28: 0
+ldr
 instruction d2800001 at address 40236c  X0: fffffffffffffea0 X28: 0
+movz
 instruction b9461c86 at address 402370  X0: fffffffffffffea0 X28: 0
+ldr
 instruction d2800003 at address 402374  X0: fffffffffffffea0 X28: 0
+movz
 instruction f9401407 at address 402378  X0: fffffffffffffea0 X28: 0
+ldr
 instruction aa0903e2 at address 40237c  X0: fffffffffffffea0 X28: 0
+orr
 instruction 72ac8e8a at address 402380  X0: fffffffffffffea0 X28: 0
+ands
 instruction d2a0100b at address 402384  X0: fffffffffffffea0 X28: 0
+movz
 instruction f000000c at address 402388  X0: fffffffffffffea0 X28: 0
+adrp
 instruction b5000787 at address 40238c  X0: fffffffffffffea0 X28: 0
+cbnz
 instruction 34000048 at address 402390  X0: fffffffffffffea0 X28: 0
+cbz
 instruction 900000a5 at address 402398  X0: fffffffffffffea0 X28: 0
+adrp
 instruction 900000a4 at address 40239c  X0: fffffffffffffea0 X28: 0
+adrp
 instruction b40001e3 at address 4023a0  X0: fffffffffffffea0 X28: 0
+cbz
 instruction 912f80a2 at address 4023dc  X0: fffffffffffffea0 X28: 0
+add
 instruction a9418c46 at address 4023e0  X0: fffffffffffffea0 X28: 0
+ldp
 instruction f9400441 at address 4023e4  X0: fffffffffffffea0 X28: 0
+ldr
 instruction 8b060021 at address 4023e8  X0: fffffffffffffea0 X28: 0
+add
 instruction d1000460 at address 4023ec  X0: fffffffffffffea0 X28: 0
+sub
 instruction cb0103e1 at address 4023f0  X0: ffffffffffffffff X28: 0
+sub
 instruction f1001c7f at address 4023f4  X0: ffffffffffffffff X28: 0
+subs
 instruction 8a000021 at address 4023f8  X0: ffffffffffffffff X28: 0
+and
 instruction 927cec00 at address 4023fc  X0: ffffffffffffffff X28: 0
+and
 instruction 8b060021 at address 402400  X0: ffffffffffffffff X28: 0
+add
 instruction 91004000 at address 402404  X0: ffffffffffffffff X28: 0
+add
 instruction f9000c41 at address 402408  X0: f X28: 0
+str
 instruction 8b000021 at address 40240c  X0: f X28: 0
+add
 instruction f9001440 at address 402410  X0: f X28: 0
+str
 instruction 54000068 at address 402414  X0: f X28: 0
+b.cond
 instruction d2800100 at address 402418  X0: f X28: 0
+movz
 instruction f9001040 at address 40241c  X0: 8 X28: 0
+str
 instruction 912f80a5 at address 402420  X0: 8 X28: 0
+add
 instruction 9130c082 at address 402424  X0: 8 X28: 0
+add
 instruction f94010a0 at address 402428  X0: 8 X28: 0
+ldr
 instruction f9001440 at address 40242c  X0: 8 X28: 0
+str
 instruction 9103dc00 at address 402430  X0: 8 X28: 0
+add
 instruction 8b010001 at address 402434  X0: ff X28: 0
+add
 instruction 927df021 at address 402438  X0: ff X28: 0
+and
 instruction f105a03f at address 40243c  X0: ff X28: 0
+subs
 instruction f9001041 at address 402440  X0: ff X28: 0
+str
 instruction 54000569 at address 402444  X0: ff X28: 0
+b.cond
 instruction 900000a0 at address 4024f0  X0: ff X28: 0
+adrp
 instruction 9129e000 at address 4024f4  X0: 416000 X28: 0
+add
 instruction 17ffffdb at address 4024f8  X0: 416a78 X28: 0
+b
 instruction 97ffff90 at address 402464  X0: 416a78 X28: 0
+bl
 instruction a9bb53f3 at address 4022a4  X0: 416a78 X28: 0
+stp
 instruction a90263f7 at address 4022a8  X0: 416a78 X28: 0
+stp
 instruction aa0003f7 at address 4022ac  X0: 416a78 X28: 0
+orr
 instruction 900000a0 at address 4022b0  X0: 416a78 X28: 0
+adrp
 instruction a9036bf9 at address 4022b4  X0: 416000 X28: 0
+stp
 instruction 9130c001 at address 4022b8  X0: 416000 X28: 0
+add
 instruction a9015bf5 at address 4022bc  X0: 416000 X28: 0
+stp
 instruction f90023fe at address 4022c0  X0: 416000 X28: 0
+str
 instruction aa0003f5 at address 4022c4  X0: 416000 X28: 0
+orr
 instruction a941d834 at address 4022c8  X0: 416000 X28: 0
+ldp
 instruction f9401433 at address 4022cc  X0: 416000 X28: 0
+ldr
 instruction d10022c2 at address 4022d0  X0: 416000 X28: 0
+sub
 instruction f9401836 at address 4022d4  X0: 416000 X28: 0
+ldr
 instruction d1000673 at address 4022d8  X0: 416000 X28: 0
+sub
 instruction cb160c56 at address 4022dc  X0: 416000 X28: 0
+sub
 instruction 92801be2 at address 4022e0  X0: 416000 X28: 0
+movn
 instruction cb170042 at address 4022e4  X0: 416000 X28: 0
+sub
 instruction 8b1602f8 at address 4022e8  X0: 416000 X28: 0
+add
 instruction 8a020273 at address 4022ec  X0: 416000 X28: 0
+and
 instruction 9100231a at address 4022f0  X0: 416000 X28: 0
+add
 instruction 8b1302f3 at address 4022f4  X0: 416000 X28: 0
+add
 instruction 91038279 at address 4022f8  X0: 416000 X28: 0
+add
 instruction b50001b4 at address 4022fc  X0: 416000 X28: 0
+cbnz
 instruction 9130c2a0 at address 402300  X0: 416000 X28: 0
+add
 instruction f9401800 at address 402304  X0: 416c30 X28: 0
+ldr
 instruction f8366ae0 at address 402308  X0: 0 X28: 0
+str
 instruction aa1303e0 at address 40230c  X0: 0 X28: 0
+orr
 instruction f9000678 at address 402310  X0: 416a78 X28: 0
+str
 instruction f9006e78 at address 402314  X0: 416a78 X28: 0
+str
 instruction a9415bf5 at address 402318  X0: 416a78 X28: 0
+ldp
 instruction a94263f7 at address 40231c  X0: 416a78 X28: 0
+ldp
 instruction a9436bf9 at address 402320  X0: 416a78 X28: 0
+ldp
 instruction f94023fe at address 402324  X0: 416a78 X28: 0
+ldr
 instruction a8c553f3 at address 402328  X0: 416a78 X28: 0
+ldp
 instruction d65f03c0 at address 40232c  X0: 416a78 X28: 0
+ret
 instruction 97ffff73 at address 402468  X0: 416a78 X28: 0
+bl
 instruction a9bf7bf3 at address 402234  X0: 416a78 X28: 0
+stp
 instruction aa0003f3 at address 402238  X0: 416a78 X28: 0
+orr
 instruction f9000000 at address 40223c  X0: 416a78 X28: 0
+str
 instruction 91038000 at address 402240  X0: 416a78 X28: 0
+add
 instruction 9400030b at address 402244  X0: 416b58 X28: 0
+bl
 instruction d51bd040 at address 402e70  X0: 416b58 X28: 0
+sub
 instruction 52800000 at address 402e74  X0: ffffffffffbe8db4 X28: 0
+movz
 instruction d65f03c0 at address 402e78  X0: 0 X28: 0
+ret
 instruction 7100001f at address 402248  X0: 0 X28: 0
+subs
 instruction 5400028b at address 40224c  X0: 0 X28: 0
+b.cond
 instruction 52800020 at address 402250  X0: 0 X28: 0
+movz
 instruction 54000061 at address 402254  X0: 0 X28: 0
+b.cond
 instruction 900000a1 at address 402258  X0: 0 X28: 0
+adrp
 instruction b90c3020 at address 40225c  X0: 0 X28: 0
+str
 instruction b9004260 at address 402260  X0: 0 X28: 0
+str
 instruction 900000a0 at address 402264  X0: 0 X28: 0
+adrp
 instruction d2800c08 at address 402268  X0: 416000 X28: 0
+movz
 instruction 9132a000 at address 40226c  X0: 416000 X28: 0
+add
 instruction d4000001 at address 402270  X0: 416ca8 X28: 0
+svc
 X8: 60
 X0: 4287656
 X1: 4284416
@@ -283,722 +559,1295 @@ X3: 0
 X4: 4284416
 X5: 4287456
 instruction b9003a60 at address 402274  X0: 416ca8 X28: 0
+str
 instruction 900000a0 at address 402278  X0: 416ca8 X28: 0
+adrp
 instruction 9131c000 at address 40227c  X0: 416000 X28: 0
+add
 instruction a9014e73 at address 402280  X0: 416c70 X28: 0
+stp
 instruction f9005a60 at address 402284  X0: 416c70 X28: 0
+str
 instruction 91024260 at address 402288  X0: 416c70 X28: 0
+add
 instruction f9004a60 at address 40228c  X0: 416b08 X28: 0
+str
 instruction 52800000 at address 402290  X0: 416b08 X28: 0
+movz
 instruction a8c17bf3 at address 402294  X0: 0 X28: 0
+ldp
 instruction d65f03c0 at address 402298  X0: 0 X28: 0
+ret
 instruction 36f80480 at address 40246c  X0: 0 X28: 0
+tbz
 instruction f84107fe at address 4024fc  X0: 0 X28: 0
+ldr
 instruction d65f03c0 at address 402500  X0: 0 X28: 0
+ret
 instruction f9408fe0 at address 400374  X0: 0 X28: 0
+ldr
 instruction 97ffffc8 at address 400378  X0: 0 X28: 0
+bl
 instruction d65f03c0 at address 400298  X0: 0 X28: 0
+ret
 instruction a94a83e1 at address 40037c  X0: 0 X28: 0
+ldp
 instruction eb00003f at address 400380  X0: 0 X28: 0
+subs
 instruction 540000c1 at address 400384  X0: 0 X28: 0
+b.cond
 instruction a94b83e1 at address 400388  X0: 0 X28: 0
+ldp
 instruction eb00003f at address 40038c  X0: 0 X28: 0
+subs
 instruction 54000061 at address 400390  X0: 0 X28: 0
+b.cond
 instruction f94087e0 at address 400394  X0: 0 X28: 0
+ldr
 instruction b4000540 at address 400398  X0: 0 X28: 0
+cbz
 instruction a9417bf5 at address 400440  X0: 0 X28: 0
+ldp
 instruction a8d853f3 at address 400444  X0: 0 X28: 0
+ldp
 instruction d65f03c0 at address 400448  X0: 0 X28: 0
+ret
 instruction 90000003 at address 4004e4  X0: 0 X28: 0
+adrp
 instruction aa1303e2 at address 4004e8  X0: 0 X28: 0
+orr
 instruction 2a1403e1 at address 4004ec  X0: 0 X28: 0
+orr
 instruction aa1503e0 at address 4004f0  X0: 0 X28: 0
+orr
 instruction 91122063 at address 4004f4  X0: 400118 X28: 0
+add
 instruction a9417bf5 at address 4004f8  X0: 400118 X28: 0
+ldp
 instruction a8c253f3 at address 4004fc  X0: 400118 X28: 0
+ldp
 instruction d61f0060 at address 400500  X0: 400118 X28: 0
+br
 instruction a9bd53f3 at address 400488  X0: 400118 X28: 0
+stp
 instruction 8b21cc53 at address 40048c  X0: 400118 X28: 0
+add
 instruction 2a0103f4 at address 400490  X0: 400118 X28: 0
+orr
 instruction 91002273 at address 400494  X0: 400118 X28: 0
+add
 instruction a9015bf5 at address 400498  X0: 400118 X28: 0
+stp
 instruction aa0203f5 at address 40049c  X0: 400118 X28: 0
+orr
 instruction aa0003f6 at address 4004a0  X0: 400118 X28: 0
+orr
 instruction f90013fe at address 4004a4  X0: 400118 X28: 0
+str
 instruction 97ffffe9 at address 4004a8  X0: 400118 X28: 0
+bl
 instruction a9be53f3 at address 40044c  X0: 400118 X28: 0
+stp
 instruction f9000bfe at address 400450  X0: 400118 X28: 0
+str
 instruction 97ffff25 at address 400454  X0: 400118 X28: 0
+bl
 instruction a9bf7bfd at address 4000e8  X0: 400118 X28: 0
+stp
 instruction 910003fd at address 4000ec  X0: 400118 X28: 0
+add
 instruction a8c17bfd at address 4000f0  X0: 400118 X28: 0
+ldp
 instruction d65f03c0 at address 4000f4  X0: 400118 X28: 0
+ret
 instruction b0000020 at address 400458  X0: 400118 X28: 0
+adrp
 instruction f944e413 at address 40045c  X0: 405000 X28: 0
+ldr
 instruction b0000020 at address 400460  X0: 405000 X28: 0
+adrp
 instruction f944e814 at address 400464  X0: 405000 X28: 0
+ldr
 instruction eb14027f at address 400468  X0: 405000 X28: 0
+subs
 instruction 54000083 at address 40046c  X0: 405000 X28: 0
+b.cond
 instruction f8408660 at address 40047c  X0: 405000 X28: 0
+ldr
 instruction d63f0000 at address 400480  X0: 400240 X28: 0
+blr
 instruction b0000020 at address 400240  X0: 400240 X28: 0
+adrp
 instruction a9bf7bfd at address 400244  X0: 405000 X28: 0
+stp
 instruction 910003fd at address 400248  X0: 405000 X28: 0
+add
 instruction f944d400 at address 40024c  X0: 405000 X28: 0
+ldr
 instruction b40000c0 at address 400250  X0: 0 X28: 0
+cbz
 instruction d00000a0 at address 400268  X0: 0 X28: 0
+adrp
 instruction 91146000 at address 40026c  X0: 416000 X28: 0
+add
 instruction f9400001 at address 400270  X0: 416518 X28: 0
+ldr
 instruction b5000061 at address 400274  X0: 416518 X28: 0
+cbnz
 instruction a8c17bfd at address 400278  X0: 416518 X28: 0
+ldp
 instruction 17ffffcf at address 40027c  X0: 416518 X28: 0
+b
 instruction d00000a1 at address 4001b8  X0: 416518 X28: 0
+adrp
 instruction d00000a0 at address 4001bc  X0: 416518 X28: 0
+adrp
 instruction 91188021 at address 4001c0  X0: 416000 X28: 0
+add
 instruction 91188000 at address 4001c4  X0: 416000 X28: 0
+add
 instruction cb000021 at address 4001c8  X0: 416620 X28: 0
+sub
 instruction 9343fc21 at address 4001cc  X0: 416620 X28: 0
+sbfm
 instruction 8b41fc21 at address 4001d0  X0: 416620 X28: 0
+add
 instruction 9341fc21 at address 4001d4  X0: 416620 X28: 0
+sbfm
 instruction b40000c1 at address 4001d8  X0: 416620 X28: 0
+cbz
 instruction d65f03c0 at address 4001f0  X0: 416620 X28: 0
+ret
 instruction 17fffff9 at address 400484  X0: 416620 X28: 0
+b
 instruction eb14027f at address 400468  X0: 416620 X28: 0
+subs
 instruction 54000083 at address 40046c  X0: 416620 X28: 0
+b.cond
 instruction f9400bfe at address 400470  X0: 416620 X28: 0
+ldr
 instruction a8c253f3 at address 400474  X0: 416620 X28: 0
+ldp
 instruction d65f03c0 at address 400478  X0: 416620 X28: 0
+ret
 instruction aa1303e2 at address 4004ac  X0: 416620 X28: 0
+orr
 instruction aa1503e1 at address 4004b0  X0: 416620 X28: 0
+orr
 instruction 2a1403e0 at address 4004b4  X0: 416620 X28: 0
+orr
 instruction d63f02c0 at address 4004b8  X0: 0 X28: 0
+blr
 instruction a9bf7bfd at address 400118  X0: 0 X28: 0
+stp
 instruction b0000020 at address 40011c  X0: 0 X28: 0
+adrp
 instruction 9126e000 at address 400120  X0: 405000 X28: 0
+add
 instruction 910003fd at address 400124  X0: 4059b8 X28: 0
+add
 instruction 94000106 at address 400128  X0: 4059b8 X28: 0
+bl
 instruction d10443ff at address 400540  X0: 4059b8 X28: 0
+sub
 instruction a90d8be1 at address 400544  X0: 4059b8 X28: 0
+stp
 instruction 910443e1 at address 400548  X0: 4059b8 X28: 0
+add
 instruction a90307e1 at address 40054c  X0: 4059b8 X28: 0
+stp
 instruction 910343e1 at address 400550  X0: 4059b8 X28: 0
+add
 instruction f90023e1 at address 400554  X0: 4059b8 X28: 0
+str
 instruction 128006e1 at address 400558  X0: 4059b8 X28: 0
+movn
 instruction a90e93e3 at address 40055c  X0: 4059b8 X28: 0
+stp
 instruction b9004be1 at address 400560  X0: 4059b8 X28: 0
+str
 instruction 12800fe1 at address 400564  X0: 4059b8 X28: 0
+movn
 instruction a9430fe2 at address 400568  X0: 4059b8 X28: 0
+ldp
 instruction b9004fe1 at address 40056c  X0: 4059b8 X28: 0
+str
 instruction a9010fe2 at address 400570  X0: 4059b8 X28: 0
+stp
 instruction aa0003e1 at address 400574  X0: 4059b8 X28: 0
+orr
 instruction a9440fe2 at address 400578  X0: 4059b8 X28: 0
+ldp
 instruction d00000a0 at address 40057c  X0: 4059b8 X28: 0
+adrp
 instruction a9020fe2 at address 400580  X0: 416000 X28: 0
+stp
 instruction 9114a000 at address 400584  X0: 416000 X28: 0
+add
 instruction 910043e2 at address 400588  X0: 416528 X28: 0
+add
 instruction f90003fe at address 40058c  X0: 416528 X28: 0
+str
 instruction 3d8017e0 at address 400590  X0: 416528 X28: 0
+str
 instruction 3d801be1 at address 400594  X0: 416528 X28: 0
+str
 instruction 3d801fe2 at address 400598  X0: 416528 X28: 0
+str
 instruction 3d8023e3 at address 40059c  X0: 416528 X28: 0
+str
 instruction 3d8027e4 at address 4005a0  X0: 416528 X28: 0
+str
 instruction 3d802be5 at address 4005a4  X0: 416528 X28: 0
+str
 instruction 3d802fe6 at address 4005a8  X0: 416528 X28: 0
+str
 instruction 3d8033e7 at address 4005ac  X0: 416528 X28: 0
+str
 instruction a90f9be5 at address 4005b0  X0: 416528 X28: 0
+stp
 instruction f90087e7 at address 4005b4  X0: 416528 X28: 0
+str
 instruction 94000682 at address 4005b8  X0: 416528 X28: 0
+bl
 instruction a9a953f3 at address 401fc0  X0: 416528 X28: 0
+stp
 instruction aa0003f3 at address 401fc4  X0: 416528 X28: 0
+orr
 instruction aa0103f4 at address 401fc8  X0: 416528 X28: 0
+orr
 instruction 910163e0 at address 401fcc  X0: 416528 X28: 0
+add
 instruction a9015bf5 at address 401fd0  X0: fffffffffffffe98 X28: 0
+stp
 instruction a9027bf7 at address 401fd4  X0: fffffffffffffe98 X28: 0
+stp
 instruction f9003fff at address 401fd8  X0: fffffffffffffe98 X28: 0
+str
 instruction a9007c1f at address 401fdc  X0: fffffffffffffe98 X28: 0
+stp
 instruction 9101a3e0 at address 401fe0  X0: fffffffffffffe98 X28: 0
+add
 instruction a9401444 at address 401fe4  X0: fffffffffffffea8 X28: 0
+ldp
 instruction a9007c1f at address 401fe8  X0: fffffffffffffea8 X28: 0
+stp
 instruction 9100e3e0 at address 401fec  X0: fffffffffffffea8 X28: 0
+add
 instruction a9410c42 at address 401ff0  X0: fffffffffffffe78 X28: 0
+ldp
 instruction a9001404 at address 401ff4  X0: fffffffffffffe78 X28: 0
+stp
 instruction 910123e0 at address 401ff8  X0: fffffffffffffe78 X28: 0
+add
 instruction 910163e4 at address 401ffc  X0: fffffffffffffe88 X28: 0
+add
 instruction a9000c02 at address 402000  X0: fffffffffffffe88 X28: 0
+stp
 instruction 910343e3 at address 402004  X0: fffffffffffffe88 X28: 0
+add
 instruction 9100e3e2 at address 402008  X0: fffffffffffffe88 X28: 0
+add
 instruction d2800000 at address 40200c  X0: fffffffffffffe88 X28: 0
+movz
 instruction 97fffdb3 at address 402010  X0: 0 X28: 0
+bl
 instruction a9b053f3 at address 4016dc  X0: 0 X28: 0
+stp
 instruction 52800013 at address 4016e0  X0: 0 X28: 0
+movz
 instruction a9015bf5 at address 4016e4  X0: 0 X28: 0
+stp
 instruction aa0003f6 at address 4016e8  X0: 0 X28: 0
+orr
 instruction a90263f7 at address 4016ec  X0: 0 X28: 0
+stp
 instruction aa0203f7 at address 4016f0  X0: 0 X28: 0
+orr
 instruction 9103fff8 at address 4016f4  X0: 0 X28: 0
+add
 instruction a9036bf9 at address 4016f8  X0: 0 X28: 0
+stp
 instruction a90473fb at address 4016fc  X0: 0 X28: 0
+stp
 instruction 52800015 at address 401700  X0: 0 X28: 0
+movz
 instruction f9002bfe at address 401704  X0: 0 X28: 0
+str
 instruction b90067ff at address 401708  X0: 0 X28: 0
+str
 instruction a9068fe4 at address 40170c  X0: 0 X28: 0
+stp
 instruction f90053e1 at address 401710  X0: 0 X28: 0
+str
 instruction 12b00000 at address 401714  X0: 0 X28: 0
+movn
 instruction 4b150000 at address 401718  X0: 7fffffff X28: 0
+sub
 instruction 6b00027f at address 40171c  X0: 7fffffff X28: 0
+subs
 instruction 5400048c at address 401720  X0: 7fffffff X28: 0
+b.cond
 instruction f94053f9 at address 401724  X0: 7fffffff X28: 0
+ldr
 instruction b1302b5 at address 401728  X0: 7fffffff X28: 0
+add
 instruction 39400320 at address 40172c  X0: 7fffffff X28: 0
+ldrb
 instruction 35000220 at address 401730  X0: 48 X28: 0
+cbnz
 instruction f94053e3 at address 401774  X0: 48 X28: 0
+ldr
 instruction 39400060 at address 401778  X0: 48 X28: 0
+ldrb
 instruction 7100941f at address 40177c  X0: 48 X28: 0
+subs
 instruction 7a401804 at address 401780  X0: 48 X28: 0
+ccmp
 instruction 54ffff41 at address 401784  X0: 48 X28: 0
+b.cond
 instruction 91000463 at address 40176c  X0: 48 X28: 0
+add
 instruction f90053e3 at address 401770  X0: 48 X28: 0
+str
 instruction f94053e3 at address 401774  X0: 48 X28: 0
+ldr
 instruction 39400060 at address 401778  X0: 48 X28: 0
+ldrb
 instruction 7100941f at address 40177c  X0: 65 X28: 0
+subs
 instruction 7a401804 at address 401780  X0: 65 X28: 0
+ccmp
 instruction 54ffff41 at address 401784  X0: 65 X28: 0
+b.cond
 instruction 91000463 at address 40176c  X0: 65 X28: 0
+add
 instruction f90053e3 at address 401770  X0: 65 X28: 0
+str
 instruction f94053e3 at address 401774  X0: 65 X28: 0
+ldr
 instruction 39400060 at address 401778  X0: 65 X28: 0
+ldrb
 instruction 7100941f at address 40177c  X0: 6c X28: 0
+subs
 instruction 7a401804 at address 401780  X0: 6c X28: 0
+ccmp
 instruction 54ffff41 at address 401784  X0: 6c X28: 0
+b.cond
 instruction 91000463 at address 40176c  X0: 6c X28: 0
+add
 instruction f90053e3 at address 401770  X0: 6c X28: 0
+str
 instruction f94053e3 at address 401774  X0: 6c X28: 0
+ldr
 instruction 39400060 at address 401778  X0: 6c X28: 0
+ldrb
 instruction 7100941f at address 40177c  X0: 6c X28: 0
+subs
 instruction 7a401804 at address 401780  X0: 6c X28: 0
+ccmp
 instruction 54ffff41 at address 401784  X0: 6c X28: 0
+b.cond
 instruction 91000463 at address 40176c  X0: 6c X28: 0
+add
 instruction f90053e3 at address 401770  X0: 6c X28: 0
+str
 instruction f94053e3 at address 401774  X0: 6c X28: 0
+ldr
 instruction 39400060 at address 401778  X0: 6c X28: 0
+ldrb
 instruction 7100941f at address 40177c  X0: 6f X28: 0
+subs
 instruction 7a401804 at address 401780  X0: 6f X28: 0
+ccmp
 instruction 54ffff41 at address 401784  X0: 6f X28: 0
+b.cond
 instruction 91000463 at address 40176c  X0: 6f X28: 0
+add
 instruction f90053e3 at address 401770  X0: 6f X28: 0
+str
 instruction f94053e3 at address 401774  X0: 6f X28: 0
+ldr
 instruction 39400060 at address 401778  X0: 6f X28: 0
+ldrb
 instruction 7100941f at address 40177c  X0: 2c X28: 0
+subs
 instruction 7a401804 at address 401780  X0: 2c X28: 0
+ccmp
 instruction 54ffff41 at address 401784  X0: 2c X28: 0
+b.cond
 instruction 91000463 at address 40176c  X0: 2c X28: 0
+add
 instruction f90053e3 at address 401770  X0: 2c X28: 0
+str
 instruction f94053e3 at address 401774  X0: 2c X28: 0
+ldr
 instruction 39400060 at address 401778  X0: 2c X28: 0
+ldrb
 instruction 7100941f at address 40177c  X0: 20 X28: 0
+subs
 instruction 7a401804 at address 401780  X0: 20 X28: 0
+ccmp
 instruction 54ffff41 at address 401784  X0: 20 X28: 0
+b.cond
 instruction 91000463 at address 40176c  X0: 20 X28: 0
+add
 instruction f90053e3 at address 401770  X0: 20 X28: 0
+str
 instruction f94053e3 at address 401774  X0: 20 X28: 0
+ldr
 instruction 39400060 at address 401778  X0: 20 X28: 0
+ldrb
 instruction 7100941f at address 40177c  X0: 77 X28: 0
+subs
 instruction 7a401804 at address 401780  X0: 77 X28: 0
+ccmp
 instruction 54ffff41 at address 401784  X0: 77 X28: 0
+b.cond
 instruction 91000463 at address 40176c  X0: 77 X28: 0
+add
 instruction f90053e3 at address 401770  X0: 77 X28: 0
+str
 instruction f94053e3 at address 401774  X0: 77 X28: 0
+ldr
 instruction 39400060 at address 401778  X0: 77 X28: 0
+ldrb
 instruction 7100941f at address 40177c  X0: 6f X28: 0
+subs
 instruction 7a401804 at address 401780  X0: 6f X28: 0
+ccmp
 instruction 54ffff41 at address 401784  X0: 6f X28: 0
+b.cond
 instruction 91000463 at address 40176c  X0: 6f X28: 0
+add
 instruction f90053e3 at address 401770  X0: 6f X28: 0
+str
 instruction f94053e3 at address 401774  X0: 6f X28: 0
+ldr
 instruction 39400060 at address 401778  X0: 6f X28: 0
+ldrb
 instruction 7100941f at address 40177c  X0: 72 X28: 0
+subs
 instruction 7a401804 at address 401780  X0: 72 X28: 0
+ccmp
 instruction 54ffff41 at address 401784  X0: 72 X28: 0
+b.cond
 instruction 91000463 at address 40176c  X0: 72 X28: 0
+add
 instruction f90053e3 at address 401770  X0: 72 X28: 0
+str
 instruction f94053e3 at address 401774  X0: 72 X28: 0
+ldr
 instruction 39400060 at address 401778  X0: 72 X28: 0
+ldrb
 instruction 7100941f at address 40177c  X0: 6c X28: 0
+subs
 instruction 7a401804 at address 401780  X0: 6c X28: 0
+ccmp
 instruction 54ffff41 at address 401784  X0: 6c X28: 0
+b.cond
 instruction 91000463 at address 40176c  X0: 6c X28: 0
+add
 instruction f90053e3 at address 401770  X0: 6c X28: 0
+str
 instruction f94053e3 at address 401774  X0: 6c X28: 0
+ldr
 instruction 39400060 at address 401778  X0: 6c X28: 0
+ldrb
 instruction 7100941f at address 40177c  X0: 64 X28: 0
+subs
 instruction 7a401804 at address 401780  X0: 64 X28: 0
+ccmp
 instruction 54ffff41 at address 401784  X0: 64 X28: 0
+b.cond
 instruction 91000463 at address 40176c  X0: 64 X28: 0
+add
 instruction f90053e3 at address 401770  X0: 64 X28: 0
+str
 instruction f94053e3 at address 401774  X0: 64 X28: 0
+ldr
 instruction 39400060 at address 401778  X0: 64 X28: 0
+ldrb
 instruction 7100941f at address 40177c  X0: 21 X28: 0
+subs
 instruction 7a401804 at address 401780  X0: 21 X28: 0
+ccmp
 instruction 54ffff41 at address 401784  X0: 21 X28: 0
+b.cond
 instruction 91000463 at address 40176c  X0: 21 X28: 0
+add
 instruction f90053e3 at address 401770  X0: 21 X28: 0
+str
 instruction f94053e3 at address 401774  X0: 21 X28: 0
+ldr
 instruction 39400060 at address 401778  X0: 21 X28: 0
+ldrb
 instruction 7100941f at address 40177c  X0: 0 X28: 0
+subs
 instruction 7a401804 at address 401780  X0: 0 X28: 0
+ccmp
 instruction 54ffff41 at address 401784  X0: 0 X28: 0
+b.cond
 instruction f94053e0 at address 401788  X0: 0 X28: 0
+ldr
 instruction 39400001 at address 40178c  X0: 4059c5 X28: 0
+ldrb
 instruction 7100943f at address 401790  X0: 4059c5 X28: 0
+subs
 instruction 54000140 at address 401794  X0: 4059c5 X28: 0
+b.cond
 instruction 12b00000 at address 401798  X0: 4059c5 X28: 0
+movn
 instruction cb19007c at address 40179c  X0: 7fffffff X28: 0
+sub
 instruction 4b150000 at address 4017a0  X0: 7fffffff X28: d
+sub
 instruction b9007be0 at address 4017a4  X0: 7fffffff X28: d
+str
 instruction eb20c39f at address 4017a8  X0: 7fffffff X28: d
-
-
-nzcv: 8
-
+subs
 instruction 5400016d at address 4017ac  X0: 7fffffff X28: d
+b.cond
 instruction 2a1c03f3 at address 4017d8  X0: 7fffffff X28: d
+orr
 instruction b40000b6 at address 4017dc  X0: 7fffffff X28: d
+cbz
 instruction 35fff93c at address 4017f0  X0: 7fffffff X28: d
+cbnz
 instruction 12b00000 at address 401714  X0: 7fffffff X28: d
+movn
 instruction 4b150000 at address 401718  X0: 7fffffff X28: d
+sub
 instruction 6b00027f at address 40171c  X0: 7fffffff X28: d
+subs
 instruction 5400048c at address 401720  X0: 7fffffff X28: d
+b.cond
 instruction f94053f9 at address 401724  X0: 7fffffff X28: d
+ldr
 instruction b1302b5 at address 401728  X0: 7fffffff X28: d
+add
 instruction 39400320 at address 40172c  X0: 7fffffff X28: d
+ldrb
 instruction 35000220 at address 401730  X0: 0 X28: d
+cbnz
 instruction b5001cf6 at address 401734  X0: 0 X28: d
+cbnz
 instruction b94067e0 at address 401738  X0: 0 X28: d
+ldr
 instruction d2800033 at address 40173c  X0: 0 X28: d
+movz
 instruction 34001c60 at address 401740  X0: 0 X28: d
+cbz
 instruction 52800015 at address 401acc  X0: 0 X28: d
+movz
 instruction 2a1503e0 at address 401ad0  X0: 0 X28: d
+orr
 instruction f9402bfe at address 401ad4  X0: 0 X28: d
+ldr
 instruction a9415bf5 at address 401ad8  X0: 0 X28: d
+ldp
 instruction a94263f7 at address 401adc  X0: 0 X28: d
+ldp
 instruction a9436bf9 at address 401ae0  X0: 0 X28: d
+ldp
 instruction a94473fb at address 401ae4  X0: 0 X28: d
+ldp
 instruction a8d053f3 at address 401ae8  X0: 0 X28: 0
+ldp
 instruction d65f03c0 at address 401aec  X0: 0 X28: 0
+ret
 instruction 37f807e0 at address 402014  X0: 0 X28: 0
+tbnz
 instruction b9408e60 at address 402018  X0: 0 X28: 0
+ldr
 instruction 52800017 at address 40201c  X0: ffffffff X28: 0
+movz
 instruction 37f80080 at address 402020  X0: ffffffff X28: 0
+tbnz
 instruction b9408a61 at address 402030  X0: ffffffff X28: 0
+ldr
 instruction b9400260 at address 402034  X0: ffffffff X28: 0
+ldr
 instruction 7100003f at address 402038  X0: 5 X28: 0
+subs
 instruction 121b0015 at address 40203c  X0: 5 X28: 0
+and
 instruction 5400006c at address 402040  X0: 5 X28: 0
+b.cond
 instruction 121a7800 at address 402044  X0: 5 X28: 0
+and
 instruction b9000260 at address 402048  X0: 5 X28: 0
+str
 instruction f9403260 at address 40204c  X0: 5 X28: 0
+ldr
 instruction d2800016 at address 402050  X0: 400 X28: 0
+movz
 instruction b5000100 at address 402054  X0: 400 X28: 0
+cbnz
 instruction f9401260 at address 402074  X0: 400 X28: 0
+ldr
 instruction b4000420 at address 402078  X0: 0 X28: 0
+cbz
 instruction aa1303e0 at address 4020fc  X0: 0 X28: 0
+orr
 instruction 940001d2 at address 402100  X0: 416528 X28: 0
+bl
 instruction b9408802 at address 402848  X0: 416528 X28: 0
+ldr
 instruction 51000441 at address 40284c  X0: 416528 X28: 0
+sub
 instruction 2a020021 at address 402850  X0: 416528 X28: 0
+orr
 instruction b9008801 at address 402854  X0: 416528 X28: 0
+str
 instruction b9400001 at address 402858  X0: 416528 X28: 0
+ldr
 instruction 361800a1 at address 40285c  X0: 416528 X28: 0
+tbz
 instruction a9458801 at address 402870  X0: 416528 X28: 0
+ldp
 instruction a900fc1f at address 402874  X0: 416528 X28: 0
+stp
 instruction f9001401 at address 402878  X0: 416528 X28: 0
+str
 instruction f9001c01 at address 40287c  X0: 416528 X28: 0
+str
 instruction 8b020021 at address 402880  X0: 416528 X28: 0
+add
 instruction f9001001 at address 402884  X0: 416528 X28: 0
+str
 instruction 52800000 at address 402888  X0: 416528 X28: 0
+movz
 instruction d65f03c0 at address 40288c  X0: 0 X28: 0
+ret
 instruction 34fffbc0 at address 402104  X0: 0 X28: 0
+cbz
 instruction aa1403e1 at address 40207c  X0: 0 X28: 0
+orr
 instruction 910163e4 at address 402080  X0: 0 X28: 0
+add
 instruction 910343e3 at address 402084  X0: 0 X28: 0
+add
 instruction 9100e3e2 at address 402088  X0: 0 X28: 0
+add
 instruction aa1303e0 at address 40208c  X0: 0 X28: 0
+orr
 instruction 97fffd93 at address 402090  X0: 416528 X28: 0
+bl
 instruction a9b053f3 at address 4016dc  X0: 416528 X28: 0
+stp
 instruction 52800013 at address 4016e0  X0: 416528 X28: 0
+movz
 instruction a9015bf5 at address 4016e4  X0: 416528 X28: 0
+stp
 instruction aa0003f6 at address 4016e8  X0: 416528 X28: 0
+orr
 instruction a90263f7 at address 4016ec  X0: 416528 X28: 0
+stp
 instruction aa0203f7 at address 4016f0  X0: 416528 X28: 0
+orr
 instruction 9103fff8 at address 4016f4  X0: 416528 X28: 0
+add
 instruction a9036bf9 at address 4016f8  X0: 416528 X28: 0
+stp
 instruction a90473fb at address 4016fc  X0: 416528 X28: 0
+stp
 instruction 52800015 at address 401700  X0: 416528 X28: 0
+movz
 instruction f9002bfe at address 401704  X0: 416528 X28: 0
+str
 instruction b90067ff at address 401708  X0: 416528 X28: 0
+str
 instruction a9068fe4 at address 40170c  X0: 416528 X28: 0
+stp
 instruction f90053e1 at address 401710  X0: 416528 X28: 0
+str
 instruction 12b00000 at address 401714  X0: 416528 X28: 0
+movn
 instruction 4b150000 at address 401718  X0: 7fffffff X28: 0
+sub
 instruction 6b00027f at address 40171c  X0: 7fffffff X28: 0
+subs
 instruction 5400048c at address 401720  X0: 7fffffff X28: 0
+b.cond
 instruction f94053f9 at address 401724  X0: 7fffffff X28: 0
+ldr
 instruction b1302b5 at address 401728  X0: 7fffffff X28: 0
+add
 instruction 39400320 at address 40172c  X0: 7fffffff X28: 0
+ldrb
 instruction 35000220 at address 401730  X0: 48 X28: 0
+cbnz
 instruction f94053e3 at address 401774  X0: 48 X28: 0
+ldr
 instruction 39400060 at address 401778  X0: 48 X28: 0
+ldrb
 instruction 7100941f at address 40177c  X0: 48 X28: 0
+subs
 instruction 7a401804 at address 401780  X0: 48 X28: 0
+ccmp
 instruction 54ffff41 at address 401784  X0: 48 X28: 0
+b.cond
 instruction 91000463 at address 40176c  X0: 48 X28: 0
+add
 instruction f90053e3 at address 401770  X0: 48 X28: 0
+str
 instruction f94053e3 at address 401774  X0: 48 X28: 0
+ldr
 instruction 39400060 at address 401778  X0: 48 X28: 0
+ldrb
 instruction 7100941f at address 40177c  X0: 65 X28: 0
+subs
 instruction 7a401804 at address 401780  X0: 65 X28: 0
+ccmp
 instruction 54ffff41 at address 401784  X0: 65 X28: 0
+b.cond
 instruction 91000463 at address 40176c  X0: 65 X28: 0
+add
 instruction f90053e3 at address 401770  X0: 65 X28: 0
+str
 instruction f94053e3 at address 401774  X0: 65 X28: 0
+ldr
 instruction 39400060 at address 401778  X0: 65 X28: 0
+ldrb
 instruction 7100941f at address 40177c  X0: 6c X28: 0
+subs
 instruction 7a401804 at address 401780  X0: 6c X28: 0
+ccmp
 instruction 54ffff41 at address 401784  X0: 6c X28: 0
+b.cond
 instruction 91000463 at address 40176c  X0: 6c X28: 0
+add
 instruction f90053e3 at address 401770  X0: 6c X28: 0
+str
 instruction f94053e3 at address 401774  X0: 6c X28: 0
+ldr
 instruction 39400060 at address 401778  X0: 6c X28: 0
+ldrb
 instruction 7100941f at address 40177c  X0: 6c X28: 0
+subs
 instruction 7a401804 at address 401780  X0: 6c X28: 0
+ccmp
 instruction 54ffff41 at address 401784  X0: 6c X28: 0
+b.cond
 instruction 91000463 at address 40176c  X0: 6c X28: 0
+add
 instruction f90053e3 at address 401770  X0: 6c X28: 0
+str
 instruction f94053e3 at address 401774  X0: 6c X28: 0
+ldr
 instruction 39400060 at address 401778  X0: 6c X28: 0
+ldrb
 instruction 7100941f at address 40177c  X0: 6f X28: 0
+subs
 instruction 7a401804 at address 401780  X0: 6f X28: 0
+ccmp
 instruction 54ffff41 at address 401784  X0: 6f X28: 0
+b.cond
 instruction 91000463 at address 40176c  X0: 6f X28: 0
+add
 instruction f90053e3 at address 401770  X0: 6f X28: 0
+str
 instruction f94053e3 at address 401774  X0: 6f X28: 0
+ldr
 instruction 39400060 at address 401778  X0: 6f X28: 0
+ldrb
 instruction 7100941f at address 40177c  X0: 2c X28: 0
+subs
 instruction 7a401804 at address 401780  X0: 2c X28: 0
+ccmp
 instruction 54ffff41 at address 401784  X0: 2c X28: 0
+b.cond
 instruction 91000463 at address 40176c  X0: 2c X28: 0
+add
 instruction f90053e3 at address 401770  X0: 2c X28: 0
+str
 instruction f94053e3 at address 401774  X0: 2c X28: 0
+ldr
 instruction 39400060 at address 401778  X0: 2c X28: 0
+ldrb
 instruction 7100941f at address 40177c  X0: 20 X28: 0
+subs
 instruction 7a401804 at address 401780  X0: 20 X28: 0
+ccmp
 instruction 54ffff41 at address 401784  X0: 20 X28: 0
+b.cond
 instruction 91000463 at address 40176c  X0: 20 X28: 0
+add
 instruction f90053e3 at address 401770  X0: 20 X28: 0
+str
 instruction f94053e3 at address 401774  X0: 20 X28: 0
+ldr
 instruction 39400060 at address 401778  X0: 20 X28: 0
+ldrb
 instruction 7100941f at address 40177c  X0: 77 X28: 0
+subs
 instruction 7a401804 at address 401780  X0: 77 X28: 0
+ccmp
 instruction 54ffff41 at address 401784  X0: 77 X28: 0
+b.cond
 instruction 91000463 at address 40176c  X0: 77 X28: 0
+add
 instruction f90053e3 at address 401770  X0: 77 X28: 0
+str
 instruction f94053e3 at address 401774  X0: 77 X28: 0
+ldr
 instruction 39400060 at address 401778  X0: 77 X28: 0
+ldrb
 instruction 7100941f at address 40177c  X0: 6f X28: 0
+subs
 instruction 7a401804 at address 401780  X0: 6f X28: 0
+ccmp
 instruction 54ffff41 at address 401784  X0: 6f X28: 0
+b.cond
 instruction 91000463 at address 40176c  X0: 6f X28: 0
+add
 instruction f90053e3 at address 401770  X0: 6f X28: 0
+str
 instruction f94053e3 at address 401774  X0: 6f X28: 0
+ldr
 instruction 39400060 at address 401778  X0: 6f X28: 0
+ldrb
 instruction 7100941f at address 40177c  X0: 72 X28: 0
+subs
 instruction 7a401804 at address 401780  X0: 72 X28: 0
+ccmp
 instruction 54ffff41 at address 401784  X0: 72 X28: 0
+b.cond
 instruction 91000463 at address 40176c  X0: 72 X28: 0
+add
 instruction f90053e3 at address 401770  X0: 72 X28: 0
+str
 instruction f94053e3 at address 401774  X0: 72 X28: 0
+ldr
 instruction 39400060 at address 401778  X0: 72 X28: 0
+ldrb
 instruction 7100941f at address 40177c  X0: 6c X28: 0
+subs
 instruction 7a401804 at address 401780  X0: 6c X28: 0
+ccmp
 instruction 54ffff41 at address 401784  X0: 6c X28: 0
+b.cond
 instruction 91000463 at address 40176c  X0: 6c X28: 0
+add
 instruction f90053e3 at address 401770  X0: 6c X28: 0
+str
 instruction f94053e3 at address 401774  X0: 6c X28: 0
+ldr
 instruction 39400060 at address 401778  X0: 6c X28: 0
+ldrb
 instruction 7100941f at address 40177c  X0: 64 X28: 0
+subs
 instruction 7a401804 at address 401780  X0: 64 X28: 0
+ccmp
 instruction 54ffff41 at address 401784  X0: 64 X28: 0
+b.cond
 instruction 91000463 at address 40176c  X0: 64 X28: 0
+add
 instruction f90053e3 at address 401770  X0: 64 X28: 0
+str
 instruction f94053e3 at address 401774  X0: 64 X28: 0
+ldr
 instruction 39400060 at address 401778  X0: 64 X28: 0
+ldrb
 instruction 7100941f at address 40177c  X0: 21 X28: 0
+subs
 instruction 7a401804 at address 401780  X0: 21 X28: 0
+ccmp
 instruction 54ffff41 at address 401784  X0: 21 X28: 0
+b.cond
 instruction 91000463 at address 40176c  X0: 21 X28: 0
+add
 instruction f90053e3 at address 401770  X0: 21 X28: 0
+str
 instruction f94053e3 at address 401774  X0: 21 X28: 0
+ldr
 instruction 39400060 at address 401778  X0: 21 X28: 0
+ldrb
 instruction 7100941f at address 40177c  X0: 0 X28: 0
+subs
 instruction 7a401804 at address 401780  X0: 0 X28: 0
+ccmp
 instruction 54ffff41 at address 401784  X0: 0 X28: 0
+b.cond
 instruction f94053e0 at address 401788  X0: 0 X28: 0
+ldr
 instruction 39400001 at address 40178c  X0: 4059c5 X28: 0
+ldrb
 instruction 7100943f at address 401790  X0: 4059c5 X28: 0
+subs
 instruction 54000140 at address 401794  X0: 4059c5 X28: 0
+b.cond
 instruction 12b00000 at address 401798  X0: 4059c5 X28: 0
+movn
 instruction cb19007c at address 40179c  X0: 7fffffff X28: 0
+sub
 instruction 4b150000 at address 4017a0  X0: 7fffffff X28: d
+sub
 instruction b9007be0 at address 4017a4  X0: 7fffffff X28: d
+str
 instruction eb20c39f at address 4017a8  X0: 7fffffff X28: d
-
-
-nzcv: 8
-
+subs
 instruction 5400016d at address 4017ac  X0: 7fffffff X28: d
+b.cond
 instruction 2a1c03f3 at address 4017d8  X0: 7fffffff X28: d
+orr
 instruction b40000b6 at address 4017dc  X0: 7fffffff X28: d
+cbz
 instruction 93407f82 at address 4017e0  X0: 7fffffff X28: d
+sbfm
 instruction aa1903e1 at address 4017e4  X0: 7fffffff X28: d
+orr
 instruction aa1603e0 at address 4017e8  X0: 7fffffff X28: d
+orr
 instruction 97fffc2a at address 4017ec  X0: 416528 X28: d
+bl
 instruction aa0103e3 at address 400894  X0: 416528 X28: d
+orr
 instruction aa0203e1 at address 400898  X0: 416528 X28: d
+orr
 instruction b9400002 at address 40089c  X0: 416528 X28: d
+ldr
 instruction 37280082 at address 4008a0  X0: 416528 X28: d
+tbnz
 instruction aa0003e2 at address 4008a4  X0: 416528 X28: d
+orr
 instruction aa0303e0 at address 4008a8  X0: 416528 X28: d
+orr
 instruction 140007fa at address 4008ac  X0: 4059b8 X28: d
+b
 instruction a9bd53f3 at address 402894  X0: 4059b8 X28: d
+stp
 instruction aa0203f3 at address 402898  X0: 4059b8 X28: d
+orr
 instruction a9015bf5 at address 40289c  X0: 4059b8 X28: d
+stp
 instruction aa0003f6 at address 4028a0  X0: 4059b8 X28: d
+orr
 instruction f90013fe at address 4028a4  X0: 4059b8 X28: d
+str
 instruction aa0103f5 at address 4028a8  X0: 4059b8 X28: d
+orr
 instruction f9401040 at address 4028ac  X0: 4059b8 X28: d
+ldr
 instruction b40001a0 at address 4028b0  X0: 416a70 X28: d
+cbz
 instruction a9420660 at address 4028b4  X0: 416a70 X28: d
+ldp
 instruction cb010000 at address 4028b8  X0: 416a70 X28: d
+sub
 instruction eb15001f at address 4028bc  X0: 400 X28: d
+subs
 instruction 540001c2 at address 4028c0  X0: 400 X28: d
+b.cond
 instruction b9409260 at address 4028f8  X0: 400 X28: d
+ldr
 instruction aa1503f4 at address 4028fc  X0: a X28: d
+orr
 instruction 36f80080 at address 402900  X0: a X28: d
+tbz
 instruction b40001d4 at address 402910  X0: a X28: d
+cbz
 instruction d1000680 at address 402914  X0: a X28: d
+sub
 instruction 38606ac1 at address 402918  X0: c X28: d
+ldrb
 instruction 7100283f at address 40291c  X0: c X28: d
+subs
 instruction 54ffff61 at address 402920  X0: c X28: d
+b.cond
 instruction aa0003f4 at address 40290c  X0: c X28: d
+orr
 instruction b40001d4 at address 402910  X0: c X28: d
+cbz
 instruction d1000680 at address 402914  X0: c X28: d
+sub
 instruction 38606ac1 at address 402918  X0: b X28: d
+ldrb
 instruction 7100283f at address 40291c  X0: b X28: d
+subs
 instruction 54ffff61 at address 402920  X0: b X28: d
+b.cond
 instruction aa0003f4 at address 40290c  X0: b X28: d
+orr
 instruction b40001d4 at address 402910  X0: b X28: d
+cbz
 instruction d1000680 at address 402914  X0: b X28: d
+sub
 instruction 38606ac1 at address 402918  X0: a X28: d
+ldrb
 instruction 7100283f at address 40291c  X0: a X28: d
+subs
 instruction 54ffff61 at address 402920  X0: a X28: d
+b.cond
 instruction aa0003f4 at address 40290c  X0: a X28: d
+orr
 instruction b40001d4 at address 402910  X0: a X28: d
+cbz
 instruction d1000680 at address 402914  X0: a X28: d
+sub
 instruction 38606ac1 at address 402918  X0: 9 X28: d
+ldrb
 instruction 7100283f at address 40291c  X0: 9 X28: d
+subs
 instruction 54ffff61 at address 402920  X0: 9 X28: d
+b.cond
 instruction aa0003f4 at address 40290c  X0: 9 X28: d
+orr
 instruction b40001d4 at address 402910  X0: 9 X28: d
+cbz
 instruction d1000680 at address 402914  X0: 9 X28: d
+sub
 instruction 38606ac1 at address 402918  X0: 8 X28: d
+ldrb
 instruction 7100283f at address 40291c  X0: 8 X28: d
+subs
 instruction 54ffff61 at address 402920  X0: 8 X28: d
+b.cond
 instruction aa0003f4 at address 40290c  X0: 8 X28: d
+orr
 instruction b40001d4 at address 402910  X0: 8 X28: d
+cbz
 instruction d1000680 at address 402914  X0: 8 X28: d
+sub
 instruction 38606ac1 at address 402918  X0: 7 X28: d
+ldrb
 instruction 7100283f at address 40291c  X0: 7 X28: d
+subs
 instruction 54ffff61 at address 402920  X0: 7 X28: d
+b.cond
 instruction aa0003f4 at address 40290c  X0: 7 X28: d
+orr
 instruction b40001d4 at address 402910  X0: 7 X28: d
+cbz
 instruction d1000680 at address 402914  X0: 7 X28: d
+sub
 instruction 38606ac1 at address 402918  X0: 6 X28: d
+ldrb
 instruction 7100283f at address 40291c  X0: 6 X28: d
+subs
 instruction 54ffff61 at address 402920  X0: 6 X28: d
+b.cond
 instruction aa0003f4 at address 40290c  X0: 6 X28: d
+orr
 instruction b40001d4 at address 402910  X0: 6 X28: d
+cbz
 instruction d1000680 at address 402914  X0: 6 X28: d
+sub
 instruction 38606ac1 at address 402918  X0: 5 X28: d
+ldrb
 instruction 7100283f at address 40291c  X0: 5 X28: d
+subs
 instruction 54ffff61 at address 402920  X0: 5 X28: d
+b.cond
 instruction aa0003f4 at address 40290c  X0: 5 X28: d
+orr
 instruction b40001d4 at address 402910  X0: 5 X28: d
+cbz
 instruction d1000680 at address 402914  X0: 5 X28: d
+sub
 instruction 38606ac1 at address 402918  X0: 4 X28: d
+ldrb
 instruction 7100283f at address 40291c  X0: 4 X28: d
+subs
 instruction 54ffff61 at address 402920  X0: 4 X28: d
+b.cond
 instruction aa0003f4 at address 40290c  X0: 4 X28: d
+orr
 instruction b40001d4 at address 402910  X0: 4 X28: d
+cbz
 instruction d1000680 at address 402914  X0: 4 X28: d
+sub
 instruction 38606ac1 at address 402918  X0: 3 X28: d
+ldrb
 instruction 7100283f at address 40291c  X0: 3 X28: d
+subs
 instruction 54ffff61 at address 402920  X0: 3 X28: d
+b.cond
 instruction aa0003f4 at address 40290c  X0: 3 X28: d
+orr
 instruction b40001d4 at address 402910  X0: 3 X28: d
+cbz
 instruction d1000680 at address 402914  X0: 3 X28: d
+sub
 instruction 38606ac1 at address 402918  X0: 2 X28: d
+ldrb
 instruction 7100283f at address 40291c  X0: 2 X28: d
+subs
 instruction 54ffff61 at address 402920  X0: 2 X28: d
+b.cond
 instruction aa0003f4 at address 40290c  X0: 2 X28: d
+orr
 instruction b40001d4 at address 402910  X0: 2 X28: d
+cbz
 instruction d1000680 at address 402914  X0: 2 X28: d
+sub
 instruction 38606ac1 at address 402918  X0: 1 X28: d
+ldrb
 instruction 7100283f at address 40291c  X0: 1 X28: d
+subs
 instruction 54ffff61 at address 402920  X0: 1 X28: d
+b.cond
 instruction aa0003f4 at address 40290c  X0: 1 X28: d
+orr
 instruction b40001d4 at address 402910  X0: 1 X28: d
+cbz
 instruction d1000680 at address 402914  X0: 1 X28: d
+sub
 instruction 38606ac1 at address 402918  X0: 0 X28: d
+ldrb
 instruction 7100283f at address 40291c  X0: 0 X28: d
+subs
 instruction 54ffff61 at address 402920  X0: 0 X28: d
+b.cond
 instruction aa0003f4 at address 40290c  X0: 0 X28: d
+orr
 instruction b40001d4 at address 402910  X0: 0 X28: d
+cbz
 instruction f9401660 at address 402948  X0: 0 X28: d
+ldr
 instruction aa1503e2 at address 40294c  X0: 416670 X28: d
+orr
 instruction aa1603e1 at address 402950  X0: 416670 X28: d
+orr
 instruction 94000073 at address 402954  X0: 416670 X28: d
+bl
 instruction f240043f at address 402b20  X0: 416670 X28: d
+ands
 instruction 54001820 at address 402b24  X0: 416670 X28: d
+b.cond
 instruction aa0003e7 at address 402e28  X0: 416670 X28: d
+orr
 instruction 17ffff49 at address 402e2c  X0: 416670 X28: d
+b
 instruction f24004e3 at address 402b50  X0: 416670 X28: d
+ands
 instruction 54000521 at address 402b54  X0: 416670 X28: d
+b.cond
 instruction f1003c5f at address 402b58  X0: 416670 X28: d
+subs
 instruction 54001809 at address 402b5c  X0: 416670 X28: d
+b.cond
 instruction 927d0045 at address 402e5c  X0: 416670 X28: d
+and
 instruction 927e0044 at address 402e60  X0: 416670 X28: d
+and
 instruction 927f0043 at address 402e64  X0: 416670 X28: d
+and
 instruction 92400042 at address 402e68  X0: 416670 X28: d
+and
 instruction 17ffff50 at address 402e6c  X0: 416670 X28: d
+b
 instruction b4000065 at address 402bac  X0: 416670 X28: d
+cbz
 instruction fc408420 at address 402bb0  X0: 416670 X28: d
+ldr
 instruction fc0084e0 at address 402bb4  X0: 77202c6f6c6c6548 X28: d
+str
 instruction b4000064 at address 402bb8  X0: 77202c6f6c6c6548 X28: d
+cbz
 instruction b8404424 at address 402bbc  X0: 77202c6f6c6c6548 X28: d
+ldr
 instruction b80044e4 at address 402bc0  X0: 77202c6f6c6c6548 X28: d
+str
 instruction b40000e3 at address 402bc4  X0: 77202c6f6c6c6548 X28: d
+cbz
 instruction b4000082 at address 402be0  X0: 77202c6f6c6c6548 X28: d
+cbz
 instruction 39400021 at address 402be4  X0: 77202c6f6c6c6548 X28: d
+ldrb
 instruction 390000e1 at address 402be8  X0: 77202c6f6c6c6548 X28: d
+strb
 instruction d65f03c0 at address 402bec  X0: 77202c6f6c6c6548 X28: d
+ret
 instruction f9401660 at address 402958  X0: 77202c6f6c6c6548 X28: d
+ldr
 instruction 8b150000 at address 40295c  X0: 416670 X28: d
+add
 instruction f9001660 at address 402960  X0: 41667d X28: d
+str
 instruction 8b1402a0 at address 402964  X0: 41667d X28: d
+add
 instruction a9415bf5 at address 402968  X0: d X28: d
+ldp
 instruction f94013fe at address 40296c  X0: d X28: d
+ldr
 instruction a8c353f3 at address 402970  X0: d X28: d
+ldp
 instruction d65f03c0 at address 402974  X0: d X28: d
+ret
 instruction 35fff93c at address 4017f0  X0: d X28: d
+cbnz
 instruction 12b00000 at address 401714  X0: d X28: d
+movn
 instruction 4b150000 at address 401718  X0: 7fffffff X28: d
+sub
 instruction 6b00027f at address 40171c  X0: 7fffffff X28: d
+subs
 instruction 5400048c at address 401720  X0: 7fffffff X28: d
+b.cond
 instruction f94053f9 at address 401724  X0: 7fffffff X28: d
+ldr
 instruction b1302b5 at address 401728  X0: 7fffffff X28: d
+add
 instruction 39400320 at address 40172c  X0: 7fffffff X28: d
+ldrb
 instruction 35000220 at address 401730  X0: 0 X28: d
+cbnz
 instruction b5001cf6 at address 401734  X0: 0 X28: d
+cbnz
 instruction 2a1503e0 at address 401ad0  X0: 0 X28: d
+orr
 instruction f9402bfe at address 401ad4  X0: d X28: d
+ldr
 instruction a9415bf5 at address 401ad8  X0: d X28: d
+ldp
 instruction a94263f7 at address 401adc  X0: d X28: d
+ldp
 instruction a9436bf9 at address 401ae0  X0: d X28: d
+ldp
 instruction a94473fb at address 401ae4  X0: d X28: d
+ldp
 instruction a8d053f3 at address 401ae8  X0: d X28: 0
+ldp
 instruction d65f03c0 at address 401aec  X0: d X28: 0
+ret
 instruction 2a0003f4 at address 402094  X0: d X28: 0
+orr
 instruction b4000196 at address 402098  X0: d X28: 0
+cbz
 instruction b9400260 at address 4020c8  X0: d X28: 0
+ldr
 instruction 2a0002b5 at address 4020cc  X0: 5 X28: 0
+orr
 instruction b9000275 at address 4020d0  X0: 5 X28: 0
+str
 instruction f27b001f at address 4020d4  X0: 5 X28: 0
+ands
 instruction 5a9f0294 at address 4020d8  X0: 5 X28: 0
+csinv
 instruction 34000077 at address 4020dc  X0: 5 X28: 0
+cbz
 instruction 2a1403e0 at address 4020e8  X0: 5 X28: 0
+orr
 instruction a9415bf5 at address 4020ec  X0: d X28: 0
+ldp
 instruction a9427bf7 at address 4020f0  X0: d X28: 0
+ldp
 instruction a8d753f3 at address 4020f4  X0: d X28: 0
+ldp
 instruction d65f03c0 at address 4020f8  X0: d X28: 0
+ret
 instruction f94003fe at address 4005bc  X0: d X28: 0
+ldr
 instruction 910443ff at address 4005c0  X0: d X28: 0
+add
 instruction d65f03c0 at address 4005c4  X0: d X28: 0
+ret
 instruction 52800000 at address 40012c  X0: d X28: 0
+movz
 instruction a8c17bfd at address 400130  X0: 0 X28: 0
+ldp
 instruction d65f03c0 at address 400134  X0: 0 X28: 0
+ret
 instruction 0 at address 0  X0: 0 X28: 0
-unknown instruction 0 at 0
-X00 : 0000000000000000
-X01 : 0000000000000021
-X02 : 0000000000000001
-X03 : 0000000000000000
-X04 : 00000000646C726F
-X05 : 0000000000000008
-X06 : 0000000000000000
-X07 : 000000000041667C
-X08 : 0000000000000060
-X09 : 0000000000000000
-X10 : 0000000000416000
-X11 : 0000000000800000
-X12 : 0000000000405000
-X13 : 0000000000000000
-X14 : 0000000000000000
-X15 : 0000000000000000
-X16 : 0000000000000000
-X17 : 0000000000000000
-X18 : 0000000000000000
-X19 : 0000000000000010
-X20 : 0000000000000000
-X21 : 0000000000000008
-X22 : 0000000000400118
-X23 : 0000000000000000
-X24 : 0000000000000000
-X25 : 0000000000000000
-X26 : 0000000000000000
-X27 : 0000000000000000
-X28 : 0000000000000000
-X29 : 0000000000000000
-X30 : 0000000000000000
-XSP : 00000000000000D0
-Q00 : 00000000000000000000000000000000
-Q01 : 00000000000000000000000000000000
-Q02 : 00000000000000000000000000000000
-Q03 : 00000000000000000000000000000000
-Q04 : 00000000000000000000000000000000
-Q05 : 00000000000000000000000000000000
-Q06 : 00000000000000000000000000000000
-Q07 : 00000000000000000000000000000000
-Q08 : 00000000000000000000000000000000
-Q09 : 00000000000000000000000000000000
-Q10 : 00000000000000000000000000000000
-Q11 : 00000000000000000000000000000000
-Q12 : 00000000000000000000000000000000
-Q13 : 00000000000000000000000000000000
-Q14 : 00000000000000000000000000000000
-Q15 : 00000000000000000000000000000000
-Q16 : 00000000000000000000000000000000
-Q17 : 00000000000000000000000000000000
-Q18 : 00000000000000000000000000000000
-Q19 : 00000000000000000000000000000000
-Q20 : 00000000000000000000000000000000
-Q21 : 00000000000000000000000000000000
-Q22 : 00000000000000000000000000000000
-Q23 : 00000000000000000000000000000000
-Q24 : 00000000000000000000000000000000
-Q25 : 00000000000000000000000000000000
-Q26 : 00000000000000000000000000000000
-Q27 : 00000000000000000000000000000000
-Q28 : 00000000000000000000000000000000
-Q29 : 00000000000000000000000000000000
-Q30 : 00000000000000000000000000000000
-Q31 : 00000000000000000000000000000000

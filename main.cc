@@ -24,7 +24,8 @@ using namespace std;
 A3 *memory = new A3();
 
 int main(int argc, const char * argv[]) {
-    bool debug = true;
+    bool debug = false;
+    bool debug_detailed = false;
     uint64_t reg[NUMREG];
     uint64_t sys_reg[65536];
     unsigned __int128 simd_reg[NUMREG];
@@ -47,12 +48,12 @@ int main(int argc, const char * argv[]) {
         // whether to change the PC
         bool pcChange = false;
         uint32_t instr_int = memory_get_32(pcLocal);
-        if ( debug ) {
-            printf("instruction %x at address %lx \n", instr_int, pcLocal);
+        if ( debug || debug_detailed ) {
+            printf("instruction %x at address %lx ", instr_int, pcLocal);
             // printf("X30: %lx", reg[30]);
-            // printf(" X0: %lx", reg[0]);
-            // printf(" X1: %lx", reg[1]);
-            // printf(" X2: %lx\n", reg[2]);
+            printf(" X0: %lx", reg[0]);
+            printf(" X28: %lx\n", reg[28]);
+            // printf(" X3: %lx\n", reg[3]);
           	// printf("mem[490b48] %lx\n", memory_get_64(4787016));
             if ( pcLocal == 0x408d58 || (pcLocal >= 0x405788 && pcLocal <= 0x405a8c) ) {
                 printf("Abort encountered. Stopping execution.\n");
@@ -65,6 +66,10 @@ int main(int argc, const char * argv[]) {
             // printf(" [X2]: %lx\n", memory_get_64(reg[2]));
         // }
         if ( is_instruction(instr_int, 0xfa400800) ) {
+            if (debug_detailed) {
+              printf("ccmp\n");
+            }
+
             // CCMP immediate 64
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t imm5 = extract(instr_int, 20, 16);
@@ -106,6 +111,10 @@ int main(int argc, const char * argv[]) {
                 nzcvLocal = flags;
             }
         } else if( is_instruction(instr_int, 0xfa400000) ){
+            if (debug_detailed) {
+              printf("ccmp\n");
+            }
+
             //ccmp register 64
             //CCMP REGISTER 64
             uint8_t flags = extract(instr_int, 4, 0);
@@ -133,6 +142,10 @@ int main(int argc, const char * argv[]) {
             nzcvLocal = flags;
         }
         else if ( is_instruction(instr_int, 0xf9400000) ) {
+            if (debug_detailed) {
+              printf("ldr\n");
+            }
+
             // printf("Reached ldr\n");
             // LDR immediate unsigned offset 64
             // cout << "LDR immediate unsigned offset 64" << endl;
@@ -147,6 +160,10 @@ int main(int argc, const char * argv[]) {
                 reg[t] = data;
             }
         } else if ( is_instruction(instr_int, 0xf9000000) ) {
+            if (debug_detailed) {
+              printf("str\n");
+            }
+
             // STR immediate unsigned offset 64
             // cout << "STR immediate unsigned offset 64" << endl;
             uint8_t size = extract32(instr_int, 31, 30);
@@ -160,6 +177,9 @@ int main(int argc, const char * argv[]) {
             // ******** FIX ******
 	    memory_set_64(address, data);
         } else if ( is_instruction(instr_int, 0xf8400c00) ) {
+            if (debug_detailed) {
+              printf("str\n");
+            }
             // LDR immediate pre-index 64
             // cout << "LDR immediate pre-index 64" << endl;
             uint64_t imm9 = extract(instr_int, 20, 12);
@@ -175,6 +195,9 @@ int main(int argc, const char * argv[]) {
             }
             reg[n] = address;
         } else if ( is_instruction(instr_int, 0xf8400400) ) {
+            if (debug_detailed) {
+              printf("ldr\n");
+            }
             // LDR immediate post-index 64
             // cout << "LDR immediate post-index 64" << endl;
             uint64_t imm9 = extract(instr_int, 20, 12);
@@ -190,6 +213,9 @@ int main(int argc, const char * argv[]) {
             address = address + offset;
             reg[n] = address;
         } else if ( is_instruction(instr_int, 0xf8000c00) ) {
+            if (debug_detailed) {
+              printf("str\n");
+            }
             // STR immediate pre-index 64
             // cout << "STR immediate pre-index 64" << endl;
             uint64_t t = extract(instr_int, 4, 0);
@@ -198,10 +224,13 @@ int main(int argc, const char * argv[]) {
             uint64_t offset = sign_extend_64(imm, 9);
             uint64_t address = reg[n];
             address = address + offset;
-            uint64_t data = reg[t];
+            uint64_t data = t == 31 ? 0 : reg[t];
             memory_set_64(address, data);
             reg[n] = address;
         } else if ( is_instruction(instr_int, 0xF8400000) ) {
+            if (debug_detailed) {
+              printf("ldru\n");
+            }
             // LDRU 64
             uint64_t imm9 = extract(instr_int, 20, 12);
             uint64_t t = extract(instr_int, 4, 0);
@@ -214,6 +243,9 @@ int main(int argc, const char * argv[]) {
                 reg[t] = data;
             }
         } else if( is_instruction(instr_int, 0xf8200800) ) {
+          if (debug_detailed) {
+            printf("str\n");
+          }
           //str shifted register 64
           //STR SHIFTED REGISTER 64
           uint64_t t = extract(instr_int, 4, 0);
@@ -239,6 +271,9 @@ int main(int argc, const char * argv[]) {
 
         }
         else if ( is_instruction(instr_int, 0xf8000400) ) {
+            if (debug_detailed) {
+              printf("str\n");
+            }
             // STR immediate post-index 64
             // cout << "STR immediate post-index 64" << endl;
             uint64_t t = extract(instr_int, 4, 0);
@@ -246,11 +281,31 @@ int main(int argc, const char * argv[]) {
             uint64_t imm = extract(instr_int, 20, 12);
             uint64_t offset = sign_extend_64(imm, 9);
             uint64_t address = reg[n];
-            uint64_t data = reg[t];
+            uint64_t data = t == 31 ? 0 : reg[t];
             memory_set_64(address, data);
             address = address + offset;
             reg[n] = address;
-        } else if( is_instruction(instr_int, 0xF2000000) ){
+        } else if( is_instruction(instr_int, 0xf8000000) ){
+          //stur 64 bit
+          //STUR 64 BIT
+          uint64_t t = extract(instr_int, 4, 0);
+          uint64_t n = extract(instr_int, 9, 5);
+          uint64_t imm = extract(instr_int, 20, 12);
+          //uint64_t scale = 32;
+          uint64_t offset = sign_extend_64(imm, 9);
+          uint64_t address = reg[n];
+          address += offset;
+          uint64_t data = 0;
+          if(t != 31){
+            data = reg[t];
+          }
+          memory_set_64(address, data);
+
+        }
+        else if( is_instruction(instr_int, 0xF2000000) ){
+            if (debug_detailed) {
+              printf("ands\n");
+            }
             //ANDS immediate 64
             uint64_t d = extract(instr_int, 4, 0);
             uint64_t n = extract(instr_int, 9, 5);
@@ -269,6 +324,9 @@ int main(int argc, const char * argv[]) {
               reg[d] = result;
             }
         } else if ( is_instruction(instr_int, 0xf1000000) ) {
+            if (debug_detailed) {
+              printf("subs\n");
+            }
             // SUBS immediate 64
             // cout << "SUBS immediate 64" << endl;
             uint64_t d = extract(instr_int, 4, 0);
@@ -287,7 +345,35 @@ int main(int argc, const char * argv[]) {
             if ( d != 31 ) {
                 reg[d] = result;
             }
+         } else if ( is_instruction(instr_int, 0xeb200000) ) {
+              if (debug_detailed) {
+                printf("subs\n");
+              }
+             // SUBS extended register 64
+             uint64_t Rd = extract(instr_int, 4, 0);
+             uint64_t Rn = extract(instr_int, 9, 5);
+             uint8_t shift = extract(instr_int, 12, 10);
+             uint64_t Rm = extract(instr_int, 20, 16);
+           //  uint64_t option = extract(instr_int, 15, 13);
+             //uint64_t sf = extract(instr_int, 31, 31);
+             // N = 64, signed = true, len = 32
+             uint32_t len = 32 - shift;
+             uint64_t sxtw = extract(reg[Rm], len-1, 0) << shift;
+             sxtw = sign_extend_64(sxtw, len + shift);
+             uint64_t result;
+             uint64_t operand1 = reg[Rn];
+             uint64_t operand2 = sxtw;
+             uint8_t nzcv = 0;
+             operand2 = ~(operand2);
+             add_with_carry64(operand1, operand2, (uint8_t) 1, &result, &nzcv);
+             nzcvLocal = nzcv;
+             if ( Rd != 31 ) {
+                 reg[Rd] = result;
+             }
          } else if ( is_instruction(instr_int, 0xeb000000) ) {
+           if (debug_detailed) {
+             printf("subs\n");
+           }
            // SUBS shifted register 64
            uint64_t Rd = extract(instr_int, 4, 0);
            uint64_t Rn = extract(instr_int, 9, 5);
@@ -312,6 +398,9 @@ int main(int argc, const char * argv[]) {
            }
 
          } else if ( is_instruction(instr_int, 0xea200000) ){
+            if (debug_detailed) {
+              printf("bics\n");
+            }
             //bics 64 bit
             //BICS 64
             uint64_t d = extract(instr_int, 4, 0);
@@ -337,6 +426,9 @@ int main(int argc, const char * argv[]) {
                 reg[d] = result;
             }
         } else if( is_instruction(instr_int, 0xdac01000) ){
+          if (debug_detailed) {
+            printf("cls\n");
+          }
           //clz 64 bit
           //CLZ 64 bit
           uint64_t d = extract(instr_int, 4, 0);
@@ -351,6 +443,9 @@ int main(int argc, const char * argv[]) {
             reg[d] = result;
           }
         } else if ( is_instruction(instr_int, 0xdac00800) ) {
+            if (debug_detailed) {
+              printf("rev\n");
+            }
             // REV
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t d = extract(instr_int, 4, 0);
@@ -370,6 +465,9 @@ int main(int argc, const char * argv[]) {
                 reg[d] = rev;
             }
         } else if ( is_instruction(instr_int, 0xdac00000) ) {
+            if (debug_detailed) {
+              printf("rbit\n");
+            }
             // RBIT 64
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t d = extract(instr_int, 4, 0);
@@ -384,6 +482,9 @@ int main(int argc, const char * argv[]) {
                 reg[d] = rev;
             }
         } else if( is_instruction(instr_int, 0xda800000) ){
+          if (debug_detailed) {
+            printf("csinv\n");
+          }
           //csinv 64 bit
           //CSINV 64 bit
           uint64_t d = extract(instr_int, 4, 0);
@@ -410,6 +511,9 @@ int main(int argc, const char * argv[]) {
           }
         }
         else if ( is_instruction(instr_int, 0xd65f0000) ) {
+            if (debug_detailed) {
+              printf("ret\n");
+            }
             // RET
             // cout << "RET" << endl;
             uint64_t n = extract(instr_int, 9, 5);
@@ -420,11 +524,15 @@ int main(int argc, const char * argv[]) {
                 pcLocal = 0;
             }
         } else if ( is_instruction(instr_int, 0xd63f0000) ){
+          if (debug_detailed) {
+            printf("blr\n");
+          }
+
           //blr
           //BLR
 
           uint64_t n = extract(instr_int, 9, 5);
-          printf("%ld", n);
+          // printf("%ld", n);
           uint64_t target = 0;
           if(n != 31){
             target = reg[n];
@@ -434,11 +542,17 @@ int main(int argc, const char * argv[]) {
           pcChange = true;
         }
         else if ( is_instruction(instr_int, 0xd61f0000) ) {
+            if (debug_detailed) {
+              printf("br\n");
+            }
             // BR
             uint64_t n = extract(instr_int, 9, 5);
             pcChange = true;
             pcLocal = n == 31 ? 0 : reg[n];
         } else if ( is_instruction(instr_int, 0xd5300000) ) {
+            if (debug_detailed) {
+              printf("mrs\n");
+            }
             // MRS
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t sys_op0 = 2 + extract_single(instr_int, 19);
@@ -454,6 +568,9 @@ int main(int argc, const char * argv[]) {
         } else if ( is_instruction(instr_int, 0xd503201f) ) {
             // NOP
         } else if ( is_instruction(instr_int, 0xd4000001) ) {
+            if (debug_detailed) {
+              printf("svc\n");
+            }
             // SVC
             // Supervisor Call
             // uint64_t imm16 = extract(instr_int, 20, 5);
@@ -467,8 +584,10 @@ int main(int argc, const char * argv[]) {
             //     printf("\n\n%ld\n\n\n", imm16);
             // }
             // syscall(imm16);
-            printf("X8: %lx\n", reg[8]);
-            printf("X0: %ld\nX1: %ld\nX2: %ld\nX3: %ld\nX4: %ld\nX5: %ld\n", reg[0], reg[1], reg[2], reg[3], reg[4], reg[5]);
+            if ( debug_detailed ) {
+                printf("X8: %lx\n", reg[8]);
+                printf("X0: %ld\nX1: %ld\nX2: %ld\nX3: %ld\nX4: %ld\nX5: %ld\n", reg[0], reg[1], reg[2], reg[3], reg[4], reg[5]);
+            }
             uint64_t syscall_num = reg[8];
             if ( syscall_num == 0xa0 ) {
                 // uname
@@ -477,6 +596,9 @@ int main(int argc, const char * argv[]) {
                 reg[0] = result;
                 // reg[0] = 0;
             } else if ( syscall_num == 0x38 ) {
+                if (debug_detailed) {
+                  printf("openat");
+                }
                 // openat
                 // uint64_t result = openat((int) reg[0], (const char *) reg[1], (int) reg[2]); //, (mode_t) reg[3]
                 uint64_t result = 1; // arbitrarily assign the file descriptor as 1 for now
@@ -488,13 +610,27 @@ int main(int argc, const char * argv[]) {
                 printf("\n");
                 reg[0] = result;
             } else if ( syscall_num == 0x40 ) {
+                if (debug_detailed) {
+                  printf("write\n");
+                }
                 // write
-                reg[0] = write((int) reg[0], (const void *) reg[1], (size_t) reg[2]);
+                int count = 0;
+                // while ( memory_get(reg[1] + count) != 0 ) {
+                    printf("%c", memory_get(reg[1] + count++));
+                // }
+                reg[0] = reg[2];
+                // reg[0] = write((int) reg[0], (const void *) reg[1], (size_t) reg[2]);
             } else if ( syscall_num == 0x39 ) {
+                if (debug_detailed) {
+                  printf("close\n");
+                }
                 // close
                 // returns 0 on success
                 reg[0] = 0;
             } else if ( syscall_num == 0x3f ) {
+                if (debug_detailed) {
+                  printf("read\n");
+                }
                 // read
                 // give it the number of bytes that it requested
                 if ( reg[0] == 1 ) {
@@ -510,13 +646,22 @@ int main(int argc, const char * argv[]) {
                 reg[0] = reg[2];
             }
             else if ( syscall_num == 0xd6 ) {
+                if (debug_detailed) {
+                  printf("brk\n");
+                }
                 // brk
                 reg[0] = 0;
             } else if ( syscall_num == 0xae || syscall_num == 0xaf || syscall_num == 0xb0 || syscall_num == 0xb1 ) {
+                if (debug_detailed) {
+                  printf("getuid32\n");
+                }
                 // getuid32 (ae) and geteuid32 (af)
                 // getgid32 (b0) and getegid32 (b1)
                 reg[0] = 0;
             } else if ( syscall_num == 0x4e ) {
+                if (debug_detailed) {
+                  printf("readlinkat\n");
+                }
                 // readlinkat
                 int count = 0;
                 printf("pathname: ");
@@ -536,6 +681,9 @@ int main(int argc, const char * argv[]) {
                 printf("%s", fileName);
                 reg[0] = strlen(fileName);
             } else if ( syscall_num == 0xde ) {
+                if (debug_detailed) {
+                  printf("mmap\n");
+                }
                 // mmap
                 // give it virtual memory address to work with
                 if ( reg[0] == 0 ) {
@@ -544,10 +692,16 @@ int main(int argc, const char * argv[]) {
                 // if reg[0] is already nonzero then we just let it be
                 // that means we are giving them the address they requested
             } else if ( syscall_num == 0xd7 ) {
+                if (debug_detailed) {
+                  printf("munmap\n");
+                }
                 // munmap
                 // success means return value is 0
                 reg[0] = 0;
             } else if ( syscall_num == 0xe2 ) {
+                if (debug_detailed) {
+                  printf("mprotect\n");
+                }
                 // mprotect
                 // success means return value is 0
                 reg[0] = 0;
@@ -558,9 +712,30 @@ int main(int argc, const char * argv[]) {
             // }
 
         } else if (is_instruction(instr_int, 0xd4200000)) {
+            if (debug_detailed) {
+              printf("brk\n");
+            }
             // BRK
             exit(0);
+        } else if ( is_instruction(instr_int, 0xd300fc00) ) {
+            if (debug_detailed) {
+              printf("lsr\n");
+            }
+            // LSR 64
+            uint64_t d = extract(instr_int, 4, 0);
+            uint64_t n = extract(instr_int, 9, 5);
+            uint64_t immr = extract(instr_int, 21, 16);
+            uint64_t src = 0;
+            if ( n != 31 ) {
+                src = reg[n];
+            }
+            if ( d != 31 ) {
+                reg[d] = src >> immr;
+            }
         } else if ( is_instruction(instr_int, 0xd3000000) ) {
+            if (debug_detailed) {
+              printf("ubfm\n");
+            }
             // UBFM 64
             // cout << "UBFM 64" << endl;
             uint64_t N = extract_single(instr_int, 22);
@@ -580,6 +755,9 @@ int main(int argc, const char * argv[]) {
                 reg[d] = bot & tmask;
             }
         } else if ( is_instruction(instr_int, 0xd2800000) ) {
+            if (debug_detailed) {
+              printf("movz\n");
+            }
             // MOVZ 64
             // cout << "MOVZ 64" << endl;
             uint64_t d = extract(instr_int, 4, 0);
@@ -594,6 +772,9 @@ int main(int argc, const char * argv[]) {
                 reg[d] = result;
             }
         } else if ( is_instruction(instr_int, 0xd1000000) ) {
+            if (debug_detailed) {
+              printf("sub\n");
+            }
             // SUB immediate 64
             // cout << "SUB immediate 64" << endl;
             uint64_t d = extract(instr_int, 4, 0);
@@ -610,6 +791,9 @@ int main(int argc, const char * argv[]) {
                 reg[d] = result;
             }
         } else if ( is_instruction(instr_int, 0xcb000000) ) {
+            if (debug_detailed) {
+              printf("sub\n");
+            }
             // SUB shifted register 64
             uint64_t Rd = extract(instr_int, 4, 0);
             uint64_t Rn = extract(instr_int, 9, 5);
@@ -634,6 +818,9 @@ int main(int argc, const char * argv[]) {
             }
         } else if ( is_instruction(instr_int, 0xc85ffc00) ) {
             // LDAXR 64
+            if (debug_detailed) {
+              printf("ldaxr\n");
+            }
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t address = reg[n];
@@ -644,6 +831,9 @@ int main(int argc, const char * argv[]) {
         } else if ( is_instruction(instr_int, 0xc800fc00) ){
             //stlxr 64 bit
             //STLXR 64 bit
+            if (debug_detailed) {
+              printf("stlxr\n");
+            }
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t s = extract(instr_int, 20, 16);
@@ -667,11 +857,14 @@ int main(int argc, const char * argv[]) {
 
         } else if ( is_instruction(instr_int, 0xc8007c00) ) {
             // STXR 64
+            if (debug_detailed) {
+              printf("stxr\n");
+            }
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t s = extract(instr_int, 20, 16);
             uint64_t address = reg[n];
-            uint64_t data = reg[t];
+            uint64_t data = t == 31 ? 0 : reg[t];
             memory_set_64(address, data);
             if ( s != 31 ) {
                 reg[s] = 0;
@@ -679,6 +872,9 @@ int main(int argc, const char * argv[]) {
         } else if ( is_instruction(instr_int, 0xb9400000) ) {
             // LDR immediate unsigned offset 32
             // cout << "LDR immediate unsigned offset 32" << endl;
+            if (debug_detailed) {
+              printf("ldr\n");
+            }
             uint64_t imm12 = extract(instr_int, 21, 10);
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t n = extract(instr_int, 9, 5);
@@ -692,6 +888,9 @@ int main(int argc, const char * argv[]) {
         } else if ( is_instruction(instr_int, 0xb9000000) ) {
             // STR immediate unsigned offset 32
             // cout << "STR immediate unsigned offset 32" << endl;
+            if (debug_detailed) {
+              printf("str\n");
+            }
             uint8_t size = extract32(instr_int, 31, 30);
             uint32_t t = extract32(instr_int, 4, 0);
             uint32_t n = extract32(instr_int, 9, 5);
@@ -701,11 +900,13 @@ int main(int argc, const char * argv[]) {
             address = address + offset;
 
             uint64_t data = t==31 ? 0 : reg[t];
-	    memory_set_32(address, data);
+	          memory_set_32(address, data);
         } else if ( is_instruction(instr_int, 0xb8800400) ) {
             // LDRSW immediate post-index
             // cout << "LDRSW immediate post-index" << endl;
-
+            if (debug_detailed) {
+              printf("ldrsw\n");
+            }
             uint64_t Rt = extract(instr_int, 4, 0);
             uint64_t Rn = extract(instr_int, 9, 5);
             uint64_t imm9 = extract(instr_int, 20, 12);
@@ -726,6 +927,9 @@ int main(int argc, const char * argv[]) {
         } else if ( is_instruction(instr_int, 0xb8400c00) ) {
             // LDR immediate pre-index 32
             // cout << "LDR immediate pre-index 32" << endl;
+            if (debug_detailed) {
+              printf("ldr\n");
+            }
             uint64_t imm9 = extract(instr_int, 20, 12);
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t n = extract(instr_int, 9, 5);
@@ -741,6 +945,9 @@ int main(int argc, const char * argv[]) {
         } else if ( is_instruction(instr_int, 0xb8400400) ) {
             // LDR immediate post-index 32
             // cout << "LDR immediate post-index 32" << endl;
+            if (debug_detailed) {
+              printf("ldr\n");
+            }
             uint64_t imm9 = extract(instr_int, 20, 12);
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t n = extract(instr_int, 9, 5);
@@ -755,6 +962,9 @@ int main(int argc, const char * argv[]) {
             reg[n] = address;
         } else if ( is_instruction(instr_int, 0xb8400400) ) {
             // LDRU 32
+            if (debug_detailed) {
+              printf("ldru\n");
+            }
             uint64_t imm9 = extract(instr_int, 20, 12);
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t n = extract(instr_int, 9, 5);
@@ -768,6 +978,9 @@ int main(int argc, const char * argv[]) {
         } else if( is_instruction(instr_int, 0xb8200800) ){
             // str shifted register 32
             // STR SHIFTED REGISTER 32
+            if (debug_detailed) {
+              printf("str\n");
+            }
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t extend_type = extract(instr_int, 15, 13);
@@ -790,6 +1003,9 @@ int main(int argc, const char * argv[]) {
         } else if ( is_instruction(instr_int, 0xb8000c00) ) {
             // STR immediate pre-index 32
             // cout << "STR immediate pre-index 32" << endl;
+            if (debug_detailed) {
+              printf("str\n");
+            }
             uint32_t t = extract32(instr_int, 4, 0);
             uint32_t n = extract32(instr_int, 9, 5);
             uint32_t imm = extract32(instr_int, 20, 12);
@@ -802,6 +1018,9 @@ int main(int argc, const char * argv[]) {
         } else if ( is_instruction(instr_int, 0xb8000400) ) {
             // STR immediate post-index 32
             // cout << "STR immediate post-index 32" << endl;
+            if (debug_detailed) {
+              printf("str\n");
+            }
             uint32_t t = extract32(instr_int, 4, 0);
             uint32_t n = extract32(instr_int, 9, 5);
             uint32_t imm = extract32(instr_int, 20, 12);
@@ -812,8 +1031,28 @@ int main(int argc, const char * argv[]) {
             memory_set_32(address, data);
             address = address + offset;
             reg[n] = address;
-        } else if ( is_instruction(instr_int, 0xb7000000) ) {
+        } else if( is_instruction(instr_int, 0xb8000000) ){
+            //stur 32 bit
+            //STUR 32 bit
+            uint64_t t = extract32(instr_int, 4, 0);
+            uint64_t n = extract32(instr_int, 9, 5);
+            uint64_t imm = extract32(instr_int, 20, 12);
+            //uint64_t scale = 32;
+            uint64_t offset = sign_extend_64(imm, 9);
+            uint64_t address = reg[n];
+            address += offset;
+            uint32_t data = 0;
+            if(t != 31){
+              data = reg[t];
+            }
+            memory_set_32(address, data);
+
+        }
+        else if ( is_instruction(instr_int, 0xb7000000) ) {
             // TBNZ 64
+            if (debug_detailed) {
+              printf("tbnz\n");
+            }
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t bitpos = (extract(instr_int, 31, 31) << 4) | extract(instr_int, 23, 19);
             uint64_t imm14 = extract(instr_int, 18, 5);
@@ -832,6 +1071,9 @@ int main(int argc, const char * argv[]) {
             }
         } else if ( is_instruction(instr_int, 0xb6000000) ) {
             // TBZ 64
+            if (debug_detailed) {
+              printf("tbz\n");
+            }
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t bitpos = (extract(instr_int,31,31) << 4) | extract(instr_int, 23, 19);
             uint64_t imm14 = extract(instr_int, 18, 5);
@@ -851,6 +1093,9 @@ int main(int argc, const char * argv[]) {
         } else if ( is_instruction(instr_int, 0xb5000000) ) {
             // CBNZ 64
             // cout << "CBNZ 64" << endl;
+            if (debug_detailed) {
+              printf("cbnz\n");
+            }
             uint64_t imm = extract(instr_int, 23, 5);
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t offset = sign_extend_64(imm << 2, 21);
@@ -869,6 +1114,9 @@ int main(int argc, const char * argv[]) {
         } else if ( is_instruction(instr_int, 0xb4000000) ) {
             // CBZ 64
             // cout << "CBZ 64" << endl;
+            if (debug_detailed) {
+              printf("cbz\n");
+            }
             uint64_t imm = extract(instr_int, 23, 5);
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t offset = sign_extend_64(imm << 2, 21);
@@ -887,6 +1135,9 @@ int main(int argc, const char * argv[]) {
         } else if ( is_instruction(instr_int, 0xb1000000) ) {
             // ADDS immediate 64
             // cout << "ADDS immediate 64" << endl;
+            if (debug_detailed) {
+              printf("adds\n");
+            }
             uint64_t d = extract(instr_int, 4, 0);
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t imm = extract(instr_int, 21, 10);
@@ -906,6 +1157,9 @@ int main(int argc, const char * argv[]) {
         } else if ( is_instruction(instr_int, 0x1b000000) ) {
             // MADD 32
             // cout << "MADD 32" << endl;
+            if (debug_detailed) {
+              printf("madd\n");
+            }
             uint64_t d = extract(instr_int, 4, 0);
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t m = extract(instr_int, 20, 16);
@@ -917,6 +1171,9 @@ int main(int argc, const char * argv[]) {
         } else if ( is_instruction(instr_int, 0xab000000) ) {
             // ADDS shifted register 64
             // cout << "ADD shifted register 64" << endl;
+            if (debug_detailed) {
+              printf("adds\n");
+            }
             uint64_t d = extract(instr_int, 4, 0);
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t m = extract(instr_int, 20, 16);
@@ -946,6 +1203,9 @@ int main(int argc, const char * argv[]) {
         } else if ( is_instruction(instr_int, 0xaa000000) ) {
             // ORR shifted register 64
             // cout << "ORR shifted register 64" << endl;
+            if (debug_detailed) {
+              printf("orr\n");
+            }
             uint64_t d = extract(instr_int, 4, 0);
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t m = extract(instr_int, 20, 16);
@@ -971,6 +1231,9 @@ int main(int argc, const char * argv[]) {
             }
         } else if ( is_instruction(instr_int, 0xa9800000) ) {
             // STP pre-index 64-bit
+            if (debug_detailed) {
+              printf("stp\n");
+            }
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t t2 = extract(instr_int, 14, 10);
@@ -984,6 +1247,9 @@ int main(int argc, const char * argv[]) {
             reg[n] = address;
         } else if ( is_instruction(instr_int, 0xa9400000) ) {
             // LDP signed offset 64-bit
+            if (debug_detailed) {
+              printf("ldp\n");
+            }
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t t2 = extract(instr_int, 14, 10);
@@ -1000,6 +1266,9 @@ int main(int argc, const char * argv[]) {
             }
         } else if ( is_instruction(instr_int, 0xa9c00000) ) {
             // LDP pre-index 64
+            if (debug_detailed) {
+              printf("ldp\n");
+            }
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t t2 = extract(instr_int, 14, 10);
@@ -1018,6 +1287,9 @@ int main(int argc, const char * argv[]) {
         } else if ( is_instruction(instr_int, 0xa9000000) ) {
             // STP signed offset 64-bit
 	    // printf("Entered stp\n");
+            if (debug_detailed) {
+              printf("stp\n");
+            }
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t t2 = extract(instr_int, 14, 10);
@@ -1032,6 +1304,9 @@ int main(int argc, const char * argv[]) {
 	    // printf("STP addr2: %lx\n", address+8);
         } else if ( is_instruction(instr_int, 0xa8c00000) ) {
             // LDP post-index 64-bit
+            if (debug_detailed) {
+              printf("ldp\n");
+            }
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t t2 = extract(instr_int, 14, 10);
@@ -1049,6 +1324,9 @@ int main(int argc, const char * argv[]) {
             reg[n] = address;
         } else if ( is_instruction(instr_int, 0xa8800000) ) {
             // STP post-index 64-bit
+            if (debug_detailed) {
+              printf("stp\n");
+            }
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t t2 = extract(instr_int, 14, 10);
@@ -1063,6 +1341,9 @@ int main(int argc, const char * argv[]) {
         } else if ( is_instruction(instr_int, 0x9b000000) ) {
             // MADD 64
             // cout << "MADD 64" << endl;
+            if (debug_detailed) {
+              printf("madd\n");
+            }
             uint64_t d = extract(instr_int, 4, 0);
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t m = extract(instr_int, 20, 16);
@@ -1073,6 +1354,9 @@ int main(int argc, const char * argv[]) {
             }
         } else if ( is_instruction(instr_int, 0x9a800400) ) {
             // CSINC 64
+            if (debug_detailed) {
+              printf("csinc\n");
+            }
             uint64_t d = extract(instr_int, 4, 0);
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t m = extract(instr_int, 20, 16);
@@ -1091,6 +1375,9 @@ int main(int argc, const char * argv[]) {
             }
         } else if( is_instruction(instr_int, 0x9a800000) ){
             //CSEL 64
+            if (debug_detailed) {
+              printf("csel\n");
+            }
             uint64_t d = extract(instr_int, 4, 0);
             uint64_t n = extract(instr_int, 9, 5);
             uint8_t cond = extract(instr_int, 15, 12);
@@ -1117,6 +1404,9 @@ int main(int argc, const char * argv[]) {
         } else if ( is_instruction(instr_int, 0x94000000) ) {
             // BL
             // cout << "BL" << endl;
+            if (debug_detailed) {
+              printf("bl\n");
+            }
             uint64_t imm = extract(instr_int, 25, 0);
             imm = sign_extend_64(imm << 2, 28);
             reg[30] = pcLocal + 4;
@@ -1125,6 +1415,9 @@ int main(int argc, const char * argv[]) {
         } else if ( is_instruction(instr_int, 0x93000000) ) {
             // SBFM 64
             // cout << "SBFM 64" << endl;
+            if (debug_detailed) {
+              printf("sbfm\n");
+            }
             uint64_t N = extract_single(instr_int, 22);
             uint64_t d = extract(instr_int, 4, 0);
             uint64_t n = extract(instr_int, 9, 5);
@@ -1145,6 +1438,9 @@ int main(int argc, const char * argv[]) {
         } else if ( is_instruction(instr_int, 0x92800000) ) {
             // MOVN 64
             // cout << "MOVN 64" << endl;
+            if (debug_detailed) {
+              printf("movn\n");
+            }
             uint32_t d = extract(instr_int, 4, 0);
             uint32_t pos = extract(instr_int, 22, 21);
             uint32_t imm = extract(instr_int, 20, 5);
@@ -1157,6 +1453,9 @@ int main(int argc, const char * argv[]) {
         } else if ( is_instruction(instr_int, 0x92000000) ) {
             // AND immediate 64
             // cout << "AND immediate 64" << endl;
+            if (debug_detailed) {
+              printf("and\n");
+            }
             uint64_t N = extract_single(instr_int, 22);
             uint64_t d = extract(instr_int, 4, 0);
             uint64_t n = extract(instr_int, 9, 5);
@@ -1175,6 +1474,9 @@ int main(int argc, const char * argv[]) {
         } else if ( is_instruction(instr_int, 0x91000000) ) {
             // ADD immediate 64
             // cout << "ADD immediate 64" << endl;
+            if (debug_detailed) {
+              printf("add\n");
+            }
             uint64_t d = extract(instr_int, 4, 0);
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t imm = extract(instr_int, 21, 10);
@@ -1188,6 +1490,9 @@ int main(int argc, const char * argv[]) {
         } else if ( is_instruction(instr_int, 0x90000000) ) {
             // ADRP
             // cout << "ADRP" << endl;
+            if (debug_detailed) {
+              printf("adrp\n");
+            }
             uint64_t d = extract(instr_int, 4, 0);
             uint64_t immhi = extract(instr_int, 23, 5);
             uint64_t immlo = extract(instr_int, 30, 29);
@@ -1197,9 +1502,30 @@ int main(int argc, const char * argv[]) {
             if ( d != 31 ) {
                 reg[d] = base + imm;
             }
+        } else if ( is_instruction(instr_int, 0x8B200000) ) {
+            // ADD Extended register 64
+            if (debug_detailed) {
+              printf("add\n");
+            }
+            uint64_t Rd = extract(instr_int, 4, 0);
+            uint64_t Rn = extract(instr_int, 9, 5);
+            uint8_t shift = extract(instr_int, 12, 10);
+            uint64_t Rm = extract(instr_int, 20, 16);
+            uint32_t len = 16;
+            uint64_t sxth = extract(reg[Rm], len-1, 0) << shift;
+            sxth = sign_extend_64(sxth, len + shift);
+            uint64_t result;
+            uint64_t operand1 = reg[Rn];
+            uint64_t operand2 = sxth;
+            uint8_t nzcv = 0;
+            add_with_carry64(operand1, operand2, (uint8_t) 1, &result, &nzcv);
+            reg[Rd] = result;
         } else if ( is_instruction(instr_int, 0x8b000000) ) {
             // ADD shifted register 64
             // cout << "ADD shifted register 64" << endl;
+            if (debug_detailed) {
+              printf("add\n");
+            }
             uint64_t d = extract(instr_int, 4, 0);
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t m = extract(instr_int, 20, 16);
@@ -1228,6 +1554,9 @@ int main(int argc, const char * argv[]) {
         } else if(is_instruction(instr_int, 0x8a200000) ){
             //bic 64
             //BIC 64
+            if (debug_detailed) {
+              printf("bic\n");
+            }
             uint64_t d = extract(instr_int, 4, 0);
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t m = extract(instr_int, 20, 16);
@@ -1251,6 +1580,9 @@ int main(int argc, const char * argv[]) {
         } else if(is_instruction(instr_int, 0x8a000000) ){
           //and shifted register 64
           //AND SHIFTED REGISTER 64
+          if (debug_detailed) {
+            printf("and\n");
+          }
           uint64_t d = extract(instr_int, 4, 0);
           uint64_t n = extract(instr_int, 9, 5);
           uint64_t m = extract(instr_int, 20, 16);
@@ -1269,6 +1601,9 @@ int main(int argc, const char * argv[]) {
         }
         else if ( is_instruction(instr_int, 0x885ffc00) ) {
             // LDAXR 32
+            if (debug_detailed) {
+              printf("ldaxr\n");
+            }
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t address = reg[n];
@@ -1279,6 +1614,9 @@ int main(int argc, const char * argv[]) {
         } else if( is_instruction(instr_int, 0x8800fc00) ){
           //stlxr 32
           //STLXR 32
+          if (debug_detailed) {
+            printf("stlxr\n");
+          }
           uint64_t t = extract(instr_int, 4, 0);
           uint64_t n = extract(instr_int, 9, 5);
           uint64_t s = extract(instr_int, 20, 16);
@@ -1303,17 +1641,23 @@ int main(int argc, const char * argv[]) {
 
         else if ( is_instruction(instr_int, 0x88007c00) ) {
             // STXR 32
+            if (debug_detailed) {
+              printf("stxr\n");
+            }
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t s = extract(instr_int, 20, 16);
             uint64_t address = reg[n];
-            uint32_t data = reg[t];
+            uint64_t data = t == 31 ? 0 : reg[t];
             memory_set_32(address, data);
             if ( s != 31 ) {
                 reg[s] = 0;
             }
         } else if ( is_instruction(instr_int, 0x7a400800) ) {
             // CCMP immediate 32
+            if (debug_detailed) {
+              printf("ccmp\n");
+            }
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t imm5 = extract(instr_int, 20, 16);
             uint8_t flags = extract(instr_int, 3, 0);
@@ -1354,6 +1698,9 @@ int main(int argc, const char * argv[]) {
         } else if( is_instruction(instr_int, 0x7a400000) ){
           //ccmp register 32
           //CCMP REGISTER 32
+          if (debug_detailed) {
+            printf("ccmp\n");
+          }
           uint8_t flags = extract(instr_int, 4, 0);
           uint64_t n = extract(instr_int, 9, 5);
           uint64_t cond = extract(instr_int, 15, 12);
@@ -1378,6 +1725,9 @@ int main(int argc, const char * argv[]) {
           nzcvLocal = flags;
         } else if( is_instruction(instr_int, 0x79000000) ){
             //STRH Immediate unsigned offset
+            if (debug_detailed) {
+              printf("strh\n");
+            }
             uint32_t t = extract(instr_int, 4, 0);
             uint32_t n = extract(instr_int, 9, 5);
             uint32_t imm = extract(instr_int, 20, 12);
@@ -1386,8 +1736,37 @@ int main(int argc, const char * argv[]) {
             uint32_t data = t==31 ? 0 : reg[t];
             memory_set(addr, extract(data,7,0));
             memory_set(addr, extract(data,15,8));
-        } else if( is_instruction(instr_int, 0x72000000) ){
+        } else if( is_instruction(instr_int, 0x78604800) ){
+            //ldrh register 32
+            //LDRH REGISTER 32
+            if (debug_detailed) {
+              printf("ldrh\n");
+            }
+            printf("im in ldrh\n");
+            uint64_t t = extract(instr_int, 4, 0);
+            uint64_t n = extract(instr_int, 9, 5);
+            uint64_t S = extract(instr_int, 12, 12);
+            uint64_t extend_type = extract(instr_int, 15, 13);
+            uint64_t m = extract(instr_int, 20, 16);
+
+
+            uint64_t offset = extend_reg64(m, extend_type, S, reg);
+            uint64_t address = reg[n];
+
+            address += offset;
+            uint16_t data = (memory_get(address) << 8) | (memory_get(address + 1));
+
+            if(t != 31){
+              reg[t] = data;
+            }
+
+
+        }
+        else if( is_instruction(instr_int, 0x72000000) ){
             //ANDS immediate 32
+            if (debug_detailed) {
+              printf("ands\n");
+            }
             uint32_t d = extract(instr_int, 4, 0);
             uint32_t n = extract(instr_int, 9, 5);
             uint32_t imms = extract(instr_int, 15, 10);
@@ -1406,6 +1785,9 @@ int main(int argc, const char * argv[]) {
         } else if ( is_instruction(instr_int, 0x71000000) ) {
             // SUBS immediate 32
             // cout << "SUBS immediate 32" << endl;
+            if (debug_detailed) {
+              printf("subs\n");
+            }
             uint32_t d = extract32(instr_int, 4, 0);
             uint32_t n = extract32(instr_int, 9, 5);
             uint32_t imm = extract32(instr_int, 21, 10);
@@ -1422,9 +1804,36 @@ int main(int argc, const char * argv[]) {
             if ( d != 31 ) {
                 reg[d] = result;
             }
+        } else if ( is_instruction(instr_int, 0x6b200000) ) {
+            // SUBS extended register 32
+            if (debug_detailed) {
+              printf("subs\n");
+            }
+            uint64_t Rd = extract(instr_int, 4, 0);
+            uint64_t Rn = extract(instr_int, 9, 5);
+            uint8_t shift = extract(instr_int, 12, 10);
+            uint64_t Rm = extract(instr_int, 20, 16);
+          //  uint64_t option = extract(instr_int, 15, 13);
+            //uint64_t sf = extract(instr_int, 31, 31);
+            // N = 64, signed = true, len = 32
+            uint32_t len = 32 - shift;
+            uint64_t sxtw = extract(reg[Rm], len-1, 0) << shift;
+            sxtw = sign_extend_64(sxtw, len + shift);
+            uint32_t result;
+            uint32_t operand1 = reg[Rn];
+            uint32_t operand2 = sxtw;
+            uint8_t nzcv = 0;
+            operand2 = ~(operand2);
+            add_with_carry32(operand1, operand2, (uint8_t) 1, &result, &nzcv);
+            nzcvLocal = nzcv;
+            if ( Rd != 31 ) {
+                reg[Rd] = result;
+            }
         } else if ( is_instruction(instr_int, 0x6b000000) ) {
             // SUBS shifted register 32
-
+            if (debug_detailed) {
+              printf("subs\n");
+            }
             uint64_t Rd = extract(instr_int, 4, 0);
             uint64_t Rn = extract(instr_int, 9, 5);
             uint64_t imm6 = extract(instr_int, 15, 10);
@@ -1449,6 +1858,9 @@ int main(int argc, const char * argv[]) {
         } else if( is_instruction(instr_int, 0x6a200000) ){
             // bics 32 bit
             // BICS 32 BIT
+            if (debug_detailed) {
+              printf("bics\n");
+            }
             uint64_t d = extract(instr_int, 4, 0);
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t m = extract(instr_int, 20, 16);
@@ -1473,6 +1885,9 @@ int main(int argc, const char * argv[]) {
             }
         } else if ( is_instruction(instr_int, 0x5ac00000) ) {
             // RBIT 32
+            if (debug_detailed) {
+              printf("rbit\n");
+            }
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t d = extract(instr_int, 4, 0);
             if ( n == 31 && d != 31 ) {
@@ -1489,6 +1904,9 @@ int main(int argc, const char * argv[]) {
         else if( is_instruction(instr_int, 0x5ac01000) ){
           //clz 32 bit
           //CLZ 32 bit
+          if (debug_detailed) {
+            printf("clz\n");
+          }
           uint64_t d = extract(instr_int, 4, 0);
           uint64_t n = extract(instr_int, 9, 5);
           uint32_t result = 0;
@@ -1504,6 +1922,9 @@ int main(int argc, const char * argv[]) {
         else if( is_instruction(instr_int, 0x5a800000) ){
           //csinv 32 bit
           //CSINV 32 bit
+          if (debug_detailed) {
+            printf("csinv\n");
+          }
           uint64_t d = extract(instr_int, 4, 0);
           uint64_t n = extract(instr_int, 9, 5);
           uint64_t m = extract(instr_int, 20, 16);
@@ -1529,7 +1950,10 @@ int main(int argc, const char * argv[]) {
         } else if ( is_instruction(instr_int, 0x58000000) ) {
             // LDR (literal) 64-bit
             // printf("reached LDR literal 64\n");
-	    uint64_t imm = extract(instr_int, 23, 5);
+            if (debug_detailed) {
+              printf("ldr\n");
+            }
+	          uint64_t imm = extract(instr_int, 23, 5);
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t offset = sign_extend_64(imm << 2, 21);
             uint64_t address = pcLocal + offset;
@@ -1543,6 +1967,9 @@ int main(int argc, const char * argv[]) {
         } else if ( is_instruction(instr_int, 0x54000000) ) {
             // B.cond
             // cout << "B.cond" << endl;
+            if (debug_detailed) {
+              printf("b.cond\n");
+            }
             uint64_t imm = extract(instr_int, 23, 5);
             uint64_t offset = sign_extend_64(imm << 2, 21);
             // uint8_t cond = extract32(instr_int, 3, 1);
@@ -1577,6 +2004,9 @@ int main(int argc, const char * argv[]) {
         } else if ( is_instruction(instr_int, 0x53000000) ) {
             // UBFM 32
             // cout << "UBFM 32" << endl;
+            if (debug_detailed) {
+              printf("ubfm\n");
+            }
             uint32_t N = extract_single32(instr_int, 22);
             uint32_t d = extract32(instr_int, 4, 0);
             uint32_t n = extract32(instr_int, 9, 5);
@@ -1596,6 +2026,9 @@ int main(int argc, const char * argv[]) {
         } else if ( is_instruction(instr_int, 0x52800000) ) {
             // MOVZ 32
             // cout << "MOVZ 32" << endl;
+            if (debug_detailed) {
+              printf("movz\n");
+            }
             uint64_t d = extract(instr_int, 4, 0);
             uint64_t imm = extract(instr_int, 20, 5);
             uint64_t pos = (extract(instr_int, 22, 21)) << 4;
@@ -1610,6 +2043,9 @@ int main(int argc, const char * argv[]) {
         } else if ( is_instruction(instr_int, 0x51000000) ) {
             // SUB immediate 32
             // cout << "SUB immediate 32" << endl;
+            if (debug_detailed) {
+              printf("sub\n");
+            }
             uint64_t d = extract(instr_int, 4, 0);
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t imm = extract(instr_int, 21, 10);
@@ -1625,6 +2061,9 @@ int main(int argc, const char * argv[]) {
             }
         } else if ( is_instruction(instr_int, 0x4b000000) ) {
             // SUB shifted register 32
+            if (debug_detailed) {
+              printf("sub\n");
+            }
             uint64_t Rd = extract(instr_int, 4, 0);
             uint64_t Rn = extract(instr_int, 9, 5);
             uint64_t imm6 = extract(instr_int, 15, 10);
@@ -1643,12 +2082,12 @@ int main(int argc, const char * argv[]) {
 
             if ( Rd != 31 ) {
                 reg[Rd] = result;
-                if ( debug ) {
-                  printf("%lx", reg[Rd]);
-                }
             }
         } else if ( is_instruction(instr_int, 0x3d800000) ) {
             // STR immediate unsigned offset SIMD 128
+            if (debug_detailed) {
+              printf("str\n");
+            }
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t imm = extract(instr_int, 21, 10);
@@ -1657,10 +2096,32 @@ int main(int argc, const char * argv[]) {
             address = address + offset;
             unsigned __int128 data = simd_reg[t];
             memory_set_128(address, data);
+        } else if ( is_instruction(instr_int, 0x3c800000) ) {
+            // LDUR and STUR SIMD 128 64-bit GPregs
+            if (debug_detailed) {
+              printf("ldur and stur\n");
+            }
+            uint64_t imm9 = extract(instr_int, 20, 12);
+            uint64_t n = extract(instr_int, 9, 5);
+            uint64_t t = extract(instr_int, 4, 0);
+            uint64_t address = reg[n];
+            address += sign_extend_64(imm9, 9);
+            unsigned __int128 data = 0;
+            if ( extract_single32(instr_int, 22) == 0 ) {
+                // store
+                data = simd_reg[t];
+                memory_set_128(address, data);
+            } else {
+                // load
+                printf("Error: unimplemented LDUR SIMD 128\n");
+            }
         } else if ( is_instruction(instr_int, 0x39400000) ) {
             // LDRB immediate unsigned offset 32
             // cout << "LDRB immediate unsigned offse;
-	    uint64_t imm = extract(instr_int, 21, 10);
+            if (debug_detailed) {
+              printf("ldrb\n");
+            }
+	          uint64_t imm = extract(instr_int, 21, 10);
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t offset = imm;
@@ -1673,6 +2134,9 @@ int main(int argc, const char * argv[]) {
         } else if ( is_instruction(instr_int, 0x39000000) ) {
             // STRB immediate unsigned offset 32
             // cout << "STRB immediate unsigned offset 32" << endl;
+            if (debug_detailed) {
+              printf("strb\n");
+            }
             uint64_t imm = extract(instr_int, 21, 10);
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t t = extract(instr_int, 4, 0);
@@ -1683,12 +2147,10 @@ int main(int argc, const char * argv[]) {
             uint8_t data = t == 31 ? 0 : reg[t];
             memory_set(address, data);
         } else if( is_instruction(instr_int, 0x38600800) ){
-            //ldrb register
-            //LDRB register
-            //LDRB REGISTER
-            // how the
-            // hell do we do this
-            // thats what they said
+            // LDRB register
+            if (debug_detailed) {
+              printf("ldrb\n");
+            }
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t m = extract(instr_int, 20, 16);
@@ -1708,6 +2170,9 @@ int main(int argc, const char * argv[]) {
         } else if ( is_instruction(instr_int, 0x38400c00) ) {
             // LDRB immediate pre-index 32
             // cout << "LDRB immediate pre-index 32" << endl;
+            if (debug_detailed) {
+              printf("ldrb\n");
+            }
             uint64_t imm = extract(instr_int, 20, 12);
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t t = extract(instr_int, 4, 0);
@@ -1723,6 +2188,9 @@ int main(int argc, const char * argv[]) {
         } else if ( is_instruction(instr_int, 0x38400400) ) {
             // LDRB immediate post-index 32
             // cout << "LDRB immediate post-index 32" << endl;
+            if (debug_detailed) {
+              printf("ldrb\n");
+            }
             uint64_t imm = extract(instr_int, 20, 12);
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t t = extract(instr_int, 4, 0);
@@ -1735,8 +2203,46 @@ int main(int argc, const char * argv[]) {
                 reg[t] = data;
             }
             reg[n] = address;
-        } else if ( is_instruction(instr_int, 0x37000000) ) {
+        } else if ( is_instruction(instr_int, 0x38400000) ) {
+            // LDURB
+            // cout << "LDRB immediate post-index 32" << endl;
+            if (debug_detailed) {
+              printf("ldurb\n");
+            }
+            uint64_t imm = extract(instr_int, 20, 12);
+            uint64_t n = extract(instr_int, 9, 5);
+            uint64_t t = extract(instr_int, 4, 0);
+            uint64_t offset = sign_extend_64(imm, 9);
+            uint64_t address = 0;
+            address = reg[n];
+            address = address + offset;
+            uint32_t data = memory_get(address);
+            if ( t != 31 ) {
+                reg[t] = data;
+            }
+        } else if( is_instruction(instr_int, 0x38000000) ){
+            // sturb
+            // STURB
+            if (debug_detailed) {
+              printf("sturb\n");
+            }
+            uint64_t t = extract(instr_int, 4, 0);
+            uint64_t n = extract(instr_int, 9, 5);
+            uint64_t imm9 = extract(instr_int, 20, 12);
+            uint64_t offset = sign_extend_64(imm9, 9);
+            uint64_t address = reg[n];
+            address += offset;
+            uint8_t data = 0;
+            if(t != 31){
+              data = reg[t];
+            }
+            memory_set(address, data);
+        }
+        else if ( is_instruction(instr_int, 0x37000000) ) {
             // TBNZ 32
+            if (debug_detailed) {
+              printf("tbnz\n");
+            }
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t bitpos = extract(instr_int, 23, 19);
             uint64_t imm14 = extract(instr_int, 18, 5);
@@ -1755,6 +2261,9 @@ int main(int argc, const char * argv[]) {
             }
         } else if ( is_instruction(instr_int, 0x36000000) ) {
             // TBZ 32
+            if (debug_detailed) {
+              printf("tbz\n");
+            }
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t bitpos = extract(instr_int, 23, 19);
             uint64_t imm14 = extract(instr_int, 18, 5);
@@ -1774,6 +2283,9 @@ int main(int argc, const char * argv[]) {
         } else if ( is_instruction(instr_int, 0x35000000) ) {
             // CBNZ 32
             // cout << "CBNZ 32" << endl;
+            if (debug_detailed) {
+              printf("cbnz\n");
+            }
             uint64_t imm = extract(instr_int, 23, 5);
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t offset = sign_extend_64(imm << 2, 21);
@@ -1792,6 +2304,9 @@ int main(int argc, const char * argv[]) {
         } else if ( is_instruction(instr_int, 0x34000000) ) {
             // CBZ 32
             // cout << "CBZ 32" << endl;
+            if (debug_detailed) {
+              printf("cbz\n");
+            }
             uint64_t imm = extract(instr_int, 23, 5);
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t offset = sign_extend_64(imm << 2, 21);
@@ -1810,6 +2325,9 @@ int main(int argc, const char * argv[]) {
         } else if ( is_instruction(instr_int, 0x31000000) ) {
             // ADDS immediate 32
             // cout << "ADDS immediate 32" << endl;
+            if (debug_detailed) {
+              printf("adds\n");
+            }
             uint32_t d = extract32(instr_int, 4, 0);
             uint32_t n = extract32(instr_int, 9, 5);
             uint32_t imm = extract32(instr_int, 21, 10);
@@ -1829,6 +2347,9 @@ int main(int argc, const char * argv[]) {
         } else if ( is_instruction(instr_int, 0x2a000000) ) {
             // ORR shifted register 32
             // cout << "ORR shifted register 32" << endl;
+            if (debug_detailed) {
+              printf("orr\n");
+            }
             uint32_t d = extract32(instr_int, 4, 0);
             uint32_t n = extract32(instr_int, 9, 5);
             uint32_t m = extract32(instr_int, 20, 16);
@@ -1854,6 +2375,9 @@ int main(int argc, const char * argv[]) {
             }
         } else if ( is_instruction(instr_int, 0x29800000) ) {
             // STP pre-index 32-bit
+            if (debug_detailed) {
+              printf("stp\n");
+            }
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t t2 = extract(instr_int, 14, 10);
@@ -1867,6 +2391,9 @@ int main(int argc, const char * argv[]) {
             reg[n] = address;
         } else if ( is_instruction(instr_int, 0x29c00000) ) {
             // LDP pre-index 32
+            if (debug_detailed) {
+              printf("ldp\n");
+            }
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t t2 = extract(instr_int, 14, 10);
@@ -1885,6 +2412,9 @@ int main(int argc, const char * argv[]) {
         }
         else if ( is_instruction(instr_int, 0x29400000) ) {
             // LDP signed offset 32-bit
+            if (debug_detailed) {
+              printf("ldp\n");
+            }
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t t2 = extract(instr_int, 14, 10);
@@ -1902,6 +2432,9 @@ int main(int argc, const char * argv[]) {
         }
         else if ( is_instruction(instr_int, 0x29000000) ) {
             // STP signed offset 32-bit
+            if (debug_detailed) {
+              printf("stp\n");
+            }
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t t2 = extract(instr_int, 14, 10);
@@ -1915,6 +2448,9 @@ int main(int argc, const char * argv[]) {
         } else if ( is_instruction(instr_int, 0x2b000000) ) {
             // ADDS shifted register 32
             // cout << "ADD shifted register 32" << endl;
+            if (debug_detailed) {
+              printf("adds\n");
+            }
             uint32_t d = extract32(instr_int, 4, 0);
             uint32_t n = extract32(instr_int, 9, 5);
             uint32_t m = extract32(instr_int, 20, 16);
@@ -1943,6 +2479,9 @@ int main(int argc, const char * argv[]) {
             }
         } else if ( is_instruction(instr_int, 0x28c00000) ) {
             // LDP post-index 32-bit
+            if (debug_detailed) {
+              printf("ldp\n");
+            }
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t t2 = extract(instr_int, 14, 10);
@@ -1960,6 +2499,9 @@ int main(int argc, const char * argv[]) {
             reg[n] = address;
         } else if ( is_instruction(instr_int, 0x28800000) ) {
             // STP post-index 32
+            if (debug_detailed) {
+              printf("stp\n");
+            }
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t t2 = extract(instr_int, 14, 10);
@@ -1973,6 +2515,9 @@ int main(int argc, const char * argv[]) {
             reg[n] = address;
         } else if ( is_instruction(instr_int, 0x1a800400) ) {
             // CSINC 32
+            if (debug_detailed) {
+              printf("csinc\n");
+            }
             uint32_t d = extract(instr_int, 4, 0);
             uint32_t n = extract(instr_int, 9, 5);
             uint32_t m = extract(instr_int, 20, 16);
@@ -1991,6 +2536,9 @@ int main(int argc, const char * argv[]) {
             }
         } else if( is_instruction(instr_int, 0x1a800000) ){
             //CSEL 32
+            if (debug_detailed) {
+              printf("csel\n");
+            }
             uint64_t d = extract(instr_int, 4, 0);
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t cond = extract(instr_int, 15, 12);
@@ -2009,7 +2557,10 @@ int main(int argc, const char * argv[]) {
         } else if ( is_instruction(instr_int, 0x18000000) ) {
             // LDR (literal) 32-bit
             // printf("Reached ldr literal\n");
-	    uint64_t imm = extract(instr_int, 23, 5);
+            if (debug_detailed) {
+              printf("ldr literal\n");
+            }
+	          uint64_t imm = extract(instr_int, 23, 5);
             uint64_t t = extract(instr_int, 4, 0);
             uint64_t offset = sign_extend_32(imm << 2, 21);
             uint64_t address = pcLocal + offset;
@@ -2020,13 +2571,43 @@ int main(int argc, const char * argv[]) {
         } else if ( is_instruction(instr_int, 0x14000000) ) {
             // B
             // cout << "B" << endl;
+            if (debug_detailed) {
+              printf("b\n");
+            }
             uint64_t imm = extract(instr_int, 25, 0);
             uint64_t offset = sign_extend_64(imm << 2, 28);
             pcChange = true;
             pcLocal = pcLocal + offset;
+        } else if ( is_instruction(instr_int, 0x13000000) ) {
+          // sbfm 32 bit
+          // SBFM 32-bit
+
+          if (debug_detailed) {
+            printf("sbfm\n");
+          }
+          uint64_t N = extract_single(instr_int, 22);
+          uint64_t d = extract(instr_int, 4, 0);
+          uint64_t n = extract(instr_int, 9, 5);
+          uint64_t immr = extract(instr_int, 21, 16);
+          uint64_t imms = extract(instr_int, 15, 10);
+          uint64_t wmask = 0;
+          uint64_t tmask = 0;
+          decode_bit_masks(N, imms, immr, false, &wmask, &tmask);
+          uint32_t src = 0;
+          if ( n != 31 ) {
+              src = reg[n];
+          }
+          uint32_t bot = rotate_right32(src, immr) & wmask;
+          uint32_t top = replicate(extract_single(src, imms), 1, 32);
+          if ( d != 31 ) {
+              reg[d] = (top & ~tmask) | (bot & tmask);
+          }
         } else if ( is_instruction(instr_int, 0x12800000) ) {
             // MOVN 32
             // cout << "MOVN 32" << endl;
+            if (debug_detailed) {
+              printf("movn\n");
+            }
             uint32_t d = extract32(instr_int, 4, 0);
             uint32_t pos = extract32(instr_int, 22, 21);
             uint32_t imm = extract32(instr_int, 20, 5);
@@ -2039,6 +2620,9 @@ int main(int argc, const char * argv[]) {
         } else if ( is_instruction(instr_int, 0x12000000) ) {
             // AND immediate 32
             // cout << "AND immediate 32" << endl;
+            if (debug_detailed) {
+              printf("and\n");
+            }
             uint32_t N = extract_single32(instr_int, 22);
             uint32_t d = extract32(instr_int, 4, 0);
             uint32_t n = extract32(instr_int, 9, 5);
@@ -2055,6 +2639,9 @@ int main(int argc, const char * argv[]) {
         } else if ( is_instruction(instr_int, 0x11000000) ) {
             // ADD immediate 32
             // cout << "ADD immediate 32" << endl;
+            if (debug_detailed) {
+              printf("add\n");
+            }
             uint64_t d = extract(instr_int, 4, 0);
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t imm = extract(instr_int, 21, 10);
@@ -2065,9 +2652,30 @@ int main(int argc, const char * argv[]) {
             }
             uint32_t result = source_val + imm;
             reg[d] = result;
-        } else if ( is_instruction(instr_int, 0xb000000) ) {
+        } else if ( is_instruction(instr_int, 0xB200000) ) {
+            // ADD Extended register 32
+            if (debug_detailed) {
+              printf("add\n");
+            }
+            uint64_t Rd = extract(instr_int, 4, 0);
+            uint64_t Rn = extract(instr_int, 9, 5);
+            uint8_t shift = extract(instr_int, 12, 10);
+            uint64_t Rm = extract(instr_int, 20, 16);
+            uint32_t len = 16;
+            uint32_t sxth = extract(reg[Rm], len-1, 0) << shift;
+            sxth = sign_extend_32(sxth, len + shift);
+            uint32_t result;
+            uint32_t operand1 = reg[Rn];
+            uint32_t operand2 = sxth;
+            uint8_t nzcv = 0;
+            add_with_carry32(operand1, operand2, (uint8_t) 1, &result, &nzcv);
+            reg[Rd] = result;
+        }  else if ( is_instruction(instr_int, 0xb000000) ) {
             // ADD shifted register 32
             // cout << "ADD shifted register 32" << endl;
+            if (debug_detailed) {
+              printf("add\n");
+            }
             uint32_t d = extract32(instr_int, 4, 0);
             uint32_t n = extract32(instr_int, 9, 5);
             uint32_t m = extract32(instr_int, 20, 16);
@@ -2096,6 +2704,9 @@ int main(int argc, const char * argv[]) {
         }  else if( is_instruction(instr_int, 0xa200000) ){
             //bic 32
             //BIC 32
+            if (debug_detailed) {
+              printf("bic\n");
+            }
             uint64_t d = extract(instr_int, 4, 0);
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t m = extract(instr_int, 20, 16);
@@ -2119,6 +2730,9 @@ int main(int argc, const char * argv[]) {
         } else if( is_instruction(instr_int, 0xa000000) ){
             //and shifted register 32
             //AND SHIFTED REGISTER 32
+            if (debug_detailed) {
+              printf("and\n");
+            }
             uint64_t d = extract(instr_int, 4, 0);
             uint64_t n = extract(instr_int, 9, 5);
             uint64_t m = extract(instr_int, 20, 16);

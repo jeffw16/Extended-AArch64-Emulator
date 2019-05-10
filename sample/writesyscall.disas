@@ -1,0 +1,75 @@
+
+writesyscall:     file format elf64-littleaarch64
+
+
+Disassembly of section .note.gnu.build-id:
+
+00000000004000e8 <.note.gnu.build-id>:
+  4000e8:	00000004 	.inst	0x00000004 ; undefined
+  4000ec:	00000014 	.inst	0x00000014 ; undefined
+  4000f0:	00000003 	.inst	0x00000003 ; undefined
+  4000f4:	00554e47 	.inst	0x00554e47 ; undefined
+  4000f8:	6ec8f7ae 	.inst	0x6ec8f7ae ; undefined
+  4000fc:	ab44b93d 	adds	x29, x9, x4, lsr #46
+  400100:	4d434f15 	.inst	0x4d434f15 ; undefined
+  400104:	410d9a08 	.inst	0x410d9a08 ; undefined
+  400108:	cce822a0 	.inst	0xcce822a0 ; undefined
+
+Disassembly of section .text:
+
+000000000040010c <write_string>:
+  40010c:	a9bd7bfd 	stp	x29, x30, [sp,#-48]!
+  400110:	910003fd 	mov	x29, sp
+  400114:	f9000fa0 	str	x0, [x29,#24]
+  400118:	f9400fa0 	ldr	x0, [x29,#24]
+  40011c:	39400000 	ldrb	w0, [x0]
+  400120:	3900bfa0 	strb	w0, [x29,#47]
+  400124:	3940bfa0 	ldrb	w0, [x29,#47]
+  400128:	7100001f 	cmp	w0, #0x0
+  40012c:	540000e0 	b.eq	400148 <write_string+0x3c>
+  400130:	f9400fa0 	ldr	x0, [x29,#24]
+  400134:	94000010 	bl	400174 <write_char>
+  400138:	f9400fa0 	ldr	x0, [x29,#24]
+  40013c:	91000400 	add	x0, x0, #0x1
+  400140:	f9000fa0 	str	x0, [x29,#24]
+  400144:	17fffff5 	b	400118 <write_string+0xc>
+  400148:	d503201f 	nop
+  40014c:	a8c37bfd 	ldp	x29, x30, [sp],#48
+  400150:	d65f03c0 	ret
+
+0000000000400154 <start>:
+  400154:	a9bf7bfd 	stp	x29, x30, [sp,#-16]!
+  400158:	910003fd 	mov	x29, sp
+  40015c:	90000000 	adrp	x0, 400000 <write_string-0x10c>
+  400160:	91062000 	add	x0, x0, #0x188
+  400164:	97ffffea 	bl	40010c <write_string>
+  400168:	d503201f 	nop
+  40016c:	a8c17bfd 	ldp	x29, x30, [sp],#16
+  400170:	d65f03c0 	ret
+
+0000000000400174 <write_char>:
+  400174:	d2800808 	mov	x8, #0x40                  	// #64
+  400178:	aa0003e1 	mov	x1, x0
+  40017c:	d2800020 	mov	x0, #0x1                   	// #1
+  400180:	d2800022 	mov	x2, #0x1                   	// #1
+  400184:	d4000001 	svc	#0x0
+
+Disassembly of section .rodata:
+
+0000000000400188 <__bss_end__-0x10007>:
+  400188:	6c6c6568 	.word	0x6c6c6568
+  40018c:	Address 0x000000000040018c is out of bounds.
+
+
+Disassembly of section .comment:
+
+0000000000000000 <.comment>:
+   0:	3a434347 	ccmn	w26, w3, #0x7, mi
+   4:	694c2820 	ldpsw	x0, x10, [x1,#96]
+   8:	6f72616e 	umlsl2	v14.4s, v11.8h, v2.h[3]
+   c:	43434720 	.inst	0x43434720 ; undefined
+  10:	352e3520 	cbnz	w0, 5c6b4 <write_string-0x3a3a58>
+  14:	3130322d 	adds	w13, w17, #0xc0c
+  18:	30312e37 	adr	x23, 625dd <write_string-0x39db2f>
+  1c:	2e352029 	usubl	v9.8h, v1.8b, v21.8b
+  20:	00302e35 	.inst	0x00302e35 ; NYI
